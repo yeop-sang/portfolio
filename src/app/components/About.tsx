@@ -24,7 +24,7 @@ export function About() {
     ko: {
       quote: "\"기술은 구현에서 끝나지 않습니다. 실제 서비스로 작동하고 운영되는 구조까지 설계할 때 비로소 완성됩니다.\"",
       bioTitle: "소개",
-      bio: "안녕하세요, 엽입니다. 백엔드, 풀스택, AI 프로토타이핑을 넘나들며 제품이 실제로 작동하는 구조를 만드는 개발자입니다. Pickle.plus에서는 서비스 운영과 배포 관점을 익혔고, Young Il Young Inc.에서는 풀스택으로 제품 개발을 경험했으며, SKT FLY AI에서 대상을 수상한 Music Sense와 해커톤 프로젝트를 통해 AI를 사용자 문제와 경험으로 연결하는 방식을 탐구했습니다.",
+      bio: "안녕하세요, 김상엽입니다. 백엔드, 풀스택, AI 프로토타이핑을 넘나들며 제품이 실제로 작동하는 구조를 만드는 개발자입니다. Pickle.plus에서는 서비스 운영과 배포 관점을 익혔고, Young Il Young Inc.에서는 풀스택으로 제품 개발을 경험했으며, SKT FLY AI에서 대상을 수상한 Music Sense와 해커톤 프로젝트를 통해 AI를 사용자 문제와 경험으로 연결하는 방식을 탐구했습니다.",
       stackTitle: "기술 스택",
       stack: [
         { category: "AI / Applied", items: ["PyTorch", "WhisperX", "GPT-4o", "Computer Vision", "Rapid Prototyping"] },
@@ -94,7 +94,7 @@ export function About() {
           >
             {/* Photo */}
             <div className="relative">
-              <div 
+              <div
                 className="relative overflow-hidden"
                 style={{
                   aspectRatio: '3/4',
@@ -108,7 +108,7 @@ export function About() {
                   style={{ filter: 'grayscale(100%)' }}
                 />
                 {/* Accent overlay on hover */}
-                <div 
+                <div
                   className="absolute inset-0 bg-[#C8FF00] opacity-0 hover:opacity-10 transition-opacity duration-500"
                 />
               </div>
@@ -172,7 +172,7 @@ export function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
                 className="border p-6"
-                style={{ 
+                style={{
                   borderColor: 'var(--bg-border)',
                   backgroundColor: 'var(--bg-card)',
                 }}
