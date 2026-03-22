@@ -24,7 +24,7 @@ export function About() {
     ko: {
       quote: "\"기술은 구현에서 끝나지 않습니다. 실제 서비스로 작동하고 운영되는 구조까지 설계할 때 비로소 완성됩니다.\"",
       bioTitle: "소개",
-      bio: "안녕하세요, 엽입니다. 백엔드, 풀스택, AI 프로토타이핑을 넘나들며 제품이 실제로 작동하는 구조를 만드는 개발자입니다. Pickle.plus에서는 서비스 운영과 배포 관점을 익혔고, Youngil Young Inc.에서는 풀스택으로 제품 개발을 경험했으며, SKT FLY AI에서 대상을 수상한 Music Sense와 해커톤 프로젝트를 통해 AI를 사용자 문제와 경험으로 연결하는 방식을 탐구했습니다.",
+      bio: "안녕하세요, 엽입니다. 백엔드, 풀스택, AI 프로토타이핑을 넘나들며 제품이 실제로 작동하는 구조를 만드는 개발자입니다. Pickle.plus에서는 서비스 운영과 배포 관점을 익혔고, Young Il Young Inc.에서는 풀스택으로 제품 개발을 경험했으며, SKT FLY AI에서 대상을 수상한 Music Sense와 해커톤 프로젝트를 통해 AI를 사용자 문제와 경험으로 연결하는 방식을 탐구했습니다.",
       stackTitle: "기술 스택",
       stack: [
         { category: "AI / Applied", items: ["PyTorch", "WhisperX", "GPT-4o", "Computer Vision", "Rapid Prototyping"] },
@@ -36,14 +36,14 @@ export function About() {
       timeline: [
         { year: "2026", title: "Binary Hackathon Project", desc: "조코딩 x OpenAI x Primer AI 해커톤 장려상 및 빠른 프로토타이핑 리드" },
         { year: "2025", title: "Music Sense", desc: "SKT FLY AI 대상 수상 및 음원 분석 기반 멀티모달 음악 경험 프로젝트 설계" },
-        { year: "2023", title: "Youngil Young Inc.", desc: "풀스택 개발자로 제품 기능 구현 및 사용자 흐름 개선" },
+        { year: "2023", title: "Young Il Young Inc.", desc: "풀스택 개발자로 제품 기능 구현 및 사용자 흐름 개선" },
         { year: "2020", title: "Pickle.plus", desc: "백엔드 개발과 서비스 운영 구조를 함께 경험" }
       ]
     },
     en: {
       quote: "\"Technology is not finished at implementation. It becomes complete when the service and operations around it are designed to work in the real world.\"",
       bioTitle: "About Me",
-      bio: "Hi, I'm Yeop. I build products that work end-to-end across backend systems, full-stack product development, and AI prototyping. At Pickle.plus I learned service operations and deployment thinking, at Youngil Young Inc. I shipped product features as a full-stack developer, and through Music Sense, a grand-prize-winning project at SKT FLY AI, along with other hackathon projects, I explored how AI can be translated into real user problems and experiences.",
+      bio: "Hi, I'm Yeop. I build products that work end-to-end across backend systems, full-stack product development, and AI prototyping. At Pickle.plus I learned service operations and deployment thinking, at Young Il Young Inc. I shipped product features as a full-stack developer, and through Music Sense, a grand-prize-winning project at SKT FLY AI, along with other hackathon projects, I explored how AI can be translated into real user problems and experiences.",
       stackTitle: "Tech Stack",
       stack: [
         { category: "AI / Applied", items: ["PyTorch", "WhisperX", "GPT-4o", "Computer Vision", "Rapid Prototyping"] },
@@ -55,7 +55,7 @@ export function About() {
       timeline: [
         { year: "2026", title: "Binary Hackathon Project", desc: "Received an encouragement award at the Jocoding x OpenAI x Primer AI hackathon while leading rapid prototyping" },
         { year: "2025", title: "Music Sense", desc: "Won the grand prize at SKT FLY AI with a multimodal music experience project based on audio analysis" },
-        { year: "2023", title: "Youngil Young Inc.", desc: "Built product features and improved user flows as a full-stack developer" },
+        { year: "2023", title: "Young Il Young Inc.", desc: "Built product features and improved user flows as a full-stack developer" },
         { year: "2020", title: "Pickle.plus", desc: "Gained hands-on experience across backend development and service operations" }
       ]
     }

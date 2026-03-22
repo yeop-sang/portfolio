@@ -432,7 +432,7 @@ export const projects: Project[] = [
   },
   {
     id: 8,
-    title: "YOUNGIL YOUNG INC.",
+    title: "YOUNG IL YOUNG INC.",
     year: "2023",
     period: "2021.08 - 2022.12",
     tags: "Fullstack · Product Development · Web",
@@ -444,7 +444,7 @@ export const projects: Project[] = [
     details: {
       ko: {
         overview:
-          "Youngil Young Inc.에서 풀스택 개발자로 참여하며, 실제 서비스/플랫폼 기능을 빠르게 구현하고 사용자 흐름에 맞게 제품을 개선하는 경험을 쌓았습니다. 프론트엔드와 백엔드를 모두 다루며, 아이디어를 작동하는 서비스 형태로 만드는 데 집중했습니다.",
+          "Young Il Young Inc.에서 풀스택 개발자로 참여하며, 실제 서비스/플랫폼 기능을 빠르게 구현하고 사용자 흐름에 맞게 제품을 개선하는 경험을 쌓았습니다. 프론트엔드와 백엔드를 모두 다루며, 아이디어를 작동하는 서비스 형태로 만드는 데 집중했습니다.",
         role:
           "휴대폰 온라인 판매 플랫폼의 서버와 프론트엔드 양쪽을 맡아 기능 구현과 사용자 흐름 개선을 함께 수행했습니다.",
         challenge:
@@ -467,7 +467,7 @@ export const projects: Project[] = [
       },
       en: {
         overview:
-          "At Youngil Young Inc., I worked as a full-stack developer, quickly shipping real product and platform features while refining the experience around actual user flows. By handling both frontend and backend work, I focused on turning ideas into functioning services.",
+          "At Young Il Young Inc., I worked as a full-stack developer, quickly shipping real product and platform features while refining the experience around actual user flows. By handling both frontend and backend work, I focused on turning ideas into functioning services.",
         role:
           "I worked across both server and frontend implementation for an online mobile-phone sales platform, covering feature delivery and user-flow improvement together.",
         challenge:
@@ -624,21 +624,21 @@ export const contributions: Contribution[] = [
     year: "2024",
     scope: "Python · Django · Open Source Contribution",
     summary: {
-      ko: "Youngil Young Inc. 프로젝트에서 사용하던 347-star 오픈소스 라이브러리 django-excel의 Django 호환성 오류를 수정해 upstream에 기여했습니다.",
-      en: "After hitting a Django compatibility error in django-excel while using it in a Youngil Young Inc. project, I contributed the fix upstream.",
+      ko: "Young Il Young Inc. 프로젝트에서 사용하던 347-star 오픈소스 라이브러리 django-excel의 Django 호환성 오류를 수정해 upstream에 기여했습니다.",
+      en: "After hitting a Django compatibility error in django-excel while using it in a Young Il Young Inc. project, I contributed the fix upstream.",
     },
     details: {
-      ko: "Youngil Young Inc. 프로젝트에서 django-excel을 사용하던 중 구형 URL 선언 방식 때문에 Django 호환성 오류가 발생했고, 이를 해결하기 위해 최신 Django 라우팅 방식에 맞게 URL 선언을 바꾸고 요구사항 범위를 정리했습니다. 단발성 우회가 아니라 실제로 내가 쓰던 라이브러리 문제를 upstream에서 바로잡았다는 점에서, 외부 코드베이스의 규칙과 호환성 요구를 이해하고 반영한 경험이었습니다.",
-      en: "While using django-excel in a Youngil Young Inc. project, I hit a Django compatibility error caused by its older URL declarations. I fixed it by updating the routing to a forward-compatible Django style and tightening the dependency requirements. The value was not a local workaround, but correcting a library issue at the upstream source while working within an external codebase's compatibility constraints.",
+      ko: "Young Il Young Inc. 프로젝트에서 django-excel을 사용하던 중 구형 URL 선언 방식 때문에 Django 호환성 오류가 발생했고, 이를 해결하기 위해 최신 Django 라우팅 방식에 맞게 URL 선언을 바꾸고 요구사항 범위를 정리했습니다. 단발성 우회가 아니라 실제로 내가 쓰던 라이브러리 문제를 upstream에서 바로잡았다는 점에서, 외부 코드베이스의 규칙과 호환성 요구를 이해하고 반영한 경험이었습니다.",
+      en: "While using django-excel in a Young Il Young Inc. project, I hit a Django compatibility error caused by its older URL declarations. I fixed it by updating the routing to a forward-compatible Django style and tightening the dependency requirements. The value was not a local workaround, but correcting a library issue at the upstream source while working within an external codebase's compatibility constraints.",
     },
     results: {
       ko: [
-        "Youngil Young Inc. 프로젝트에서 발생한 Django 호환성 오류를 upstream 수정으로 해결",
+        "Young Il Young Inc. 프로젝트에서 발생한 Django 호환성 오류를 upstream 수정으로 해결",
         "url() → re_path() 전환으로 Django URL routing 호환성 보완",
         "Django 및 xlrd 요구사항 정리와 changelog 업데이트 반영",
       ],
       en: [
-        "Resolved a Django compatibility error from a Youngil Young Inc. project by landing an upstream fix",
+        "Resolved a Django compatibility error from a Young Il Young Inc. project by landing an upstream fix",
         "Replaced url() usage with re_path() for forward-compatible Django routing",
         "Updated Django/xlrd requirement handling and changelog entries",
       ],
