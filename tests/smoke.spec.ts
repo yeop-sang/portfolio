@@ -31,7 +31,7 @@ test("main navigation loads and language toggle works", async ({ page }) => {
   await expect(page).toHaveURL(/\/about$/);
   await expect(page.getByText("About Me", { exact: false })).toBeVisible();
   const aboutPhoto = page.locator("img[alt='Yeop Sang']");
-  await expect(aboutPhoto).toHaveAttribute("src", /avatars\.githubusercontent\.com/);
+  await expect(aboutPhoto).toHaveAttribute("src", /\/photo_yeop\.jpg$/);
 
   await page.getByRole("link", { name: "CONTACT" }).click();
   await expect(page).toHaveURL(/\/contact$/);

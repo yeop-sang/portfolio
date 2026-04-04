@@ -23,7 +23,7 @@ export function About() {
 
   const stack = aboutContent.stack[language];
   const timeline = aboutContent.timeline[language];
-  const profileImageSrc = "https://avatars.githubusercontent.com/u/49216065?v=4";
+  const profileImageSrc = "/photo_yeop.jpg";
 
   return (
     <div className="min-h-screen pt-32 pb-24 px-8" style={{ backgroundColor: 'var(--bg-dark)' }}>
@@ -69,7 +69,6 @@ export function About() {
                   src={profileImageSrc}
                   alt="Yeop Sang"
                   className="w-full h-full object-cover"
-                  style={{ filter: 'grayscale(100%)' }}
                 />
                 {/* Accent overlay on hover */}
                 <div
