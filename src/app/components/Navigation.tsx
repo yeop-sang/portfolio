@@ -19,6 +19,7 @@ export function Navigation() {
   const navLinks = [
     { path: "/work", label: "WORK" },
     { path: "/about", label: "ABOUT" },
+    { path: "/credentials", label: "CREDENTIALS" },
     { path: "/contact", label: "CONTACT" },
   ];
 
@@ -36,7 +37,7 @@ export function Navigation() {
           className="text-white uppercase tracking-[0.15em] text-sm font-medium hover:text-[#C8FF00] transition-colors"
           style={{ fontFamily: 'var(--font-display)' }}
         >
-          Y.K
+          Y.S
         </Link>
 
         <div className="flex items-center gap-8">

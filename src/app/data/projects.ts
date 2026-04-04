@@ -9,6 +9,22 @@ export interface LocalizedProjectDetails {
   tech: string[];
 }
 
+interface ProjectAsset {
+  src: string;
+  alt: {
+    ko: string;
+    en: string;
+  };
+}
+interface ProjectResource {
+  href: string;
+  label: {
+    ko: string;
+    en: string;
+  };
+  icon: "github" | "external";
+}
+
 export interface Project {
   id: number;
   title: string;
@@ -20,14 +36,13 @@ export interface Project {
     en: string;
   };
   color: string;
+  heroImage?: ProjectAsset;
+  gallery?: ProjectAsset[];
   details: {
     ko: LocalizedProjectDetails;
     en: LocalizedProjectDetails;
   };
-  links?: {
-    github?: string;
-    demo?: string;
-  };
+  resources?: ProjectResource[];
 }
 
 export interface Contribution {
@@ -58,46 +73,67 @@ export interface Contribution {
 export const projects: Project[] = [
   {
     id: 2,
-    title: "SIGN LANGUAGE AI",
+    title: "BINARI",
     year: "2025",
     period: "2025.08 - 2026.02",
-    tags: "FastAPI · OCR · Qdrant · Veo 3",
+    tags: "AI Pipeline · OCR · Qdrant · Async Video",
     description: {
-      ko: "OCR·LLM·Veo 3를 연결한 수어 비디오 생성 백엔드",
-      en: "Backend for OCR-to-sign-language video generation",
+      ko: "촬영한 동화책 이미지를 한국수어 시나리오와 영상 생성 흐름으로 연결한 프로젝트",
+      en: "Project that turns photographed storybooks into KSL scenarios and video-generation workflows",
     },
     color: "#1A3A2A",
+    heroImage: {
+      src: "/binari/binari-cover.png",
+      alt: {
+        ko: "비나리 표지 슬라이드",
+        en: "BinarI cover slide",
+      },
+    },
+    gallery: [
+      {
+        src: "/binari/binari-problem.png",
+        alt: {
+          ko: "비나리 문제 정의 슬라이드",
+          en: "BinarI problem-definition slide",
+        },
+      },
+      {
+        src: "/binari/binari-solution.png",
+        alt: {
+          ko: "비나리 차별점 슬라이드",
+          en: "BinarI differentiation slide",
+        },
+      },
+    ],
     details: {
       ko: {
         overview:
-          "Binary 팀에서 진행한 해커톤 프로젝트와 동일한 수어 번역 프로젝트로, 한국어 텍스트를 수어 영상 생성 파이프라인으로 연결하는 FastAPI 기반 백엔드입니다. OCR로 문장을 추출하고, 수어 사전 semantic search와 LLM 프롬프트 생성을 거쳐 Google Veo 3 영상 생성과 S3 저장까지 하나의 API 흐름으로 구성했습니다.",
+          "비나리는 촬영한 동화책 페이지에서 시작해 OCR, 삽화·캐릭터 인식, 검색, 영상 생성을 연결하는 동화책 수어 프로젝트입니다. 공모전 제출용 프로토타입으로 만들었고, 한국수어 콘텐츠 제작 병목을 줄일 수 있는 구조를 검증하는 데 초점을 맞췄습니다.",
         role:
-          "FastAPI 백엔드와 프롬프트 엔지니어링을 중심으로, 비동기 비디오 생성 구조·수어 검색 구조·LLM 추상화까지 연결하는 역할을 맡았습니다.",
+          "Flutter와 인증을 제외한 대부분의 구조를 맡아 AI 파이프라인, 인프라, 전체 아키텍처, CI/CD, 발표 메시지와 데모 구성을 주도했습니다.",
         challenge:
-          "초기 구조에서는 Veo 생성 시간이 길어 동기 요청에서 타임아웃 위험이 있었고, 수어 설명 조회는 외부 공공 API에 의존해 재현성과 안정성이 낮았습니다. 또한 문장 분석과 프롬프트 생성이 Gemini 단일 의존 구조라 개발·운영 환경에 맞는 모델 선택이 제한됐습니다.",
+          "한국에서는 매년 1,882종의 그림책이 출판되지만 수어 영상은 13년 평균 165종, 전체의 8.8% 수준에 머물러 있습니다. 기존 제작 방식은 한 권당 약 38시간과 331만 원이 들어 확장성이 낮았고, 기존 서비스도 텍스트 번역이나 해외 수어 중심이라 동화의 맥락과 한국수어 환경을 함께 다루기 어려웠습니다.",
         solution:
-          "비디오 생성은 Celery·Redis 기반 비동기 작업으로 분리해 task_id 발급, 상태 조회, 취소, S3 업로드 흐름을 만들었습니다. 수어 설명 조회는 13,950건 CSV를 Qdrant에 임베딩 적재하는 semantic search 구조로 전환했고, 문장 분석과 프롬프트 생성은 Ollama·OpenAI를 공통 인터페이스로 다루는 LLMService로 정리했습니다.",
+          "입력은 텍스트 파일이 아니라 촬영한 동화책 페이지에서 시작하도록 설계했습니다. OCR로 문장을 추출하고 삽화와 캐릭터 정보를 함께 해석한 뒤, Qdrant 기반 검색과 LLM 조합으로 동화 맥락이 살아 있는 한국수어 시나리오를 생성했습니다. 영상 생성은 Celery·Redis 비동기 처리로 분리해 timeout 문제를 줄였고, AWS/Veo 계열 구조를 Azure/Sora 방향으로도 전환 가능한 형태로 정리했습니다.",
         impact:
-          "단순한 수어 번역 데모가 아니라, OCR·검색·LLM·영상 생성이 이어지는 운영 가능한 백엔드 구조로 정리했다는 점이 핵심입니다. 긴 작업을 비동기로 분리하고 외부 의존성을 줄여 실제 서비스화에 가까운 형태로 개선했습니다.",
+          "이 프로젝트의 핵심은 단순 번역 데모가 아니라, 반복적으로 비효율적인 제작 과정을 줄이고 더 많은 판단을 콘텐츠 기획과 검수에 남길 수 있는 구조를 만든 점입니다. 아직 실사용 배포까지 이어지지는 않았지만, Qdrant 도입으로 토큰 사용량을 줄이고 대기시간을 약 10초 단축했으며, 코사인 유사도 기반 재검증 루틴으로 생성 품질을 더 안정적으로 관리할 수 있게 했습니다.",
         highlights: [
-          "숭실대 워런톤 최우수상 수상 프로젝트",
-          "Binary 팀 해커톤 프로젝트와 동일한 수어 번역 백엔드 작업",
-          "Qdrant 기반 수어 데이터 검색 구조 도입",
-          "Ollama·OpenAI 통합 LLMService 도입",
-          "Veo 3 비동기 작업과 S3 업로드 흐름 구현",
+          "촬영한 동화책 페이지에서 바로 시작하는 KSL 파이프라인",
+          "삽화·캐릭터 정보를 반영한 수어 시나리오 생성",
+          "Qdrant와 재검증 루틴으로 비용·대기시간·품질을 함께 개선",
+          "클라우드와 영상 모델 전환 가능성을 고려한 구조 설계",
         ],
         results: [
-          "Veo 3 생성을 task_id 기반 비동기 워크플로우로 전환",
-          "수어 사전 CSV 13,950건을 Qdrant 인덱스로 적재해 외부 조회 의존을 내부 검색으로 전환",
-          "Ollama·OpenAI 통합 LLM 레이어 도입으로 로컬·운영 환경 선택지 확보",
-          "LLM 응답 정리 유틸, 오류 분기, 테스트 보강으로 실패 처리 가시성 개선",
+          "Qdrant 도입으로 토큰 사용량을 줄이고 대기시간을 약 10초 단축",
+          "코사인 유사도 기반 재검증 루틴으로 생성 전 품질 점검 단계 추가",
+          "Celery·Redis 비동기 처리로 영상 생성 timeout 문제 완화",
+          "AWS/Veo 계열에서 Azure/Sora 방향으로 전환 가능한 구조 설계",
         ],
         tech: [
           "FastAPI",
           "Google Vision OCR",
           "Qdrant",
-          "OpenAI Embeddings",
-          "Ollama",
+          "GPT-4o",
           "OpenAI API",
           "Google Veo 3",
           "Celery",
@@ -107,34 +143,32 @@ export const projects: Project[] = [
       },
       en: {
         overview:
-          "This is the same sign-language translation project that I carried into the Binary team hackathon, built as a FastAPI backend that turns Korean text into a sign-language video generation workflow. It connects OCR, semantic retrieval over sign-language data, LLM-based prompt generation, Google Veo 3 generation, and S3 delivery inside a single API-driven pipeline.",
+          "BinarI is a storybook sign-language project that starts from photographed book pages and connects OCR, illustration and character understanding, retrieval, and video generation into one pipeline. It was built as a competition prototype to validate a structure that could reduce the production bottleneck around Korean Sign Language content.",
         role:
-          "I focused on the FastAPI backend and prompt-engineering side, while also shaping the async video-generation flow, sign-language retrieval layer, and LLM abstraction into one working system.",
+          "I owned most of the system except Flutter and auth, covering the AI pipeline, infrastructure, overall architecture, CI/CD, and the presentation and demo narrative.",
         challenge:
-          "The earlier structure risked timeouts because Veo generation was handled synchronously, relied on an external public API for sign descriptions, and was tightly coupled to Gemini for analysis and prompt generation. That made reproducibility, runtime stability, and deployment flexibility harder to manage.",
+          "In Korea, 1,882 picture books are published each year, but sign-language video content averages only 165 titles over 13 years, about 8.8% of that supply. The traditional workflow costs about 38 hours and KRW 3.31 million per book, which makes scale difficult. Existing products also lean toward text-only translation or non-KSL sign systems, making it hard to preserve story context in Korean Sign Language.",
         solution:
-          "I moved video generation into a Celery and Redis async workflow with task submission, status polling, cancellation, and S3 upload. I replaced the external sign-description lookup with a Qdrant-based semantic search pipeline over 13,950 CSV entries, and unified prompt generation behind an LLMService that supports both Ollama and OpenAI.",
+          "I designed the pipeline to start from photographed storybook pages rather than pre-digitized text. OCR extracts the text, illustration and character cues are interpreted alongside it, and Qdrant-backed retrieval plus LLM prompting generate a KSL scenario that keeps the story world intact. Video generation was moved into Celery and Redis async processing to avoid timeout-prone synchronous flows, and the structure was kept loose enough to pivot from AWS and Veo-style components toward Azure and Sora-style components.",
         impact:
-          "The value of the project came from turning a demo-like translation flow into a backend that could realistically support operations. By separating long-running work and reducing external dependency, the system became more reproducible and service-ready.",
+          "The project mattered because it turned a repetitive and expensive manual process into a system that can leave more human effort for editorial judgment and quality review. It did not reach public distribution, but adding Qdrant reduced token usage and cut wait time by roughly 10 seconds, while a cosine-similarity revalidation routine made the output pipeline easier to control.",
         highlights: [
-          "Award-winning project at the Soongsil Warranton hackathon",
-          "The same sign-language backend project carried into the Binary team hackathon",
-          "Introduced Qdrant-based sign-language retrieval",
-          "Introduced a unified Ollama/OpenAI LLMService",
-          "Implemented async Veo 3 processing and S3 upload flow",
+          "A KSL pipeline that starts directly from photographed storybook pages",
+          "Generated sign-language scenarios that preserve illustration and character context",
+          "Improved cost, latency, and quality with Qdrant plus a revalidation routine",
+          "Designed the system to stay adaptable across cloud and video-model choices",
         ],
         results: [
-          "Converted Veo 3 generation into a task_id-based async workflow",
-          "Indexed 13,950 sign-language dictionary rows in Qdrant and replaced external lookup dependency",
-          "Added an Ollama/OpenAI abstraction for more flexible local and hosted model usage",
-          "Improved failure handling with shared JSON cleanup, clearer error branches, and added tests",
+          "Reduced token usage and cut wait time by about 10 seconds after introducing Qdrant retrieval",
+          "Added cosine-similarity revalidation to check quality before generation",
+          "Moved video generation into Celery and Redis async jobs to avoid timeout-heavy synchronous requests",
+          "Kept the architecture portable enough to move from AWS and Veo-style components toward Azure and Sora-style components",
         ],
         tech: [
           "FastAPI",
           "Google Vision OCR",
           "Qdrant",
-          "OpenAI Embeddings",
-          "Ollama",
+          "GPT-4o",
           "OpenAI API",
           "Google Veo 3",
           "Celery",
@@ -143,9 +177,11 @@ export const projects: Project[] = [
         ],
       },
     },
-    links: {
-      github: "https://github.com/FullMoo0n/ai",
-    },
+    resources: [
+      { href: "https://github.com/FullMoo0n/ai", label: { ko: "GitHub", en: "GitHub" }, icon: "github" },
+      { href: "https://docs.google.com/presentation/d/10er26Coogyj7ZeC4-Qc8A8sAd-uPZQK_wvNTib8N5qU/preview", label: { ko: "발표 자료", en: "Slides" }, icon: "external" },
+      { href: "https://www.youtube.com/live/CAUkNSF-aQs?si=Z-YM3c6rLaH-Du5Q&t=6774", label: { ko: "발표 영상", en: "Talk" }, icon: "external" },
+    ],
   },
   {
     id: 10,
@@ -230,9 +266,9 @@ export const projects: Project[] = [
         ],
       },
     },
-    links: {
-      github: "https://github.com/yeop-sang/hanium_power_monitor_server",
-    },
+    resources: [
+      { href: "https://github.com/yeop-sang/hanium_power_monitor_server", label: { ko: "GitHub", en: "GitHub" }, icon: "github" },
+    ],
   },
   {
     id: 11,
@@ -297,71 +333,71 @@ export const projects: Project[] = [
         tech: ["U-Net", "YOLOv5x", "PyTorch", "OpenCV", "Google Colab"],
       },
     },
-    links: {
-      demo: "https://colab.research.google.com/drive/1N0MWTKKxj89MX-CvlMV2xXluNJMrgT9a",
-    },
+    resources: [
+      { href: "https://colab.research.google.com/drive/1N0MWTKKxj89MX-CvlMV2xXluNJMrgT9a", label: { ko: "데모", en: "Demo" }, icon: "external" },
+    ],
   },
   {
     id: 1,
     title: "MUSIC SENSE",
     year: "2025",
-    period: "2025",
+    period: "2025 -",
     tags: "Audio AI · Backend · Multimodal UX",
     description: {
-      ko: "SKT FLY AI 대상 수상 멀티모달 음악 경험 프로젝트",
-      en: "Grand-prize-winning multimodal music experience project at SKT FLY AI",
+      ko: "SKT FLY AI 대상 이후에도 제품 업데이트를 이어가는 접근성 기반 음악 경험 프로젝트",
+      en: "Accessibility-driven music product still evolving after winning the grand prize at SKT FLY AI",
     },
     color: "#2A1A4A",
     details: {
       ko: {
         overview:
-          "Music Sense는 SKT FLY AI에서 대상을 수상한 프로젝트로, 음악 음원에서 보컬, 드럼, 베이스 등 주요 요소를 분리·분석하고 이를 바탕으로 사용자가 음악을 더 직관적이고 풍부하게 경험할 수 있도록 설계했습니다. 청각장애인의 음악 접근성 문제에서 출발했으며, 이후 더 넓은 사용자 경험과 서비스 가능성까지 함께 탐색했습니다.",
+          "Music Sense는 SKT FLY AI 대상 수상으로 끝난 프로젝트가 아니라, 지금도 이어가고 있는 접근성 기반 음악 경험 프로젝트입니다. 청각장애인의 음악 접근성 문제를 실제 제품 문제로 보고, 음원에서 보컬·드럼·베이스를 분리·분석한 결과를 촉각·시각 중심의 앱 경험으로 번역하는 흐름을 만들었습니다. 수상 이후에도 사용자와 직접 소통하며 Flutter 업데이트를 이어가고 있고, 청각장애인 복지기관과 연결된 맥락에서 다음 적용 방향을 검토하고 있습니다.",
         role:
-          "오디오 분석 파이프라인 방향을 설계하고, 분리된 음원 결과를 어떤 사용자 경험으로 연결할지 제품 관점까지 함께 정리했습니다.",
+          "PM과 개발을 사실상 분리하지 않고 프로젝트 전반을 밀었습니다. 오디오 분석 파이프라인, 백엔드 구조, 앱 경험 방향, 데모와 발표 메시지, 후속 Flutter 업데이트 우선순위까지 거의 모든 핵심 의사결정과 구현 흐름을 직접 연결했습니다.",
         challenge:
           "기존의 음악 경험은 대부분 청각 중심으로 설계되어 있어, 음악의 구조나 감정선, 리듬 변화를 다양한 방식으로 이해하거나 경험하기 어렵습니다. 또한 특정 사용자는 음악의 요소를 더 분리해서 인식할 필요가 있었고, 더 직관적인 형태로 음악을 해석할 수 있는 도구가 필요했습니다.",
         solution:
-          "음원을 분석해 보컬, 드럼, 베이스 등 개별 요소를 분리하고, 이를 기반으로 음악의 구조와 특징을 해석하는 파이프라인을 설계했습니다. 이후 분석 결과를 사용자 경험으로 연결할 수 있도록 멀티모달 인터랙션 방향을 함께 고민했습니다.",
+          "음원에서 주요 stem을 분리하고 pitch·timing 등 특징을 뽑아낸 뒤, 그 결과를 앱 안에서 촉각·시각 피드백으로 재해석하는 구조를 설계했습니다. 분석 결과를 보여주는 데서 멈추지 않고, 실제 사용자 경험과 다음 업데이트로 이어질 수 있게 Flutter 중심의 제품 흐름까지 함께 다듬었습니다.",
         impact:
-          "모델을 하나 더 붙이는 문제보다, 분석 결과를 실제 사용자 경험으로 어떻게 번역할지에 더 집중한 프로젝트였습니다. 접근성 관점에서 출발해 서비스 방향과 연구 가능성을 함께 탐색했고, SKT FLY AI 대상 수상으로 문제 정의와 방향성의 설득력을 검증했다는 점이 강점입니다.",
+          "이 프로젝트의 설득력은 대상 수상 자체보다, 접근성 문제를 제품 업데이트와 후속 적용 검토로 계속 밀어붙이고 있다는 데 있습니다. SKT FLY AI 대상은 방향성을 검증한 사건이었고, 그 이후에도 사용자 소통, Flutter 업데이트, 청각장애인 복지기관과 연결된 맥락을 통해 프로젝트를 살아 있는 제품 흐름으로 유지하고 있습니다.",
         highlights: [
           "SKT FLY AI 대상 수상",
-          "청각장애인의 음악 접근성 문제에서 출발",
-          "오디오 분석 결과를 멀티모달 경험으로 연결하는 방향 탐색",
-          "외부 피드백과 팀 논의를 통해 사업성·연구 가능성 재검토",
+          "청각장애인의 음악 접근성 문제를 제품 문제로 재정의",
+          "오디오 분석 결과를 앱 기반 멀티모달 경험으로 번역하는 구조 설계",
+          "사용자 소통과 Flutter 업데이트로 수상 이후에도 프로젝트 지속",
         ],
         results: [
-          "음악 분석 및 stem separation 기반 파이프라인 설계",
-          "멀티모달 음악 경험을 위한 서비스 방향성 구체화",
-          "외부 피드백과 팀 회의를 통해 사업성·연구 가능성 재검토",
-          "예창패, 논문, 프로젝트 마무리 방향으로 목표 재정의",
+          "stem separation, pitch, timing 흐름을 잇는 오디오 분석 구조 설계",
+          "분석 결과를 촉각·시각 앱 경험으로 연결하는 제품 흐름 정리",
+          "사용자 소통 기반으로 Flutter 업데이트 우선순위 정리 및 후속 반영",
+          "청각장애인 복지기관과 연결된 맥락에서 다음 적용 시나리오 검토",
         ],
-        tech: ["PyTorch", "FastAPI", "React", "PostgreSQL", "WhisperX", "GPT-4o"],
+        tech: ["PyTorch", "FastAPI", "Flutter", "Demucs", "WhisperX", "ONNX"],
       },
       en: {
         overview:
-          "Music Sense is the grand-prize-winning project from SKT FLY AI, designed to separate and analyze key elements in music tracks—such as vocals, drums, and bass—and turn that analysis into a more intuitive and expressive music experience. It began with the accessibility challenge of music for deaf and hard-of-hearing users, then expanded into broader interaction and service possibilities.",
+          "Music Sense did not end with its SKT FLY AI grand-prize win. It is an accessibility-driven music product that treats music access for deaf and hard-of-hearing users as a real product problem, then translates separated and analyzed elements such as vocals, drums, and bass into an app experience centered on touch and visual feedback. Since the award, I have kept the project moving through direct user conversations, follow-up Flutter updates, and next-step review in a context connected to a deaf-welfare organization.",
         role:
-          "I helped shape both the audio-analysis pipeline direction and the product framing around how those outputs could become a user experience.",
+          "I pushed the project across both PM and development instead of treating them as separate lanes. I connected the core decisions and implementation flow across the audio-analysis pipeline, backend structure, app experience direction, demo and presentation narrative, and the priorities for follow-up Flutter updates.",
         challenge:
           "Most music experiences are designed primarily around hearing, which makes it difficult to understand musical structure, emotional progression, and rhythmic change through other modalities. Some users also need to perceive musical components in a more separated form, requiring a clearer and more intuitive way to interpret music.",
         solution:
-          "We designed a pipeline that analyzes audio tracks, separates individual elements such as vocals, drums, and bass, and interprets musical structure and features from those stems. We then explored how those outputs could be translated into multimodal interactions.",
+          "We separated major stems from the track, extracted features such as pitch and timing, and designed a structure that reinterprets those outputs as touch and visual feedback inside the app. The point was not to stop at analysis output, but to shape a Flutter-centered product flow that could keep evolving through real user feedback and later updates.",
         impact:
-          "The project mattered because it focused not just on another model, but on how analysis could be translated into a usable experience. Starting from accessibility helped clarify both product direction and research opportunity, and winning the grand prize at SKT FLY AI validated the strength of that framing.",
+          "The real strength of the project is not the award itself, but the fact that the accessibility problem is still being pushed forward through product updates and follow-up application paths. The SKT FLY AI grand prize validated the direction, and the project has stayed alive through user conversations, Flutter updates, and next-step review in a context connected to a deaf-welfare organization.",
         highlights: [
           "Won the grand prize at SKT FLY AI",
-          "Started from the accessibility challenge of music for deaf and hard-of-hearing users",
-          "Explored how audio-analysis outputs could become multimodal interaction",
-          "Reframed the project through external feedback and team discussion",
+          "Reframed music accessibility for deaf and hard-of-hearing users as a product problem",
+          "Designed a structure that turns audio-analysis outputs into app-side multimodal experience",
+          "Kept the project moving after the award through user conversations and Flutter updates",
         ],
         results: [
-          "Designed a music analysis pipeline based on stem separation",
-          "Defined a service direction for multimodal music experiences",
-          "Reassessed business and research potential through external feedback and team discussions",
-          "Refined the project's next goals around competition, research, and wrap-up deliverables",
+          "Shaped the audio-analysis structure across stem separation, pitch, and timing flows",
+          "Defined a product flow that turns analysis outputs into touch- and visual-centered app experiences",
+          "Prioritized and shipped follow-up Flutter updates based on user conversations",
+          "Reviewed next-step application scenarios in a context connected to a deaf-welfare organization",
         ],
-        tech: ["PyTorch", "FastAPI", "React", "PostgreSQL", "WhisperX", "GPT-4o"],
+        tech: ["PyTorch", "FastAPI", "Flutter", "Demucs", "WhisperX", "ONNX"],
       },
     },
   },
@@ -426,67 +462,71 @@ export const projects: Project[] = [
         tech: ["Python", "PyMuPDF", "Regex", "YAML", "CSV"],
       },
     },
-    links: {
-      github: "https://github.com/yeop-sang/pdf-exam-parser",
-    },
+    resources: [
+      { href: "https://github.com/yeop-sang/pdf-exam-parser", label: { ko: "GitHub", en: "GitHub" }, icon: "github" },
+    ],
   },
   {
     id: 8,
     title: "YOUNG IL YOUNG INC.",
-    year: "2023",
-    period: "2021.08 - 2022.12",
+    year: "2022",
+    period: "2021.12 - 2022.08",
     tags: "Fullstack · Product Development · Web",
     description: {
-      ko: "풀스택 개발 경험",
-      en: "Full-stack product development experience",
+      ko: "Django 기반 온라인 판매·상담 서비스에서 `Consult` 흐름과 `StockList` 성능을 직접 손본 풀스택 실무 경험",
+      en: "Full-stack product work tightening `Consult` UX and `StockList` performance in a Django-based commerce service",
     },
     color: "#3A241A",
     details: {
       ko: {
         overview:
-          "Young Il Young Inc.에서 풀스택 개발자로 참여하며, 실제 서비스/플랫폼 기능을 빠르게 구현하고 사용자 흐름에 맞게 제품을 개선하는 경험을 쌓았습니다. 프론트엔드와 백엔드를 모두 다루며, 아이디어를 작동하는 서비스 형태로 만드는 데 집중했습니다.",
+          "Young Il Young Inc.에서는 Django 기반 온라인 휴대폰 판매·상담 서비스에서 `Consult` 흐름과 `StockList` 화면을 중심으로 제품 경험과 운영 부담을 함께 다뤘습니다. 상담 입력 플로우를 다듬고, 무거운 재고 화면에 캐싱을 도입하고, 알림·로깅·테스트 안전장치까지 손보면서 '돌아가는 기능'이 아니라 '버티는 서비스'를 만드는 감각을 익혔습니다.",
         role:
-          "휴대폰 온라인 판매 플랫폼의 서버와 프론트엔드 양쪽을 맡아 기능 구현과 사용자 흐름 개선을 함께 수행했습니다.",
+          "서버와 프론트엔드를 함께 보며 `Consult`, `StockList`, `Landing`, `Post` 영역의 기능 구현과 개선을 맡았습니다. 특히 상담 흐름 사용성, 재고 화면 캐싱, 운영성 보완처럼 사용자 경험과 서비스 비용이 만나는 지점을 직접 손봤습니다.",
         challenge:
-          "초기 서비스 개발 환경에서는 제한된 리소스로 빠르게 기능을 구현하면서도, 실제 사용 가능한 형태로 다듬는 역량이 중요합니다. 단순한 프로토타입이 아니라, 사용자가 실제로 접할 수 있는 제품 수준으로 구현해야 했습니다.",
+          "초기 서비스에서는 기능을 빨리 붙이는 것만으로는 부족했고, 실제 사용자 흐름과 운영 안정성을 함께 맞춰야 했습니다. 재고 화면은 많은 데이터를 처리해 렌더링 부담이 있었고, 상담 플로우는 색상 선택·모바일 레이아웃·입력 검증 같은 디테일이 서비스 품질을 좌우했습니다.",
         solution:
-          "프론트엔드와 백엔드를 함께 다루며 기능 단위로 구현했고, 사용자 흐름을 고려하여 서비스가 자연스럽게 동작하도록 설계했습니다. 요구사항을 빠르게 구현 가능한 단위로 나누고, 실제 서비스 구조에 맞게 연결하는 경험을 쌓았습니다.",
+          "`Feature/stocklist/cache` PR에서 `stockList` 뷰의 과도한 HTML 처리 문제를 페이지 캐싱과 캐시 키 정리, 관리자 업로드 이후 무효화 흐름으로 완화했습니다. 동시에 `Consult` 흐름에서는 색상 선택, 모바일 UI, 입력 오류 메시지 같은 사용성 개선을 진행했고, Slack 알림·로거 설정·테스트 환경 SMS 대응 같은 운영 안정화 작업도 함께 다뤘습니다.",
         impact:
-          "제품 개발에서 중요한 것은 기능 하나보다 전체 흐름이라는 점을 배운 시기였습니다. 빠른 구현과 제품 수준 다듬기를 동시에 경험하면서 풀스택 감각을 키웠습니다.",
+          "이 경험의 핵심은 풀스택이라는 말이 아니라, 실제 제품에서 어디를 손대야 체감이 달라지는지 배운 점이었습니다. `Consult` 흐름과 `StockList` 캐싱처럼 사용자 흐름과 운영 부담이 겹치는 지점을 직접 다루면서, 이후 프로젝트에서도 문제를 기능 단위가 아니라 제품 구조 단위로 보게 됐습니다.",
         highlights: [
-          "휴대폰 온라인 판매 플랫폼 개발 참여",
-          "서버와 프론트엔드를 함께 담당한 풀스택 경험",
-          "실사용자 흐름에 맞춘 기능 구현과 개선 경험",
+          "`StockList` 화면의 캐싱 전략과 캐시 무효화 흐름 구현",
+          "`Consult` 입력 흐름의 색상 선택, 모바일 UI, 입력 검증 개선",
+          "Slack 알림, 로거 설정, 테스트 환경 SMS 대응 등 운영 안정화 작업",
+          "코드 리뷰 과정에서 주석·포맷팅·개행 같은 협업 품질 기준까지 함께 반영",
         ],
         results: [
-          "실사용 가능한 기능을 빠르게 구현하는 경험 확보",
-          "프론트엔드와 백엔드를 아우르는 풀스택 개발 역량 강화",
-          "문제를 제품 구조로 연결하는 감각 형성",
+          "무거운 재고 화면에 캐싱 전략과 무효화 흐름을 붙여 응답 부담을 완화",
+          "상담 입력 흐름과 모바일 UI를 정리해 실제 사용 흐름을 더 매끄럽게 개선",
+          "Slack 알림, 로깅, 테스트 환경 SMS 대응으로 운영 안전장치 보강",
+          "프론트엔드와 백엔드를 한 흐름으로 보는 실서비스형 제품 감각 축적",
         ],
-        tech: ["Django", "Vue.js", "Python", "Fullstack Development", "API Integration"],
+        tech: ["Django", "Vue.js", "Python", "Caching", "Slack", "Logger"],
       },
       en: {
         overview:
-          "At Young Il Young Inc., I worked as a full-stack developer, quickly shipping real product and platform features while refining the experience around actual user flows. By handling both frontend and backend work, I focused on turning ideas into functioning services.",
+          "At Young Il Young Inc., I worked on a Django-based online mobile commerce and consult service, with the biggest leverage points sitting in the `Consult` flow and `StockList` pages. I tightened the consult input journey, added caching around the heaviest stock screens, and improved alerts, logging, and test safeguards, which taught me how to build not just working features but a service that can hold up under use.",
         role:
-          "I worked across both server and frontend implementation for an online mobile-phone sales platform, covering feature delivery and user-flow improvement together.",
+          "I worked across backend and frontend boundaries on `Consult`, `StockList`, `Landing`, and `Post`, with the most important work happening where user experience and service cost met. That meant refining consult usability, reducing pressure on stock pages with caching, and adding operational guardrails around the service.",
         challenge:
-          "In an early-stage product environment, it is critical to ship quickly with limited resources while still shaping features into something users can genuinely use. The goal is not just a prototype, but a product-level experience people can interact with.",
+          "The product needed more than fast feature work. Heavy stock pages created rendering pressure, consult flows needed better validation and mobile usability, and the service also needed guardrails around alerts, logging, and test-environment behavior.",
         solution:
-          "I implemented features across frontend and backend boundaries and designed them to behave naturally within the overall user flow. The work required breaking requirements into deliverable units and connecting them back into a real service structure.",
+          "In the `Feature/stocklist/cache` work, I helped reduce heavy HTML processing on stock pages through page caching, cache-key cleanup, and cache invalidation after admin uploads. I also improved the consult flow through color selection, mobile UI and validation changes, and worked on operational pieces such as Slack alerts, logger setup, and safer SMS behavior in test contexts.",
         impact:
-          "This period taught me that product quality depends on flow, not isolated features. It strengthened my ability to ship quickly while still thinking at a product level.",
+          "The important part of this period was not the label of full-stack work, but learning where a real product changes when you touch the right leverage point. Working directly on consult flow, stock-page caching, and operational safeguards trained me to see problems as product-structure issues, not isolated feature tickets.",
         highlights: [
-          "Worked on an online mobile-phone sales platform",
-          "Handled both server and frontend implementation as a full-stack developer",
-          "Built experience refining real user flows rather than only isolated features",
+          "Implemented caching and cache-invalidation work around `StockList` pages",
+          "Improved consult UX through color selection, mobile UI refinement, and validation flow updates",
+          "Contributed operational improvements such as Slack alerts, logger setup, and safer test-environment behavior",
+          "Used review feedback to reinforce code quality details such as formatting, comments, and file hygiene",
         ],
         results: [
-          "Built experience delivering production-usable features quickly",
-          "Strengthened full-stack development capability across frontend and backend",
-          "Developed a stronger instinct for translating problems into product structure",
+          "Reduced pressure on heavy stock screens through explicit caching and invalidation strategy",
+          "Made the consult journey feel cleaner on real mobile screens through UX and validation updates",
+          "Strengthened operational safety with alerts, logging, and safer SMS behavior in test contexts",
+          "Built a more product-grounded full-stack view across frontend, backend, and service operations",
         ],
-        tech: ["Django", "Vue.js", "Python", "Fullstack Development", "API Integration"],
+        tech: ["Django", "Vue.js", "Python", "Caching", "Slack", "Logger"],
       },
     },
   },
@@ -497,123 +537,127 @@ export const projects: Project[] = [
     period: "2019.08 - 2020.08",
     tags: "Backend · DevOps · Service Operations",
     description: {
-      ko: "백엔드 개발 및 서비스 운영 경험",
-      en: "Backend development and service operations experience",
+      ko: "현재도 운영 중인 Pickle.plus 공동구독 플랫폼에서 백엔드·정산·운영 구조를 익힌 초기 실무",
+      en: "Early product work on Pickle.plus, a live subscription platform, across backend, settlement, and operations",
     },
     color: "#24324A",
     details: {
       ko: {
         overview:
-          "Pickle.plus에서 백엔드 개발 및 DevOps 관점의 업무를 수행하며, 단순 기능 구현을 넘어 실제 서비스가 운영되는 구조를 이해하고 경험했습니다. 서비스 개발과 운영의 접점을 함께 보며, 안정적인 백엔드 구조와 배포 환경에 대한 감각을 키웠습니다.",
+          "Pickle.plus는 지금도 운영 중인 공동구독 플랫폼입니다. 이 시기에는 백엔드와 DevOps 관점의 업무를 맡으며, 기능 하나를 붙이는 일보다 서비스가 실제로 굴러가는 구조를 몸으로 배웠습니다. 운영 중인 플랫폼 안에서 배포 환경, 정산 흐름, 실시간 참여자 통계 같은 운영 기능을 보며 라이브 서비스의 기준을 처음 체감했습니다.",
         role:
-          "OTT 공유 서비스 개발 과정에서 백엔드와 프론트엔드를 함께 다루고, 실시간 참여자 통계와 자동 정산 같은 운영 기능까지 접했습니다.",
+          "운영 중인 공동구독 서비스에서 백엔드와 프론트엔드를 함께 다루며, 실시간 참여자 통계와 자동 정산처럼 운영 비용과 직접 맞닿는 기능 구조를 경험했습니다.",
         challenge:
           "서비스는 기능 구현만으로 끝나지 않고, 실제 운영 가능한 구조와 안정성이 함께 확보되어야 합니다. 특히 백엔드와 배포 구조는 서비스 품질과 직결되기 때문에, 구현과 운영을 함께 이해하는 경험이 중요했습니다.",
         solution:
           "백엔드 로직 구현뿐 아니라 서비스 운영 구조를 함께 경험하면서, 개발과 운영이 분리된 일이 아니라는 점을 체감했습니다. 실제 서비스 환경에서 구조를 이해하고, 안정적인 서비스 흐름을 염두에 두고 작업했습니다.",
         impact:
-          "초기 실무 경험으로서, 기능 구현과 서비스 운영을 따로 보지 않는 시각을 갖게 해준 프로젝트입니다. 이후 프로젝트들에서 구조와 운영을 같이 보는 기준을 만든 경험이었습니다.",
+          "이 경험이 중요했던 이유는 지금도 운영되는 서비스의 구조를 안쪽에서 보고, 그 문제의식이 핀테크 공모전 우수상으로 이어지는 팀 맥락까지 함께 겪었기 때문입니다. 이후 프로젝트에서도 구조와 운영을 같이 보는 기준이 여기서 생겼습니다.",
         highlights: [
-          "OTT 공유 서비스 개발 참여",
-          "실시간 참여자 통계와 자동 정산 시스템 경험",
-          "핀테크 공모전 수상과 연결된 팀 경험",
+          "현재도 운영 중인 Pickle.plus 플랫폼 경험",
+          "실시간 참여자 통계와 자동 정산 흐름 경험",
+          "핀테크 공모전 우수상으로 이어진 초기 팀 문제의식 경험",
         ],
         results: [
-          "백엔드와 운영 구조를 함께 이해하는 실무 경험 확보",
-          "기능 구현을 넘어 서비스 안정성과 운영 관점을 함께 학습",
-          "이후 프로젝트에서도 서비스 구조를 더 입체적으로 바라보는 기반 마련",
+          "운영 중인 서비스의 백엔드·정산·운영 구조를 함께 이해하는 실무 경험 확보",
+          "기능 구현과 서비스 안정성을 함께 보는 관점 형성",
+          "후속 프로젝트들에서 구조와 운영을 같이 보는 기준 마련",
         ],
         tech: ["Django", "React.js", "Python", "Backend Development", "Service Operations"],
       },
       en: {
         overview:
-          "At Pickle.plus, I worked across backend development and DevOps concerns, going beyond feature implementation to understand how a real service is structured and operated. That experience helped me build a stronger sense for stable backend architecture and deployment environments.",
+          "Pickle.plus is a subscription-sharing platform that is still live today. During this period, I worked across backend and DevOps concerns and learned what makes a live service actually hold together, not just how to ship one more feature. Seeing deployment environments, settlement flow, and live participation metrics inside an operating platform gave me an early production baseline.",
         role:
-          "I worked on both backend and frontend aspects of an OTT-sharing service and was exposed to operational features such as live participant statistics and automated settlement flows.",
+          "I worked across backend and frontend boundaries in a live subscription service and saw the structure behind operating-cost-sensitive features such as live participation metrics and automated settlement.",
         challenge:
           "A service does not end with feature delivery; it also needs an operational structure and reliability that can hold up in production. Because backend and deployment architecture directly affect service quality, it was important to understand implementation and operations together.",
         solution:
           "I worked not only on backend logic but also with the surrounding service operation structure, which made it clear that development and operations are not separate concerns. I approached the work with an awareness of real production flow and service stability.",
         impact:
-          "As an early practical experience, this project taught me to think about implementation and operation together. It gave me a baseline for evaluating later systems through both code and service structure.",
+          "This period mattered because I got to see the inside of a service that is still live and the early team problem framing that also led into a fintech contest award. It became an early baseline for how I judge later systems through both operations and service structure.",
         highlights: [
-          "Worked on an OTT-sharing service",
-          "Observed live participation metrics and automated settlement features",
-          "Part of the team experience connected to a fintech competition award",
+          "Worked on Pickle.plus while the service stayed live",
+          "Observed live participation metrics and automated settlement flow",
+          "Part of the early team problem framing connected to a fintech contest award",
         ],
         results: [
-          "Gained hands-on experience understanding backend and operational structures together",
-          "Learned to view service stability and operations alongside feature implementation",
-          "Built a foundation for evaluating later projects through a fuller service-structure lens",
+          "Gained hands-on experience understanding backend, settlement, and operations in a live service",
+          "Learned to evaluate feature work alongside service stability and operations",
+          "Built an early baseline for later projects through a fuller service-structure lens",
         ],
         tech: ["Django", "React.js", "Python", "Backend Development", "Service Operations"],
       },
     },
+    resources: [
+      { href: "https://pickle.plus/", label: { ko: "서비스", en: "Live Site" }, icon: "external" },
+      { href: "/credentials#pickle-plus-fintech-award", label: { ko: "관련 수상", en: "Related Award" }, icon: "external" },
+    ],
   },
   {
     id: 12,
     title: "DONGBTI",
-    year: "2022",
-    period: "2022.07",
-    tags: "Django · Vue.js · Event Site",
+    year: "2021",
+    period: "2021.09",
+    tags: "Django · Python · Event Site",
     description: {
-      ko: "동아리 행사용 MBTI 추천 웹사이트",
-      en: "MBTI-based club recommendation site for a campus event",
+      ko: "동아리연합회 외주 MBTI형 동아리 추천 웹서비스",
+      en: "Commissioned MBTI-style club recommendation web service",
     },
     color: "#2B2F4A",
     details: {
       ko: {
         overview:
-          "교내 동아리 행사에서 학생들이 동아리 정보를 더 재미있고 빠르게 탐색할 수 있도록 만든 웹사이트입니다. 질문 흐름과 동아리 데이터를 연결해 성향 기반으로 동아리 정보를 보여주는 이벤트 경험을 목표로 했습니다.",
+          "숭실대 동아리연합회 외주로 진행한 웹 프로젝트로, 교내 행사에서 학생들이 질문 흐름을 따라 자신과 맞는 동아리를 빠르게 탐색할 수 있도록 설계했습니다. 단순 홍보 페이지가 아니라 전교생 유입과 약 4,000명 동시 접속 가능성을 염두에 둔 행사성 추천 서비스로 정리했습니다.",
         role:
-          "질문 데이터 구조화와 추천 흐름 설계, Django 기반 웹 구현을 중심으로 작업했습니다.",
+          "질문·동아리 데이터 구조화, 추천 흐름 설계, Django 기반 웹 구현 전반을 맡았습니다.",
         challenge:
-          "짧은 행사 맥락 안에서 여러 동아리 정보를 한 번에 전달하려면, 단순 목록보다 참여형 인터랙션이 필요했습니다. 질문 데이터와 추천 결과를 웹 흐름으로 연결하면서도 운영자가 관리 가능한 구조가 필요했습니다.",
+          "행사 현장에서는 짧은 시간 안에 많은 학생이 한꺼번에 접속해도 흐름이 끊기지 않아야 했습니다. 여러 동아리 정보를 단순 목록으로 나열하는 대신, 운영 가능한 데이터 구조와 빠른 응답을 갖춘 추천형 경험이 필요했습니다.",
         solution:
-          "동아리·질문 데이터를 CSV로 정리하고 Django 프로젝트 안에서 추천 흐름과 폼 구조를 구성했습니다. 행사 현장에서 사용할 수 있도록 가볍고 빠른 웹 경험에 집중했고, 사용자가 결과를 자연스럽게 확인할 수 있는 페이지 흐름을 만들었습니다.",
+          "동아리·질문 데이터를 CSV로 정리해 운영자가 수정 가능한 구조로 만들고, Django에서 질문-분기-결과 흐름을 JSON 응답 중심으로 구현했습니다. 페이지를 가볍게 유지해 행사성 트래픽에 대응할 수 있도록 했고, 사용자가 몇 번의 선택만으로 결과를 확인할 수 있게 동선을 단순화했습니다.",
         impact:
-          "작고 빠른 프로젝트였지만, 실제 행사 맥락에 맞춘 웹 경험을 짧은 일정 안에 정리해내는 연습이 됐습니다. 데이터를 경험 흐름으로 바꾸는 감각을 키우는 데 도움이 된 작업입니다.",
+          "외주 성격의 실제 행사 서비스를 짧은 일정 안에 설계하고 구현한 경험이었습니다. 데이터 구조, 사용자 흐름, 트래픽 가정이 함께 맞물려야 서비스가 버틴다는 점을 배웠고, 이후 트래픽을 염두에 둔 제품 설계 감각의 출발점이 됐습니다.",
         highlights: [
-          "숭실대 동아리 연합회 외주 성격의 프로젝트",
-          "질문 데이터와 동아리 데이터를 웹 추천 흐름으로 구조화",
-          "행사 현장 사용을 전제로 한 가벼운 웹 경험 구현",
+          "숭실대 동아리연합회 외주 프로젝트",
+          "전교생 대상 행사 유입과 약 4,000명 동시 접속을 고려한 서비스 설계",
+          "질문 데이터와 동아리 데이터를 추천 흐름으로 구조화",
         ],
         results: [
-          "Django 기반 MBTI형 동아리 추천 웹 구현",
+          "Django 기반 MBTI형 동아리 추천 웹서비스 구현",
           "CSV 기반 동아리·질문 데이터 관리 구조 정리",
-          "행사 현장에서 빠르게 사용할 수 있는 참여형 결과 흐름 구성",
-          "초기 웹 제품을 짧은 일정 안에 정리해 납품한 경험 확보",
+          "행사 현장에서 빠르게 사용할 수 있는 가벼운 추천 흐름 설계",
+          "실제 외주 환경에서 트래픽 가정을 반영한 초기 서비스 납품 경험 확보",
         ],
-        tech: ["Django", "Vue.js", "Python", "CSV", "Forms"],
+        tech: ["Django", "Python", "CSV", "Forms", "SQLite"],
       },
       en: {
         overview:
-          "A web project built for a campus club event so students could explore club information in a more engaging and faster way. The goal was to connect question flows and club data into an MBTI-style recommendation experience.",
+          "A commissioned web project for the Soongsil University club union, built so students at a campus event could move through a short question flow and quickly discover matching clubs. Rather than a static listing page, it was framed as an event-ready recommendation service designed with campus-wide traffic and roughly 4,000 concurrent users in mind.",
         role:
-          "I focused on structuring the question data, shaping the recommendation flow, and implementing the Django-based web experience.",
+          "I handled the end-to-end structure of the service: organizing the club and question data, designing the recommendation flow, and implementing the Django-based web experience.",
         challenge:
-          "A simple list of clubs was not enough for an event setting where people needed to explore many options quickly. The project needed an interactive recommendation flow while still remaining manageable for content and data updates.",
+          "The service needed to stay simple and responsive even if many students accessed it at once during the event. That meant turning a large set of club information into a recommendation flow while keeping the content model easy to operate and update.",
         solution:
-          "I organized club and question data in CSV form and built the recommendation flow and form structure inside a Django project. The site focused on a lightweight event-ready experience that made it easy for users to move through the questions and view the result naturally.",
+          "I organized club and question data in CSV form, then implemented the question-branch-result flow around lightweight Django JSON endpoints and form pages. The flow was kept intentionally small and fast so users could reach a recommendation quickly under event-style traffic.",
         impact:
-          "Although smaller in scope, the project was useful training in shaping a web experience for a real event under a short timeline. It also helped strengthen the instinct of turning raw data into a user journey.",
+          "This was an early commissioned delivery where product flow, data structure, and traffic assumptions had to line up under a short schedule. It became a useful starting point for thinking about lightweight services that still need to hold up under real user load.",
         highlights: [
-          "Delivered as a commissioned project for the Soongsil club union",
-          "Structured club and question data into a recommendation flow",
-          "Built for an on-site event context rather than a generic listing page",
+          "Commissioned by the Soongsil University club union",
+          "Designed with campus-wide event traffic and roughly 4,000 concurrent users in mind",
+          "Structured club and questionnaire data into a recommendation flow",
         ],
         results: [
-          "Shipped a Django-based MBTI-style club recommendation site",
+          "Built a Django-based MBTI-style club recommendation web service",
           "Organized club and questionnaire data into a maintainable CSV-backed structure",
-          "Built an interactive result flow suited for on-site event use",
-          "Gained experience shipping an early web product on a short timeline",
+          "Shipped a lightweight recommendation flow suited for on-site event use",
+          "Gained early delivery experience building around real traffic assumptions",
         ],
-        tech: ["Django", "Vue.js", "Python", "CSV", "Forms"],
+        tech: ["Django", "Python", "CSV", "Forms", "SQLite"],
       },
     },
-    links: {
-      github: "https://github.com/yeop-sang/Dongbti",
-    },
+    resources: [
+      { href: "https://github.com/yeop-sang/Dongbti", label: { ko: "GitHub", en: "GitHub" }, icon: "github" },
+    ],
   },
 ];
 
@@ -624,23 +668,23 @@ export const contributions: Contribution[] = [
     year: "2024",
     scope: "Python · Django · Open Source Contribution",
     summary: {
-      ko: "Young Il Young Inc. 프로젝트에서 사용하던 347-star 오픈소스 라이브러리 django-excel의 Django 호환성 오류를 수정해 upstream에 기여했습니다.",
-      en: "After hitting a Django compatibility error in django-excel while using it in a Young Il Young Inc. project, I contributed the fix upstream.",
+      ko: "Young Il Young Inc. 서비스에서 부딪힌 Django 호환성 오류를 로컬 우회가 아니라 `django-excel` upstream fix로 해결한 기여입니다.",
+      en: "Instead of patching around a Django compatibility error in a Young Il Young Inc. service, I fixed it upstream in `django-excel`.",
     },
     details: {
-      ko: "Young Il Young Inc. 프로젝트에서 django-excel을 사용하던 중 구형 URL 선언 방식 때문에 Django 호환성 오류가 발생했고, 이를 해결하기 위해 최신 Django 라우팅 방식에 맞게 URL 선언을 바꾸고 요구사항 범위를 정리했습니다. 단발성 우회가 아니라 실제로 내가 쓰던 라이브러리 문제를 upstream에서 바로잡았다는 점에서, 외부 코드베이스의 규칙과 호환성 요구를 이해하고 반영한 경험이었습니다.",
-      en: "While using django-excel in a Young Il Young Inc. project, I hit a Django compatibility error caused by its older URL declarations. I fixed it by updating the routing to a forward-compatible Django style and tightening the dependency requirements. The value was not a local workaround, but correcting a library issue at the upstream source while working within an external codebase's compatibility constraints.",
+      ko: "Young Il Young Inc. 서비스에서 `django-excel`이 구형 URL 선언 때문에 막히자, 증상을 우회하지 않고 원인을 dependency 레벨까지 추적했습니다. `url()` 기반 선언을 `re_path()`로 바꾸고 Django/xlrd 요구사항을 정리해, 실제 서비스 blocker를 upstream PR과 commit으로 해결했습니다. 핵심은 외부 라이브러리 문제를 프로젝트 내부 패치로 묻지 않고, 원인이 있는 곳에서 바로잡았다는 점입니다.",
+      en: "When `django-excel` blocked part of a Young Il Young Inc. service because of older URL declarations, I traced the issue back to the dependency instead of patching around the symptom. I replaced `url()`-based routing with `re_path()`, cleaned up the Django/xlrd requirements, and resolved the service blocker with an upstream PR and commit. The important part was fixing the problem where it actually lived instead of burying it inside a local project patch.",
     },
     results: {
       ko: [
-        "Young Il Young Inc. 프로젝트에서 발생한 Django 호환성 오류를 upstream 수정으로 해결",
-        "url() → re_path() 전환으로 Django URL routing 호환성 보완",
-        "Django 및 xlrd 요구사항 정리와 changelog 업데이트 반영",
+        "서비스 진행을 막던 Django 호환성 오류를 upstream 수정으로 제거",
+        "`url()` → `re_path()` 전환으로 forward-compatible routing 반영",
+        "Django/xlrd 요구사항과 changelog 정리까지 포함해 실제 릴리스 가능한 변경으로 마무리",
       ],
       en: [
-        "Resolved a Django compatibility error from a Young Il Young Inc. project by landing an upstream fix",
-        "Replaced url() usage with re_path() for forward-compatible Django routing",
-        "Updated Django/xlrd requirement handling and changelog entries",
+        "Removed a service-blocking Django compatibility issue by landing the fix upstream",
+        "Replaced `url()` with `re_path()` for forward-compatible routing",
+        "Finished the change as a releaseable update, including Django/xlrd requirement cleanup and changelog edits",
       ],
     },
     tech: ["Python", "Django", "OSS Contribution", "Dependency Maintenance"],
@@ -657,25 +701,25 @@ export const contributions: Contribution[] = [
     year: "2026",
     scope: "Dart · Flutter Plugin · Open Source Contribution",
     summary: {
-      ko: "Music Sense를 개발하면서 더 세밀한 iOS Core Haptics 제어가 필요해, 284-star flutter_vibration 플러그인에 `sharpnesses` 파라미터를 추가하는 라이브러리 기여를 제출했습니다.",
-      en: "While building Music Sense, I needed finer iOS Core Haptics control, so I submitted an upstream library contribution to the 284-star flutter_vibration plugin to add a `sharpnesses` parameter.",
+      ko: "Music Sense의 햅틱 표현 한계를 프로젝트 내부 해킹으로 두지 않고 `flutter_vibration` API 확장 PR로 끌어올린 기여입니다.",
+      en: "Instead of leaving Music Sense's haptics limit as a local hack, I pushed it into a `flutter_vibration` API expansion PR.",
     },
     details: {
-      ko: "Music Sense에서 음악 요소를 촉각적으로 더 정교하게 전달하려면 sharpness 조절이 필요했고, 그래서 benjamindean/flutter_vibration에 `vibrate` 메서드용 `List<double> sharpnesses` 파라미터를 제안했습니다. iOS CoreHaptics 이벤트별 sharpness 매핑과 Android 쪽 안전한 argument parsing을 함께 구현했으며, 제품에서 실제로 필요했던 기능을 업스트림 라이브러리 수준 API로 정리해 기여했다는 점에서 의미가 있었습니다.",
-      en: "Music Sense needed more precise haptic expression, so I proposed a `List<double> sharpnesses` parameter for `vibrate` in benjamindean/flutter_vibration. I implemented per-event sharpness mapping on iOS CoreHaptics and safer argument parsing on Android, turning a feature I needed in a real product into an upstream library-level API contribution.",
+      ko: "Music Sense에서 음악 요소를 촉각적으로 구분해 전달하려면 진동 세기만으로는 부족했고, 햅틱의 질감을 조절하는 `sharpness`가 필요했습니다. 그래서 benjamindean/flutter_vibration의 `vibrate` API에 `List<double> sharpnesses` 파라미터를 제안하고, iOS CoreHaptics 이벤트별 sharpness 매핑과 Android argument parsing까지 직접 구현했습니다. 제품에서 드러난 한계를 라이브러리 수준 API로 끌어올려, 같은 문제가 반복되지 않게 만든 기여였습니다.",
+      en: "Music Sense needed more than vibration intensity to distinguish musical elements through touch, it needed control over haptic texture through `sharpness`. I proposed a `List<double> sharpnesses` parameter for the `vibrate` API in benjamindean/flutter_vibration, then implemented per-event sharpness mapping for iOS CoreHaptics and Android argument parsing myself. The value was taking a limitation exposed by a real product and turning it into a library-level API so the same constraint would not keep reappearing as a local hack.",
     },
     results: {
       ko: [
-        "Music Sense에 필요했던 haptic sharpness 제어를 업스트림 라이브러리 API로 제안",
-        "`sharpnesses` 리스트 기반의 세밀한 iOS haptic texture 제어 제안",
+        "Music Sense의 실제 제품 요구를 라이브러리 API 제안으로 승격",
+        "`sharpnesses` 리스트 기반 iOS 햅틱 텍스처 제어 추가",
         "iOS CoreHaptics 이벤트별 sharpness 매핑 구현",
-        "Android 쪽 인자 파싱 추가로 플랫폼 간 호출 안정성 보완",
+        "Android 인자 파싱 보강으로 cross-platform API 안정성 개선",
       ],
       en: [
-        "Turned a Music Sense haptics need into an upstream library API proposal",
-        "Proposed list-based `sharpnesses` control for richer iOS haptic textures",
+        "Turned a real Music Sense product need into a library API proposal",
+        "Added list-based `sharpnesses` control for richer iOS haptic textures",
         "Implemented per-event sharpness mapping for iOS CoreHaptics",
-        "Added Android-side argument parsing to make cross-platform calls safer",
+        "Improved cross-platform API safety with stronger Android argument parsing",
       ],
     },
     tech: ["Dart", "Flutter", "iOS CoreHaptics", "Android", "Plugin API Design"],

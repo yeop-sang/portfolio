@@ -4,6 +4,7 @@ import { Home } from "./components/Home";
 import { Work } from "./components/Work";
 import { About } from "./components/About";
 import { Contact } from "./components/Contact";
+import { Credentials } from "./components/Credentials";
 import { ProjectDetail } from "./components/ProjectDetail";
 import { NotFound } from "./components/NotFound";
 
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
       { path: "work", Component: Work },
       { path: "work/:id", Component: ProjectDetail },
       { path: "about", Component: About },
+      { path: "credentials", Component: Credentials },
       { path: "contact", Component: Contact },
       { path: "*", Component: NotFound },
     ],

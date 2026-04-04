@@ -46,7 +46,7 @@ Nav: ALL CAPS, letter-spacing 0.15em, font-size 12px
 ## SITE STRUCTURE (5 pages / sections)
 
 ### 1. NAV (Global, Sticky)
-- Left: Name or initials — e.g. "Y.J" or monogram, large letter-spacing
+- Left: Name or initials — e.g. "Y.S" or monogram, large letter-spacing
 - Center: Logo mark (abstract minimal — optional, can be just name)
 - Right: WORK · ABOUT · CONTACT (ALL CAPS, 12px, tracked)
 - Active state: underline with accent color #C8FF00

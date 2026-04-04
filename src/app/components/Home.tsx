@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
 import { useLanguage } from "../context/LanguageContext";
+import { homeContent } from "../data/siteContent";
 
 export function Home() {
   const tickerRef = useRef<HTMLDivElement>(null);
@@ -30,23 +31,6 @@ export function Home() {
     return () => cancelAnimationFrame(animationId);
   }, []);
 
-  const tickerText = "LLM · AUDIO PROCESSING · COMPUTER VISION · FULL-STACK · STARTUP · OPEN TO COLLABORATE · ";
-
-  const content = {
-    ko: {
-      available: "협업 가능 — 2026",
-      title: "AI · ML · DEV",
-      description: "서울에서 활동하는 개발자입니다. 오디오 모델부터 에이전트 워크플로우까지, 생각하는 시스템을 만듭니다.",
-      cta: "프로젝트 보기 →"
-    },
-    en: {
-      available: "AVAILABLE FOR WORK — 2026",
-      title: "AI · ML · DEV",
-      description: "Seoul-based developer building intelligent systems. From audio models to agent workflows, I create systems that think.",
-      cta: "VIEW PROJECTS →"
-    }
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
@@ -66,7 +50,7 @@ export function Home() {
                 color: '#888888'
               }}
             >
-              {content[language].available}
+              {homeContent.available[language]}
             </span>
           </motion.div>
 
@@ -86,7 +70,7 @@ export function Home() {
                 lineHeight: 1.1,
               }}
             >
-              {content[language].title}
+              {homeContent.title[language]}
             </motion.h1>
 
             <motion.p
@@ -101,7 +85,7 @@ export function Home() {
                 color: '#888888',
               }}
             >
-              {content[language].description}
+              {homeContent.description[language]}
             </motion.p>
 
             <motion.div
@@ -115,7 +99,7 @@ export function Home() {
                 style={{ fontFamily: 'var(--font-body)' }}
               >
                 <span className="relative z-10 group-hover:text-black transition-colors duration-300">
-                  {content[language].cta}
+                  {homeContent.cta[language]}
                 </span>
                 <span 
                   className="absolute inset-0 bg-[#C8FF00] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"
@@ -137,7 +121,7 @@ export function Home() {
                 color: '#888888'
               }}
             >
-              {tickerText.repeat(10)}
+              {homeContent.tickerText.repeat(10)}
             </span>
           </div>
         </div>

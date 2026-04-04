@@ -1,22 +1,10 @@
 import { motion } from "motion/react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { contactContent } from "../data/siteContent";
 
 export function Contact() {
   const { language } = useLanguage();
-
-  const content = {
-    ko: {
-      label: "CONTACT",
-      title: "함께 만들어요.",
-      footer: "© 2026 김상엽 — 서울, 한국"
-    },
-    en: {
-      label: "CONTACT",
-      title: "Let's Build Together.",
-      footer: "© 2026 Sangyeop(Yup) Kim — Seoul, Korea"
-    }
-  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-8 py-24" style={{ backgroundColor: '#0F0F0F' }}>
@@ -32,7 +20,7 @@ export function Contact() {
             color: '#888888',
           }}
         >
-          {content[language].label}
+          {contactContent.label[language]}
         </motion.p>
 
         <motion.h1
@@ -49,14 +37,14 @@ export function Contact() {
             lineHeight: 1.2,
           }}
         >
-          {content[language].title}
+          {contactContent.title[language]}
         </motion.h1>
 
         <motion.a
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          href="mailto:yeop@yeop.kr"
+          href={`mailto:${contactContent.email}`}
           className="inline-flex items-center gap-3 mb-12 group"
           style={{
             fontFamily: 'var(--font-body)',
@@ -66,7 +54,7 @@ export function Contact() {
         >
           <Mail className="w-5 h-5 group-hover:text-[#C8FF00] transition-colors" />
           <span className="group-hover:text-[#C8FF00] transition-colors">
-            yeop@yeop.kr
+            {contactContent.email}
           </span>
         </motion.a>
 
@@ -77,7 +65,7 @@ export function Contact() {
           className="flex items-center justify-center gap-6 mb-24"
         >
           <a
-            href="https://github.com/yeop-sang"
+            href={contactContent.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 border rounded-full transition-all duration-300 hover:border-[#C8FF00] hover:bg-[#C8FF00] group"
@@ -86,7 +74,7 @@ export function Contact() {
             <Github className="w-5 h-5 text-white group-hover:text-black transition-colors" />
           </a>
           <a
-            href="https://linkedin.com/in/yeop-kr/"
+            href={contactContent.linkedInUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 border rounded-full transition-all duration-300 hover:border-[#C8FF00] hover:bg-[#C8FF00] group"
@@ -107,7 +95,7 @@ export function Contact() {
             color: '#888888',
           }}
         >
-          {content[language].footer}
+          {contactContent.footer[language]}
         </motion.footer>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router";
 import { ArrowLeft, ArrowRight, ExternalLink, Github } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { useEffect } from "react";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { NotFound } from "./NotFound";
 import { projects } from "../data/projects";
 
@@ -25,6 +26,8 @@ export function ProjectDetail() {
   const currentProjectIndex = projects.findIndex((p) => p.id === projectId);
   const nextProject = projects[(currentProjectIndex + 1) % projects.length];
   const highlights = details.highlights ?? [];
+  const gallery = project.gallery ?? [];
+  const resourceLinks = project.resources ?? [];
 
   return (
     <div className="min-h-screen pt-24 pb-16" style={{ backgroundColor: "#0F0F0F" }}>
@@ -110,43 +113,109 @@ export function ProjectDetail() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full aspect-video rounded-lg mb-20"
-            style={{ backgroundColor: project.color }}
-          />
+            className="w-full aspect-video rounded-lg mb-20 overflow-hidden border"
+            style={{ backgroundColor: project.color, borderColor: "#2A2A2A" }}
+          >
+            {project.heroImage ? (
+              <ImageWithFallback
+                src={project.heroImage.src}
+                alt={project.heroImage.alt[language]}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full" style={{ backgroundColor: project.color }} />
+            )}
+          </motion.div>
 
-          {project.links && (
+          {resourceLinks.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               className="flex flex-wrap gap-4 mb-20"
             >
-              {project.links.github && (
-                <a
-                  href={project.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 border border-[#2A2A2A] text-white hover:border-[#C8FF00] hover:text-[#C8FF00] transition-all rounded"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  <Github className="w-4 h-4" />
-                  <span className="text-sm uppercase tracking-[0.1em]">GitHub</span>
-                </a>
-              )}
-              {project.links.demo && (
-                <a
-                  href={project.links.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 border border-[#2A2A2A] text-white hover:border-[#C8FF00] hover:text-[#C8FF00] transition-all rounded"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  <span className="text-sm uppercase tracking-[0.1em]">
-                    {language === "ko" ? "데모" : "Demo"}
-                  </span>
-                </a>
-              )}
+              {resourceLinks.map((link) => {
+                const linkContent = (
+                  <>
+                    {link.icon === "github" ? <Github className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
+                    <span className="text-sm uppercase tracking-[0.1em]">{link.label[language]}</span>
+                  </>
+                );
+
+                return link.href.startsWith("/") ? (
+                  <Link
+                    key={`${project.id}-${link.href}`}
+                    to={link.href}
+                    className="flex items-center gap-2 px-6 py-3 border border-[#2A2A2A] text-white hover:border-[#C8FF00] hover:text-[#C8FF00] transition-all rounded"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {linkContent}
+                  </Link>
+                ) : (
+                  <a
+                    key={`${project.id}-${link.href}`}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-6 py-3 border border-[#2A2A2A] text-white hover:border-[#C8FF00] hover:text-[#C8FF00] transition-all rounded"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {linkContent}
+                  </a>
+                );
+              })}
+            </motion.div>
+          )}
+
+          {gallery.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35 }}
+              className="mb-20"
+            >
+              <h2
+                className="mb-6 uppercase tracking-[0.1em]"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1rem",
+                  color: "#C8FF00",
+                }}
+              >
+                {language === "ko" ? "발표 자료" : "Supporting Visuals"}
+              </h2>
+              <div className="grid lg:grid-cols-2 gap-6">
+                {gallery.map((image) => (
+                  <a
+                    key={image.src}
+                    href={image.src}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block border rounded-lg overflow-hidden hover:border-[#C8FF00] transition-colors"
+                    style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}
+                  >
+                    <div className="aspect-video bg-[#0B0B0B]">
+                      <ImageWithFallback
+                        src={image.src}
+                        alt={image.alt[language]}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4 border-t" style={{ borderColor: "#2A2A2A" }}>
+                      <p
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: "0.95rem",
+                          lineHeight: 1.7,
+                          color: "#CCCCCC",
+                        }}
+                      >
+                        {image.alt[language]}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
             </motion.div>
           )}
 
