@@ -7,8 +7,10 @@ import {
   Github,
   GitPullRequest,
 } from "lucide-react";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useLanguage } from "../context/LanguageContext";
 import { Contribution, Project, contributions, projects } from "../data/projects";
+import { contactContent, workPageContent } from "../data/siteContent";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -53,15 +55,34 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             backgroundColor: project.color,
           }}
         >
+          {project.heroImage && (
+            <>
+              <ImageWithFallback
+                src={project.heroImage.src}
+                alt={project.heroImage.alt[language]}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div
+                className="absolute inset-0 transition-opacity duration-300"
+                style={{
+                  background: "linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.45) 100%)",
+                  opacity: isHovered ? 0.7 : 0.45,
+                }}
+              />
+            </>
+          )}
           <div
             className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
-            style={{ opacity: isHovered ? 0.6 : 1 }}
+            style={{ opacity: isHovered ? 0.75 : 1 }}
           >
             <span
-              className="text-xs uppercase tracking-[0.15em]"
+              className="text-xs uppercase tracking-[0.15em] px-4 py-2 rounded-full"
               style={{
                 fontFamily: "var(--font-mono)",
-                color: "#888888",
+                color: "#FFFFFF",
+                backgroundColor: project.heroImage ? "rgba(15, 15, 15, 0.55)" : "transparent",
+                border: project.heroImage ? "1px solid rgba(255, 255, 255, 0.08)" : "none",
+                backdropFilter: project.heroImage ? "blur(6px)" : "none",
               }}
             >
               {project.title}
@@ -71,7 +92,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <div
             className="absolute inset-0 flex flex-col items-center justify-center p-8 transition-opacity duration-300"
             style={{
-              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              backgroundColor: "rgba(0, 0, 0, 0.82)",
               opacity: isHovered ? 1 : 0,
             }}
           >
@@ -330,7 +351,7 @@ export function Work() {
             color: "#FFFFFF",
           }}
         >
-          {language === "ko" ? "프로젝트" : "PROJECTS"}
+          {workPageContent.projectsTitle[language]}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -344,9 +365,7 @@ export function Work() {
             color: "#888888",
           }}
         >
-          {language === "ko"
-            ? "근거의 강도, 설명 가능성, 그리고 포트폴리오에서의 대표성을 기준으로 앞쪽에 배치했습니다. 각 프로젝트 상세에서는 역할, 해결 방식, 결과를 더 길게 확인할 수 있습니다."
-            : "Projects are ordered by evidence strength, explainability, and portfolio value. Each detail page is structured to show role, approach, and outcomes more clearly."}
+          {workPageContent.projectsIntro[language]}
         </motion.p>
       </div>
 
@@ -374,7 +393,7 @@ export function Work() {
               color: "#FFFFFF",
             }}
           >
-            {language === "ko" ? "오픈소스 기여" : "OPEN SOURCE CONTRIBUTIONS"}
+            {workPageContent.contributionsTitle[language]}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -389,9 +408,7 @@ export function Work() {
               color: "#888888",
             }}
           >
-            {language === "ko"
-              ? "개인 프로젝트 외에도 외부 코드베이스에 직접 수정과 호환성 개선을 기여한 기록을 따로 정리했습니다."
-              : "Beyond personal projects, I keep a separate record of fixes and compatibility improvements contributed to external codebases."}
+            {workPageContent.contributionsIntro[language]}
           </motion.p>
 
           <div className="space-y-6">
@@ -405,7 +422,7 @@ export function Work() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            href="https://github.com/yeop-sang"
+            href={contactContent.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 mt-8 text-sm uppercase tracking-[0.12em] hover:text-[#C8FF00] transition-colors"
@@ -414,7 +431,7 @@ export function Work() {
               color: "#888888",
             }}
           >
-            <span>{language === "ko" ? "다른 공개 작업 보기" : "More public work"}</span>
+            <span>{workPageContent.morePublicWorkLabel[language]}</span>
             <ExternalLink className="w-4 h-4" />
           </motion.a>
         </div>
