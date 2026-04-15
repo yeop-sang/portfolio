@@ -4,3 +4,26 @@ playwright-report/
 test-results/
 .DS_Store
 .omx/
+
+# Local workspace overlays
+/.openclaw/
+/AGENTS.md
+/BOOTSTRAP.md
+/HEARTBEAT.md
+/IDENTITY.md
+/SOUL.md
+/TOOLS.md
+/USER.md
+/artifacts/
+/guidelines/
+/memory/
+/skills/
+
+# Source documents kept out of the published site
+/public/19D-P-24.pdf
+/public/BTS_report.pdf
+/public/power-monitoring/power-monitoring-env-sensor.png
+/public/road-damage/kics-cover.png
+/public/road-damage/road-damage-bridge3-report.hwp
+/public/road-damage/road-damage-dataset-distribution.png
+/public/road-damage/road-damage-report-page-1.png
