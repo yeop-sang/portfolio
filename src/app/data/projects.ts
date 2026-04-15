@@ -188,35 +188,72 @@ export const projects: Project[] = [
     title: "POWER MONITORING SYSTEM",
     year: "2025",
     period: "2025.06 - 2025.11",
-    tags: "IoT · Flask · Vue · Claude API",
+    tags: "IoT · MQTT · Flask · Vue · ESG Automation",
     description: {
-      ko: "한이음 ICT 멘토링 공모전 장려상 수상 전력 모니터링 및 ESG 리포트 자동화 시스템",
-      en: "Encouragement-award-winning power monitoring and ESG reporting system from the Hanium ICT Mentoring competition",
+      ko: "스마트 플러그와 FMS 사이의 간극을 겨냥한 실시간 전력 모니터링·ESG 자동화 시스템",
+      en: "Real-time power monitoring and ESG automation system aimed at the gap between smart plugs and full FMS products",
     },
     color: "#19324A",
+    heroImage: {
+      src: "/power-monitoring/power-monitoring-hardware-hero.png",
+      alt: {
+        ko: "Power Monitoring 전류·전원 제어 하드웨어 사진",
+        en: "Power Monitoring current and power-control hardware photo",
+      },
+    },
+    gallery: [
+      {
+        src: "/power-monitoring/power-monitoring-report.png",
+        alt: {
+          ko: "Power Monitoring 대시보드와 ESG 보고서 화면",
+          en: "Power Monitoring dashboard and ESG report view",
+        },
+      },
+      {
+        src: "/power-monitoring/power-monitoring-market.png",
+        alt: {
+          ko: "Power Monitoring 시장 포지셔닝 슬라이드",
+          en: "Power Monitoring market-positioning slide",
+        },
+      },
+      {
+        src: "/power-monitoring/power-monitoring-architecture.png",
+        alt: {
+          ko: "Power Monitoring 서비스 구성도 슬라이드",
+          en: "Power Monitoring architecture slide",
+        },
+      },
+      {
+        src: "/power-monitoring/power-monitoring-hardware.png",
+        alt: {
+          ko: "Power Monitoring 하드웨어 및 모니터링 화면",
+          en: "Power Monitoring hardware and monitoring screen",
+        },
+      },
+    ],
     details: {
       ko: {
         overview:
-          "Arduino·ESP32 센서에서 전력 소비량과 환경 데이터를 수집하고, 이를 Flask 백엔드와 Vue 대시보드, Claude 기반 ESG 리포트 생성으로 연결한 풀스택 시스템입니다. 센서 데이터 수집부터 리포트 자동화까지 전체 흐름을 하나의 서비스로 묶는 데 집중했고, 한이음 ICT 멘토링 공모전 장려상 수상으로 그 완성도를 인정받았습니다.",
+          "Power Monitoring System은 단순한 전력 확인 대시보드가 아니라, 중소규모 환경에서도 현실적으로 도입 가능한 에너지 관리 제품을 목표로 만든 프로젝트입니다. 직접 제작한 IoT 전력 제어 하드웨어로 데이터를 수집하고, MQTT·Flask·MySQL·Vue 흐름으로 실시간 모니터링과 분석을 연결했으며, 그 결과를 ESG 환경 보고서까지 이어 붙였습니다. 핵심은 '센서 데이터 수집'과 '운영에 쓰이는 보고서' 사이를 하나의 제품 흐름으로 묶어 스마트 플러그와 대형 FMS 사이의 간극을 메우는 것이었습니다.",
         role:
-          "풀스택 단독 주도 형태로 센서 수집 흐름, Flask API, 대시보드, AI 리포트 생성을 함께 설계하고 구현했습니다.",
+          "풀스택 단독 주도에 가깝게 하드웨어 데이터 흐름, MQTT 수집, Flask API, MySQL 저장 구조, Vue 대시보드, WebSocket 실시간 반영, Claude 기반 리포트 자동화를 함께 설계하고 구현했습니다.",
         challenge:
-          "센서 데이터가 끊기지 않도록 수집·저장·시각화를 연결해야 했고, 단순 모니터링을 넘어 실제로 읽을 수 있는 ESG 리포트까지 자동 생성해야 했습니다. 실시간성, 데이터 무결성, 운영 편의성을 함께 고려한 구조가 필요했습니다.",
+          "기존 선택지는 양극단이었습니다. 스마트 플러그는 설치는 쉽지만 분석·통합 관리·ESG 대응이 약했고, FMS는 기능은 강하지만 구축 비용과 운영 부담이 커서 중소규모 조직에는 과했습니다. 그래서 별도 대공사 없이 붙일 수 있는 IoT 하드웨어, 끊기지 않는 실시간 수집, 비용·탄소배출 통합 관리, 그리고 실제 제출 가능한 ESG 보고서 자동화까지 한 번에 다루는 구조가 필요했습니다.",
         solution:
-          "센서 → MQTT → Flask API → MySQL → Vue 대시보드 흐름으로 아키텍처를 구성하고, WebSocket으로 5초 단위 데이터를 스트리밍했습니다. 탄소 배출량 계산 로직과 Claude API 기반 보고서 생성을 붙였고, Docker Compose로 각 서비스를 컨테이너 기반으로 운영하도록 정리했습니다.",
+          "직접 만든 전류·전원 제어 하드웨어와 환경 센서를 ESP32에 연결하고, 센서 데이터를 MQTT 브로커를 통해 백엔드로 수집했습니다. Flask API는 실시간 수신 데이터를 파싱해 MySQL에 저장하고, Vue 대시보드는 WebSocket으로 5초 단위 사용량·환경 수치를 갱신했습니다. 여기에 탄소배출량 계산과 사용 패턴 분석, Claude API 기반 ESG 요약·PDF 리포트 생성을 붙였고, Docker Compose와 NCP 배포 흐름까지 정리해 운영 가능한 서비스 구조로 만들었습니다.",
         impact:
-          "하드웨어 데이터 수집과 웹 소프트웨어, AI 리포트 생성을 하나의 제품 흐름으로 연결한 프로젝트였습니다. 단순 수집 도구가 아니라 실제 운영과 리포트 소비까지 고려한 구조를 직접 설계했고, 한이음 ICT 멘토링 공모전 장려상 수상으로 실용성과 완성도를 검증했습니다.",
+          "이 프로젝트의 의미는 에너지 절감을 추상적인 캠페인이 아니라 반복 운영 가능한 데이터 제품으로 바꿨다는 데 있습니다. 사용자는 실시간 사용량, 요금, 탄소배출량을 한 화면에서 보고, 운영자는 자동 생성된 ESG 보고서를 바로 검토할 수 있으며, 하드웨어 레이어까지 직접 제어 가능한 구조를 확보했습니다. 결과적으로 Power Monitoring은 '측정만 하는 IoT'가 아니라, 수집·분석·시각화·리포트까지 닫힌 루프를 가진 서비스로 정리되었고 한이음 ICT 멘토링 공모전 장려상으로 그 완성도를 검증받았습니다.",
         highlights: [
           "한이음 ICT 멘토링 공모전 장려상 수상",
-          "5초 주기 MQTT 데이터 수집과 WebSocket 대시보드 연결",
-          "탄소 배출량 계산 로직과 Claude 기반 ESG 리포트 자동화 결합",
-          "Docker Compose 기반 마이크로서비스 구조로 운영 정리",
+          "스마트 플러그와 FMS 사이의 중간 시장을 겨냥한 제품 포지셔닝",
+          "MQTT·WebSocket 기반 실시간 모니터링과 Claude 기반 ESG 자동화 결합",
+          "직접 제작한 전류·전원 제어 하드웨어부터 보고서까지 end-to-end 구현",
         ],
         results: [
-          "5초 단위 실시간 전력 데이터 스트리밍 대시보드 구축",
-          "Claude API 기반 ESG 리포트 자동 생성 파이프라인 구현",
-          "탄소 배출량 계산 로직을 포함한 분석 흐름 구성",
-          "센서 수집부터 리포트 생성까지 end-to-end 시스템 통합",
+          "5초 단위 실시간 전력·환경 데이터 스트리밍 대시보드 구축",
+          "ESG 환경 보고서 조회 및 PDF 생성 흐름 구현",
+          "탄소배출량·전기요금·이상 감지 데이터를 묶은 운영 화면 구성",
+          "MQTT 수집부터 WebSocket 시각화, 리포트 자동화까지 end-to-end 통합",
         ],
         tech: [
           "Arduino",
@@ -228,30 +265,31 @@ export const projects: Project[] = [
           "MySQL",
           "Docker",
           "Claude API",
+          "NCP",
         ],
       },
       en: {
         overview:
-          "A full-stack system that collects power-consumption and environmental data from Arduino and ESP32 devices, streams it through a Flask backend and Vue dashboard, and generates ESG reports with Claude. The focus was on connecting sensing, monitoring, and reporting into one end-to-end service, and the project received an encouragement award in the Hanium ICT Mentoring competition.",
+          "Power Monitoring System was not just a dashboard for checking electricity usage. It was built as a realistic energy-management product for small and mid-sized environments that sit between cheap smart plugs and heavyweight FMS products. I connected custom IoT hardware, MQTT ingestion, a Flask and MySQL backend, a Vue monitoring dashboard, and ESG report generation so that sensing and reporting would live inside one product flow rather than in separate tools.",
         role:
-          "I drove the project end to end across sensor ingestion, Flask APIs, dashboard work, and AI-based report generation.",
+          "I drove the stack almost end to end across hardware data flow, MQTT ingestion, Flask APIs, MySQL modeling, the Vue dashboard, WebSocket updates, and Claude-based report automation.",
         challenge:
-          "The system needed to connect sensor ingestion, storage, and visualization without losing data, while also turning raw measurements into readable ESG reports. It required a structure that balanced real-time updates, data integrity, and operational simplicity.",
+          "The market gap was clear: smart plugs are easy to install but weak on analysis, integrated management, and ESG readiness, while FMS products are powerful but expensive and too heavy for smaller organizations. The project needed a structure that could attach to existing equipment without major retrofits, keep real-time data flowing reliably, combine energy cost with carbon metrics, and produce reports that were actually usable by operators.",
         solution:
-          "I designed a sensor → MQTT → Flask API → MySQL → Vue dashboard architecture and streamed updates every five seconds over WebSocket. I added carbon-emission calculation and Claude-based report generation, then packaged the services with Docker Compose for repeatable local operation.",
+          "I connected custom current and power-control hardware plus environmental sensors to ESP32 devices, then routed the data through MQTT into a Flask backend. The backend parsed incoming measurements, stored them in MySQL, and exposed them to a Vue dashboard that refreshed every five seconds through WebSocket. On top of that, I added carbon-emission and cost calculations, usage-pattern analysis, Claude-based ESG summaries, and PDF report generation, then packaged the stack with Docker Compose and an NCP deployment path.",
         impact:
-          "This project mattered because it connected hardware collection, web software, and AI reporting into a single product flow. It was not just a monitoring demo but a fuller system designed for operation and consumption, and the encouragement award from the Hanium ICT Mentoring competition validated that practicality.",
+          "What made the project meaningful was turning energy saving from a vague idea into a closed product loop: collect, analyze, visualize, and report. Users could monitor live power, cost, and carbon metrics in one place, operators could review generated ESG reports, and the hardware layer remained directly controllable. That made the system more than an IoT demo, it became an operational product flow that was validated with an encouragement award in the Hanium ICT Mentoring competition.",
         highlights: [
           "Received an encouragement award in the Hanium ICT Mentoring competition",
-          "Connected 5-second MQTT ingestion to a live WebSocket dashboard",
-          "Combined carbon-emission calculation with Claude-based ESG reporting",
-          "Packaged the stack with Docker Compose for service-level operation",
+          "Positioned the product between simple smart plugs and heavyweight FMS systems",
+          "Combined MQTT and WebSocket monitoring with Claude-based ESG automation",
+          "Implemented the flow end to end from custom hardware to reports",
         ],
         results: [
-          "Built a dashboard that streams power data every five seconds",
-          "Implemented an automated ESG report pipeline using Claude API",
-          "Added carbon-emission calculation into the analysis flow",
-          "Integrated sensing, backend, dashboard, and reporting into one end-to-end system",
+          "Built a dashboard that streams power and environmental data every five seconds",
+          "Implemented ESG report viewing and PDF-generation flows",
+          "Combined carbon, cost, and anomaly data into one operational interface",
+          "Integrated MQTT ingestion, WebSocket visualization, and reporting into one end-to-end system",
         ],
         tech: [
           "Arduino",
@@ -263,11 +301,14 @@ export const projects: Project[] = [
           "MySQL",
           "Docker",
           "Claude API",
+          "NCP",
         ],
       },
     },
     resources: [
       { href: "https://github.com/yeop-sang/hanium_power_monitor_server", label: { ko: "GitHub", en: "GitHub" }, icon: "github" },
+      { href: "/power-monitoring/power-monitoring-result-report.pdf", label: { ko: "결과 보고서", en: "Result Report" }, icon: "external" },
+      { href: "/power-monitoring/power-monitoring-design-doc.pdf", label: { ko: "설계서", en: "Design Doc" }, icon: "external" },
     ],
   },
   {
@@ -275,66 +316,95 @@ export const projects: Project[] = [
     title: "ROAD DAMAGE DETECTION",
     year: "2025",
     period: "2025.07",
-    tags: "Computer Vision · U-Net · YOLOv5x",
+    tags: "Computer Vision · Segmentation · Ensemble Detection",
     description: {
-      ko: "U-Net + YOLO 앙상블 기반 도로 파손 탐지 실험",
-      en: "Road damage detection with a U-Net + YOLO ensemble",
+      ko: "U-Net + YOLO 앙상블 기반 도로 파손 탐지를 BRIDGE 3.0·2026 KICS 발표까지 확장한 프로젝트",
+      en: "Road damage detection with a U-Net + YOLO ensemble, later extended into BRIDGE 3.0 and a 2026 KICS presentation",
     },
     color: "#243A1F",
+    heroImage: {
+      src: "/road-damage/road-damage-hero.png",
+      alt: {
+        ko: "Road Damage Detection 샘플 탐지 결과",
+        en: "Road Damage Detection sample predictions",
+      },
+    },
+    gallery: [
+      {
+        src: "/road-damage/kics-page-2.png",
+        alt: {
+          ko: "후속 연구 확장 흐름",
+          en: "Follow-up research extension flow",
+        },
+      },
+      {
+        src: "/road-damage/road-damage-report-page-2.png",
+        alt: {
+          ko: "실험 구조와 적용 방향",
+          en: "Experiment structure and application direction",
+        },
+      },
+    ],
     details: {
       ko: {
         overview:
-          "USC Road Damage Detection 대회에서 도로 파손 이미지를 더 정확하게 찾기 위해 배경 제거와 객체 탐지를 결합한 컴퓨터 비전 실험입니다. 제한된 시간 안에 성능과 학습 효율을 함께 확보하는 것이 핵심이었습니다.",
+          "USC Road Damage Detection 대회에서 도로 파손 이미지를 더 정확하게 찾기 위해 배경 제거와 객체 탐지를 결합한 컴퓨터 비전 실험입니다. 제한된 시간 안에 성능과 학습 효율을 함께 확보하는 것이 핵심이었고, 이후 BRIDGE 3.0 후속 연구와 2026년도 KICS 한국통신학회 동계종합학술발표회 발표자료로까지 확장했습니다.",
         role:
-          "기술 담당으로 배경 제거와 객체 탐지 조합 전략, 전처리 파이프라인, 실험 반복 구조를 설계했습니다.",
+          "기술 담당으로 배경 제거와 객체 탐지 조합 전략, 전처리 파이프라인, 실험 반복 구조를 설계했습니다. 이후 결과 보고서와 KICS 발표자료에서 핵심 판단 흐름이 드러나도록 내용을 정리했습니다.",
         challenge:
-          "도로 이미지에는 배경 노이즈와 다양한 파손 형태가 섞여 있어 단일 탐지 모델만으로 안정적인 성능을 내기 어려웠습니다. 대회 환경에서는 학습 시간을 과도하게 늘리지 않으면서도 성능을 끌어올릴 전략이 필요했습니다.",
+          "도로 이미지에는 배경 노이즈와 다양한 파손 형태가 섞여 있어 단일 탐지 모델만으로 안정적인 성능을 내기 어려웠습니다. 대회 환경에서는 학습 시간을 과도하게 늘리지 않으면서도 성능을 끌어올릴 전략이 필요했고, 후속 단계에서는 이 실험 구조를 보고서와 발표로 설명 가능한 형태로 정리해야 했습니다.",
         solution:
-          "U-Net으로 배경을 정리한 뒤 YOLOv5x 기반 객체 탐지를 조합하는 앙상블 접근을 적용했습니다. 데이터 전처리와 학습 파이프라인을 정리해 반복 실험 비용을 낮추고, 제한된 학습 시간 안에서 결과를 비교·개선할 수 있도록 구성했습니다.",
+          "U-Net으로 배경을 정리한 뒤 YOLO 기반 객체 탐지를 조합하는 앙상블 접근을 적용했습니다. 데이터 전처리와 학습 파이프라인을 정리해 반복 실험 비용을 낮추고, 제한된 학습 시간 안에서 결과를 비교·개선할 수 있도록 구성했습니다. 이후 BRIDGE 3.0 단계에서는 grayscale 기반 증강을 포함한 후속 실험으로 위험 요소 탐지 방향까지 확장했고, 이를 결과 보고서와 KICS 발표자료로 정리했습니다.",
         impact:
-          "단순 모델 실험이 아니라, 전처리와 학습 효율까지 포함한 실험 전략을 설계했다는 점이 중요했습니다. 모델 선택보다 전체 파이프라인 품질이 성능과 일정에 큰 영향을 준다는 점을 직접 검증한 프로젝트였습니다.",
+          "단순 모델 실험이 아니라, 전처리와 학습 효율까지 포함한 실험 전략을 설계했다는 점이 중요했습니다. 모델 선택보다 전체 파이프라인 품질이 성능과 일정에 큰 영향을 준다는 점을 검증했고, 그 결과를 BRIDGE 3.0 후속 연구와 2026 KICS 발표까지 연결했습니다.",
         highlights: [
           "USC IMSC Hackathon 3위 수상",
           "숭실대 BRIDGE 3.0 PoC 선정",
+          "2026년도 KICS 한국통신학회 동계종합학술발표회 제출 및 발표",
           "배경 제거 + 탐지 모델 결합을 통한 앙상블 실험",
-          "50 epoch 기준 3~4시간 미만 학습 파이프라인 구성",
+          "결과 보고서와 KICS 발표자료로 후속 연구 흐름 문서화",
         ],
         results: [
           "배경 제거와 객체 탐지를 결합한 앙상블 실험 구조 설계",
           "50 epoch 기준 3~4시간 미만의 학습 파이프라인 구성",
           "반복 가능한 전처리·실험 workflow 정리",
-          "제한된 대회 일정 안에서 성능 개선 전략 검증",
+          "결과 보고서와 2026 KICS 발표자료까지 연결되는 후속 산출물 구성",
         ],
-        tech: ["U-Net", "YOLOv5x", "PyTorch", "OpenCV", "Google Colab"],
+        tech: ["U-Net", "YOLOv5x", "PyTorch", "OpenCV", "Google Colab", "Grayscale Augmentation"],
       },
       en: {
         overview:
-          "A computer-vision project for the USC Road Damage Detection competition that combined background removal and object detection to improve road-damage recognition. The main goal was to balance performance and training efficiency under a tight schedule.",
+          "A computer-vision project for the USC Road Damage Detection competition that combined background removal and object detection to improve road-damage recognition. The main goal was to balance performance and training efficiency under a tight schedule, then carry the strongest direction into BRIDGE 3.0 follow-up work and a 2026 KICS winter conference presentation.",
         role:
-          "I focused on the technical strategy: combining background removal with detection, shaping the preprocessing flow, and making experiments repeatable under time pressure.",
+          "I focused on the technical strategy: combining background removal with detection, shaping the preprocessing flow, and making experiments repeatable under time pressure. I later organized the core decisions into the report and the KICS presentation.",
         challenge:
-          "Road images contain noisy backgrounds and highly varied damage patterns, which makes it difficult to rely on a single detector alone. In a competition setting, I needed an approach that improved performance without turning training time into a bottleneck.",
+          "Road images contain noisy backgrounds and highly varied damage patterns, which makes it difficult to rely on a single detector alone. In a competition setting, I needed an approach that improved performance without turning training time into a bottleneck, while still being explainable in later documentation and presentation.",
         solution:
-          "I used an ensemble strategy that applied U-Net for background cleanup before YOLOv5x-based detection. I also organized the preprocessing and training workflow so experiments could be repeated and compared within a limited training window.",
+          "I used an ensemble strategy that applied U-Net for background cleanup before YOLO-based detection. I also organized the preprocessing and training workflow so experiments could be repeated and compared within a limited training window. In the BRIDGE 3.0 follow-up, grayscale-oriented augmentation was added for road-risk and sinkhole-related cues, and that extension was documented in both the final report and the KICS deck.",
         impact:
-          "The project showed that pipeline quality—not just model choice—can strongly shape both performance and delivery speed. It became a practical exercise in balancing research quality with competition constraints.",
+          "The project showed that pipeline quality—not just model choice—can strongly shape both performance and delivery speed. It also became a practical example of how a competition experiment can mature into BRIDGE 3.0 follow-up work and a public-facing KICS presentation.",
         highlights: [
           "Placed 3rd at the USC IMSC Hackathon",
           "Selected for Soongsil BRIDGE 3.0 PoC",
+          "Submitted and presented at the 2026 KICS Winter Conference",
           "Used an ensemble approach combining segmentation and detection",
-          "Kept the 50-epoch training flow within roughly 3–4 hours",
+          "Documented the follow-up flow through both a report and a KICS slide deck",
         ],
         results: [
           "Designed an ensemble workflow combining background removal and object detection",
           "Built a training pipeline that stayed under roughly 3–4 hours for 50 epochs",
           "Structured a repeatable preprocessing and experiment workflow",
-          "Validated a performance-improvement strategy under tight competition constraints",
+          "Extended the work into both a final report and a 2026 KICS presentation artifact",
         ],
-        tech: ["U-Net", "YOLOv5x", "PyTorch", "OpenCV", "Google Colab"],
+        tech: ["U-Net", "YOLOv5x", "PyTorch", "OpenCV", "Google Colab", "Grayscale Augmentation"],
       },
     },
     resources: [
+      { href: "/road-damage/road-damage-kics-2026-paper.pdf", label: { ko: "2026 KICS 발표자료 (PDF)", en: "2026 KICS Slides (PDF)" }, icon: "external" },
+      { href: "/road-damage/road-damage-report.pdf", label: { ko: "결과 보고서", en: "Report" }, icon: "external" },
+      { href: "https://imsc-hackathon-2025.github.io/pages/college-consolidated.html", label: { ko: "공식 챌린지", en: "Official Challenge" }, icon: "external" },
       { href: "https://colab.research.google.com/drive/1N0MWTKKxj89MX-CvlMV2xXluNJMrgT9a", label: { ko: "데모", en: "Demo" }, icon: "external" },
+      { href: "/credentials/2025-usc-imsc-hackathon-third-place.png", label: { ko: "수상 증빙", en: "Award" }, icon: "external" },
     ],
   },
   {
@@ -342,64 +412,98 @@ export const projects: Project[] = [
     title: "MUSIC SENSE",
     year: "2025",
     period: "2025 -",
-    tags: "Audio AI · Backend · Multimodal UX",
+    tags: "Accessibility · Audio AI · Haptics · Flutter",
     description: {
-      ko: "SKT FLY AI 대상 이후에도 제품 업데이트를 이어가는 접근성 기반 음악 경험 프로젝트",
-      en: "Accessibility-driven music product still evolving after winning the grand prize at SKT FLY AI",
+      ko: "난청 아동 교육·재활 현장의 병목에서 출발한 멀티모달 음악 접근성 프로젝트",
+      en: "Multimodal music-accessibility project shaped around bottlenecks in deaf and hard-of-hearing education and rehabilitation",
     },
     color: "#2A1A4A",
+    heroImage: {
+      src: "/music-sense/music-sense-cover.png",
+      alt: {
+        ko: "Music Sense 표지 슬라이드",
+        en: "Music Sense cover slide",
+      },
+    },
+    gallery: [
+      {
+        src: "/music-sense/music-sense-problem.png",
+        alt: {
+          ko: "Music Sense 문제 정의 슬라이드",
+          en: "Music Sense problem-definition slide",
+        },
+      },
+      {
+        src: "/music-sense/music-sense-demo.png",
+        alt: {
+          ko: "Music Sense 앱 데모 슬라이드",
+          en: "Music Sense app demo slide",
+        },
+      },
+      {
+        src: "/music-sense/music-sense-validation.png",
+        alt: {
+          ko: "Music Sense 서비스 검증 결과 슬라이드",
+          en: "Music Sense validation-result slide",
+        },
+      },
+    ],
     details: {
       ko: {
         overview:
-          "Music Sense는 SKT FLY AI 대상 수상으로 끝난 프로젝트가 아니라, 지금도 이어가고 있는 접근성 기반 음악 경험 프로젝트입니다. 청각장애인의 음악 접근성 문제를 실제 제품 문제로 보고, 음원에서 보컬·드럼·베이스를 분리·분석한 결과를 촉각·시각 중심의 앱 경험으로 번역하는 흐름을 만들었습니다. 수상 이후에도 사용자와 직접 소통하며 Flutter 업데이트를 이어가고 있고, 청각장애인 복지기관과 연결된 맥락에서 다음 적용 방향을 검토하고 있습니다.",
+          "Music Sense는 SKT FLY AI 대상 수상으로 끝난 데모가 아니라, 난청 아동 교육·재활 현장의 병목에서 출발한 멀티모달 음악 접근성 프로젝트입니다. 복지기관과 음악치료 현장에서 확인한 문제는 아이들이 음악을 원하지 않는 것이 아니라, 멜로디와 리듬을 해석할 단서가 부족하고 이를 보완할 교구는 여전히 수작업에 크게 의존한다는 점이었습니다. 그래서 보컬·가사·박자·음정을 분리 분석한 결과를 자막, 시각 단서, 햅틱으로 번역해 앱과 교육용 콘텐츠로 연결하는 흐름을 만들었고, 수상 이후에도 사용자 피드백과 Flutter 업데이트를 이어가며 제품 방향을 다듬고 있습니다.",
         role:
-          "PM과 개발을 사실상 분리하지 않고 프로젝트 전반을 밀었습니다. 오디오 분석 파이프라인, 백엔드 구조, 앱 경험 방향, 데모와 발표 메시지, 후속 Flutter 업데이트 우선순위까지 거의 모든 핵심 의사결정과 구현 흐름을 직접 연결했습니다.",
+          "프로젝트를 PM과 개발로 나누지 않고 사실상 전체 흐름을 이어붙였습니다. 문제 정의와 현장 인터뷰, 오디오 분석 파이프라인 방향, FastAPI·Flutter 구조, 데모 시나리오, 발표 메시지, 후속 업데이트 우선순위까지 핵심 판단과 구현 연결을 맡았습니다.",
         challenge:
-          "기존의 음악 경험은 대부분 청각 중심으로 설계되어 있어, 음악의 구조나 감정선, 리듬 변화를 다양한 방식으로 이해하거나 경험하기 어렵습니다. 또한 특정 사용자는 음악의 요소를 더 분리해서 인식할 필요가 있었고, 더 직관적인 형태로 음악을 해석할 수 있는 도구가 필요했습니다.",
+          "기존의 음악 경험은 대부분 청각 중심으로 설계되어 있어, 난청 사용자가 음악의 구조와 감정선, 리듬 변화를 다른 감각으로 이해하기 어렵습니다. 특히 교육·재활 현장에서는 시각 자료와 리듬 단서를 치료사가 수작업으로 만들고 있어 곡을 바꿀 때마다 시간이 오래 걸리고 확장성이 낮았습니다. 인터뷰와 설문에서도 멜로디 변화를 느끼고 싶다는 응답이 70.1%, 음악을 멀리하는 이유로 전달 수단 부족이 87.5%로 나타나 미충족 수요가 분명했습니다.",
         solution:
-          "음원에서 주요 stem을 분리하고 pitch·timing 등 특징을 뽑아낸 뒤, 그 결과를 앱 안에서 촉각·시각 피드백으로 재해석하는 구조를 설계했습니다. 분석 결과를 보여주는 데서 멈추지 않고, 실제 사용자 경험과 다음 업데이트로 이어질 수 있게 Flutter 중심의 제품 흐름까지 함께 다듬었습니다.",
+          "음원을 stem separation으로 분리한 뒤 가사·timestamp·pitch·rhythm을 개별 파이프라인으로 뽑아냈습니다. 타임스탬프는 WhisperX의 한계를 넘기 위해 Lyrics-Aligner 기반 음절 정렬 흐름으로 바꾸고, 보컬 pitch와 드럼 onset을 시각 자막과 Core Haptics용 profile로 재구성했습니다. 그 결과를 Flutter 앱과 교육용 악보 생성 흐름까지 묶어, 한 곡의 음악을 '듣는 정보'가 아니라 '느끼고 따라갈 수 있는 단서'로 바꾸는 구조를 만들었습니다.",
         impact:
-          "이 프로젝트의 설득력은 대상 수상 자체보다, 접근성 문제를 제품 업데이트와 후속 적용 검토로 계속 밀어붙이고 있다는 데 있습니다. SKT FLY AI 대상은 방향성을 검증한 사건이었고, 그 이후에도 사용자 소통, Flutter 업데이트, 청각장애인 복지기관과 연결된 맥락을 통해 프로젝트를 살아 있는 제품 흐름으로 유지하고 있습니다.",
+          "이 프로젝트의 의미는 접근성 문제를 추상적인 선의가 아니라 현장의 반복 병목과 제품 경험의 문제로 다뤘다는 데 있습니다. 실제 난청 아동 검증에서 리듬 정확도는 44→63, 44→81, 69→88로 개선됐고, 멜로디 정확도도 33→55, 31→50, 50→63으로 올라갔습니다. 덕분에 Music Sense는 단순 공모전 앱이 아니라 교육·재활 현장에 먼저 들어가고 이후 공연·OTT·웨어러블로 확장 가능한 멀티모달 접근성 엔진으로 설명할 수 있게 됐습니다.",
         highlights: [
-          "SKT FLY AI 대상 수상",
-          "청각장애인의 음악 접근성 문제를 제품 문제로 재정의",
-          "오디오 분석 결과를 앱 기반 멀티모달 경험으로 번역하는 구조 설계",
-          "사용자 소통과 Flutter 업데이트로 수상 이후에도 프로젝트 지속",
+          "SKT FLY AI Challenger 프로젝트 부문 대상 수상",
+          "난청인의 음악 접근성 문제를 '더 크게 듣는 보조'가 아니라 멀티모달 번역 문제로 재정의",
+          "Lyrics-Aligner 기반 음절 정렬로 자막 정밀도를 크게 끌어올린 구조 설계",
+          "복지기관·음악치료 현장 검증과 후속 Flutter 업데이트까지 이어진 제품 흐름",
         ],
         results: [
-          "stem separation, pitch, timing 흐름을 잇는 오디오 분석 구조 설계",
-          "분석 결과를 촉각·시각 앱 경험으로 연결하는 제품 흐름 정리",
-          "사용자 소통 기반으로 Flutter 업데이트 우선순위 정리 및 후속 반영",
-          "청각장애인 복지기관과 연결된 맥락에서 다음 적용 시나리오 검토",
+          "음절 단위 정렬로 timestamp 평균 오차를 1.70초에서 0.04초까지 축소",
+          "난청 아동 3명 사전·사후 비교에서 리듬 정확도 19~37%p 개선",
+          "동일 검증에서 멜로디 정확도 13~22%p 개선",
+          "수작업 교구 의존도를 낮추는 앱·교육 콘텐츠 생성 흐름 정리",
         ],
-        tech: ["PyTorch", "FastAPI", "Flutter", "Demucs", "WhisperX", "ONNX"],
+        tech: ["FastAPI", "Flutter", "Demucs", "Lyrics-Aligner", "Torchcrepe", "madmom", "Core Haptics"],
       },
       en: {
         overview:
-          "Music Sense did not end with its SKT FLY AI grand-prize win. It is an accessibility-driven music product that treats music access for deaf and hard-of-hearing users as a real product problem, then translates separated and analyzed elements such as vocals, drums, and bass into an app experience centered on touch and visual feedback. Since the award, I have kept the project moving through direct user conversations, follow-up Flutter updates, and next-step review in a context connected to a deaf-welfare organization.",
+          "Music Sense was not just a grand-prize demo at SKT FLY AI. It became a multimodal music-accessibility project shaped around real bottlenecks in education and rehabilitation for deaf and hard-of-hearing children. What we saw in the field was not a lack of interest in music, but a lack of cues for reading melody and rhythm, while the supporting materials used in therapy were still heavily manual. I helped turn separated vocals, lyrics, rhythm, and pitch into subtitles, visual cues, and haptic feedback that connect the app to educational content, and I have kept refining the direction through user feedback and follow-up Flutter updates.",
         role:
-          "I pushed the project across both PM and development instead of treating them as separate lanes. I connected the core decisions and implementation flow across the audio-analysis pipeline, backend structure, app experience direction, demo and presentation narrative, and the priorities for follow-up Flutter updates.",
+          "I treated PM and development as one connected lane and stitched together the full flow. That covered problem framing and field interviews, the audio-analysis direction, the FastAPI and Flutter structure, the demo narrative, the presentation message, and the priorities for follow-up product updates.",
         challenge:
-          "Most music experiences are designed primarily around hearing, which makes it difficult to understand musical structure, emotional progression, and rhythmic change through other modalities. Some users also need to perceive musical components in a more separated form, requiring a clearer and more intuitive way to interpret music.",
+          "Most music products are designed around hearing, which makes musical structure, emotional movement, and rhythmic change hard to access through other senses. In education and rehabilitation settings, therapists still spend manual effort producing visual and rhythmic cues, which makes each new song costly to adapt and hard to scale. Interviews and survey data also showed unmet demand: 70.1% wanted to feel melodic change more clearly, while 87.5% cited the lack of a delivery method as a reason for not engaging with music.",
         solution:
-          "We separated major stems from the track, extracted features such as pitch and timing, and designed a structure that reinterprets those outputs as touch and visual feedback inside the app. The point was not to stop at analysis output, but to shape a Flutter-centered product flow that could keep evolving through real user feedback and later updates.",
+          "We split the track into stems, extracted lyrics, timestamps, pitch, and rhythm through separate pipelines, and then reassembled those outputs into visual subtitles and Core Haptics profiles. To move past the limitations of WhisperX, I shifted timestamping toward a Lyrics-Aligner-based syllable alignment flow, then mapped vocal pitch and drum onsets into cues users could feel and follow. The result was not just analysis output, but a Flutter-based product flow that translates one song into a multimodal set of guides for both the app and educational content.",
         impact:
-          "The real strength of the project is not the award itself, but the fact that the accessibility problem is still being pushed forward through product updates and follow-up application paths. The SKT FLY AI grand prize validated the direction, and the project has stayed alive through user conversations, Flutter updates, and next-step review in a context connected to a deaf-welfare organization.",
+          "What makes the project matter is that it treated accessibility as a repeatable product and workflow problem rather than a vague social good. In field validation with three children, rhythm accuracy improved from 44→63, 44→81, and 69→88, while melody accuracy rose from 33→55, 31→50, and 50→63. That gave the project a stronger identity: not just a competition app, but a multimodal accessibility engine that can enter education and rehabilitation first, then grow toward concerts, OTT, and wearables.",
         highlights: [
-          "Won the grand prize at SKT FLY AI",
-          "Reframed music accessibility for deaf and hard-of-hearing users as a product problem",
-          "Designed a structure that turns audio-analysis outputs into app-side multimodal experience",
-          "Kept the project moving after the award through user conversations and Flutter updates",
+          "Won the project grand prize at SKT FLY AI Challenger",
+          "Reframed music accessibility as a multimodal translation problem rather than a louder-audio problem",
+          "Designed a syllable-level alignment and haptic-translation structure around actual field use",
+          "Kept the work alive through field validation, user feedback, and follow-up Flutter updates",
         ],
         results: [
-          "Shaped the audio-analysis structure across stem separation, pitch, and timing flows",
-          "Defined a product flow that turns analysis outputs into touch- and visual-centered app experiences",
-          "Prioritized and shipped follow-up Flutter updates based on user conversations",
-          "Reviewed next-step application scenarios in a context connected to a deaf-welfare organization",
+          "Cut average timestamp error from 1.70 seconds to 0.04 seconds with syllable-level alignment",
+          "Improved rhythm accuracy by 19–37 percentage points in before-and-after validation with three children",
+          "Improved melody accuracy by 13–22 percentage points in the same validation flow",
+          "Defined an app and educational-content pipeline that reduces dependence on fully manual therapy materials",
         ],
-        tech: ["PyTorch", "FastAPI", "Flutter", "Demucs", "WhisperX", "ONNX"],
+        tech: ["FastAPI", "Flutter", "Demucs", "Lyrics-Aligner", "Torchcrepe", "madmom", "Core Haptics"],
       },
     },
+    resources: [
+      { href: "/music-sense/music_sense_pitch_deck.pdf", label: { ko: "발표 자료", en: "Slides" }, icon: "external" },
+      { href: "/credentials/2026-skt-fly-ai-project-grand-prize.jpeg", label: { ko: "수상 증빙", en: "Award" }, icon: "external" },
+    ],
   },
   {
     id: 13,

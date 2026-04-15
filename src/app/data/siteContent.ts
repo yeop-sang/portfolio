@@ -89,13 +89,13 @@ export const aboutContent = {
   timeline: {
     ko: [
       { year: "2026", title: "BinarI", desc: "동화책 수어 프로젝트 비나리에서 AI 파이프라인, 인프라, 발표 흐름을 설계하며 빠른 프로토타이핑을 리드" },
-      { year: "2025", title: "Music Sense", desc: "SKT FLY AI 대상 이후에도 사용자 소통과 Flutter 업데이트로 계속 밀고 있는 접근성 기반 음악 프로젝트" },
+      { year: "2025", title: "Music Sense", desc: "난청 아동 교육·재활 현장의 병목을 겨냥해 멀티모달 음악 접근성 제품을 설계하고, 수상 이후에도 검증과 업데이트를 이어감" },
       { year: "2022", title: "Young Il Young Inc.", desc: "상담 흐름 개선과 재고 화면 캐싱으로 사용자 경험과 운영 부담을 함께 다룸" },
       { year: "2020", title: "Pickle.plus", desc: "현재도 운영 중인 Pickle.plus에서 백엔드, 정산, 서비스 운영 구조를 함께 경험" },
     ],
     en: [
       { year: "2026", title: "BinarI", desc: "Led rapid prototyping for BinarI, a storybook-to-KSL project, by shaping the AI pipeline, infrastructure, and demo narrative" },
-      { year: "2025", title: "Music Sense", desc: "Kept pushing an accessibility-driven music product through user feedback and Flutter updates after winning the grand prize at SKT FLY AI" },
+      { year: "2025", title: "Music Sense", desc: "Built a multimodal music-accessibility product around bottlenecks in education and rehabilitation, then kept iterating after the SKT FLY AI win" },
       { year: "2022", title: "Young Il Young Inc.", desc: "Improved consult flow and stock-page caching in a real commerce product, balancing UX with service stability" },
       { year: "2020", title: "Pickle.plus", desc: "Learned backend, settlement, and service operations inside Pickle.plus, which is still live today" },
     ],
@@ -198,8 +198,8 @@ export const credentialsContent = {
       title: { ko: "Music Sense", en: "Music Sense" },
       subtitle: { ko: "SKT FLY AI Challenger 8기 프로젝트 부문 대상", en: "SKT FLY AI Challenger 8th, Project Grand Prize" },
       desc: {
-        ko: "Music Sense로 프로젝트 부문 대상을 수상했고, 이후에도 사용자 소통과 후속 Flutter 업데이트를 이어가고 있습니다.",
-        en: "Won the project grand prize with Music Sense and have continued follow-up Flutter updates through ongoing user conversations.",
+        ko: "Music Sense로 프로젝트 부문 대상을 수상했고, 이후에도 난청 아동 교육·재활 현장 검증과 Flutter 업데이트를 바탕으로 제품 방향을 계속 다듬고 있습니다.",
+        en: "Won the project grand prize with Music Sense and have kept refining the product through field validation in education and rehabilitation settings plus follow-up Flutter updates.",
       },
     },
     {

@@ -27,7 +27,9 @@ export function ProjectDetail() {
   const nextProject = projects[(currentProjectIndex + 1) % projects.length];
   const highlights = details.highlights ?? [];
   const gallery = project.gallery ?? [];
+  const [featuredVisual, ...supportingVisuals] = gallery;
   const resourceLinks = project.resources ?? [];
+  const useFeaturedGalleryLayout = gallery.length > 2;
 
   return (
     <div className="min-h-screen pt-24 pb-16" style={{ backgroundColor: "#0F0F0F" }}>
@@ -142,16 +144,10 @@ export function ProjectDetail() {
                   </>
                 );
 
-                return link.href.startsWith("/") ? (
-                  <Link
-                    key={`${project.id}-${link.href}`}
-                    to={link.href}
-                    className="flex items-center gap-2 px-6 py-3 border border-[#2A2A2A] text-white hover:border-[#C8FF00] hover:text-[#C8FF00] transition-all rounded"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {linkContent}
-                  </Link>
-                ) : (
+                const isStaticAsset =
+                  link.href.startsWith("/") && /\.(pdf|png|jpe?g|gif|webp|svg|hwp)$/i.test(link.href);
+
+                return !link.href.startsWith("/") || isStaticAsset ? (
                   <a
                     key={`${project.id}-${link.href}`}
                     href={link.href}
@@ -162,6 +158,15 @@ export function ProjectDetail() {
                   >
                     {linkContent}
                   </a>
+                ) : (
+                  <Link
+                    key={`${project.id}-${link.href}`}
+                    to={link.href}
+                    className="flex items-center gap-2 px-6 py-3 border border-[#2A2A2A] text-white hover:border-[#C8FF00] hover:text-[#C8FF00] transition-all rounded"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {linkContent}
+                  </Link>
                 );
               })}
             </motion.div>
@@ -184,38 +189,107 @@ export function ProjectDetail() {
               >
                 {language === "ko" ? "발표 자료" : "Supporting Visuals"}
               </h2>
-              <div className="grid lg:grid-cols-2 gap-6">
-                {gallery.map((image) => (
-                  <a
-                    key={image.src}
-                    href={image.src}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block border rounded-lg overflow-hidden hover:border-[#C8FF00] transition-colors"
-                    style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}
-                  >
-                    <div className="aspect-video bg-[#0B0B0B]">
-                      <ImageWithFallback
-                        src={image.src}
-                        alt={image.alt[language]}
-                        className="w-full h-full object-cover"
-                      />
+              {useFeaturedGalleryLayout ? (
+                <div className="space-y-6">
+                  {featuredVisual && (
+                    <a
+                      href={featuredVisual.src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block border rounded-lg overflow-hidden hover:border-[#C8FF00] transition-colors"
+                      style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}
+                    >
+                      <div className="aspect-[16/10] bg-[#0B0B0B]">
+                        <ImageWithFallback
+                          src={featuredVisual.src}
+                          alt={featuredVisual.alt[language]}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="p-5 border-t" style={{ borderColor: "#2A2A2A" }}>
+                        <p
+                          style={{
+                            fontFamily: "var(--font-body)",
+                            fontSize: "1rem",
+                            lineHeight: 1.7,
+                            color: "#F1F1F1",
+                          }}
+                        >
+                          {featuredVisual.alt[language]}
+                        </p>
+                      </div>
+                    </a>
+                  )}
+
+                  {supportingVisuals.length > 0 && (
+                    <div className="grid lg:grid-cols-2 gap-6">
+                      {supportingVisuals.map((image) => (
+                        <a
+                          key={image.src}
+                          href={image.src}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block border rounded-lg overflow-hidden hover:border-[#C8FF00] transition-colors"
+                          style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}
+                        >
+                          <div className="aspect-[4/3] bg-[#0B0B0B]">
+                            <ImageWithFallback
+                              src={image.src}
+                              alt={image.alt[language]}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="p-4 border-t" style={{ borderColor: "#2A2A2A" }}>
+                            <p
+                              style={{
+                                fontFamily: "var(--font-body)",
+                                fontSize: "0.95rem",
+                                lineHeight: 1.7,
+                                color: "#CCCCCC",
+                              }}
+                            >
+                              {image.alt[language]}
+                            </p>
+                          </div>
+                        </a>
+                      ))}
                     </div>
-                    <div className="p-4 border-t" style={{ borderColor: "#2A2A2A" }}>
-                      <p
-                        style={{
-                          fontFamily: "var(--font-body)",
-                          fontSize: "0.95rem",
-                          lineHeight: 1.7,
-                          color: "#CCCCCC",
-                        }}
-                      >
-                        {image.alt[language]}
-                      </p>
-                    </div>
-                  </a>
-                ))}
-              </div>
+                  )}
+                </div>
+              ) : (
+                <div className="grid lg:grid-cols-2 gap-6">
+                  {gallery.map((image) => (
+                    <a
+                      key={image.src}
+                      href={image.src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block border rounded-lg overflow-hidden hover:border-[#C8FF00] transition-colors"
+                      style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}
+                    >
+                      <div className="aspect-[4/3] bg-[#0B0B0B]">
+                        <ImageWithFallback
+                          src={image.src}
+                          alt={image.alt[language]}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="p-4 border-t" style={{ borderColor: "#2A2A2A" }}>
+                        <p
+                          style={{
+                            fontFamily: "var(--font-body)",
+                            fontSize: "0.95rem",
+                            lineHeight: 1.7,
+                            color: "#CCCCCC",
+                          }}
+                        >
+                          {image.alt[language]}
+                        </p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              )}
             </motion.div>
           )}
 
