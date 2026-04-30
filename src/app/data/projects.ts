@@ -411,11 +411,11 @@ export const projects: Project[] = [
     id: 1,
     title: "MUSIC SENSE",
     year: "2025",
-    period: "2025 -",
-    tags: "Accessibility · Audio AI · Haptics · Flutter",
+    period: "2025 - 2026",
+    tags: "Accessibility · Audio AI · Haptics · KSCI Paper",
     description: {
-      ko: "난청 아동 교육·재활 현장의 병목에서 출발한 멀티모달 음악 접근성 프로젝트",
-      en: "Multimodal music-accessibility project shaped around bottlenecks in deaf and hard-of-hearing education and rehabilitation",
+      ko: "난청 아동 교육·재활 검증을 KSCI 논문 원고까지 확장한 멀티모달 음악 접근성 프로젝트",
+      en: "Multimodal music-accessibility project extended from DHH education and therapy validation into a KSCI journal manuscript",
     },
     color: "#2A1A4A",
     heroImage: {
@@ -447,61 +447,81 @@ export const projects: Project[] = [
           en: "Music Sense validation-result slide",
         },
       },
+      {
+        src: "/music-sense/music-sense-ksci-paper-cover.png",
+        alt: {
+          ko: "Music Sense KSCI 논문 원고 표지",
+          en: "Music Sense KSCI manuscript cover page",
+        },
+      },
+      {
+        src: "/music-sense/music-sense-ksci-architecture.png",
+        alt: {
+          ko: "Music Sense KSCI 논문 시스템 아키텍처 도식",
+          en: "Music Sense KSCI paper system architecture diagram",
+        },
+      },
     ],
     details: {
       ko: {
         overview:
-          "Music Sense는 SKT FLY AI 대상 수상으로 끝난 데모가 아니라, 난청 아동 교육·재활 현장의 병목에서 출발한 멀티모달 음악 접근성 프로젝트입니다. 복지기관과 음악치료 현장에서 확인한 문제는 아이들이 음악을 원하지 않는 것이 아니라, 멜로디와 리듬을 해석할 단서가 부족하고 이를 보완할 교구는 여전히 수작업에 크게 의존한다는 점이었습니다. 그래서 보컬·가사·박자·음정을 분리 분석한 결과를 자막, 시각 단서, 햅틱으로 번역해 앱과 교육용 콘텐츠로 연결하는 흐름을 만들었고, 수상 이후에도 사용자 피드백과 Flutter 업데이트를 이어가며 제품 방향을 다듬고 있습니다.",
+          "Music Sense는 SKT FLY AI 대상 수상으로 끝난 데모가 아니라, 난청 아동 교육·재활 현장의 병목에서 출발한 멀티모달 음악 접근성 프로젝트입니다. 복지기관과 음악치료 현장에서 확인한 문제는 아이들이 음악을 원하지 않는 것이 아니라, 멜로디와 리듬을 해석할 단서가 부족하고 이를 보완할 교구는 여전히 수작업에 크게 의존한다는 점이었습니다. 그래서 보컬·가사·박자·음정을 분리 분석한 결과를 자막, 시각 단서, 햅틱으로 번역해 앱과 교육용 콘텐츠로 연결하는 흐름을 만들었고, 수상 이후에는 2026년 4월 KSCI 한국컴퓨터정보학회논문지 양식의 논문 원고로 정리해 논문 등재 준비 중입니다.",
         role:
-          "프로젝트를 PM과 개발로 나누지 않고 사실상 전체 흐름을 이어붙였습니다. 문제 정의와 현장 인터뷰, 오디오 분석 파이프라인 방향, FastAPI·Flutter 구조, 데모 시나리오, 발표 메시지, 후속 업데이트 우선순위까지 핵심 판단과 구현 연결을 맡았습니다.",
+          "프로젝트를 PM과 개발로 나누지 않고 사실상 전체 흐름을 이어붙였습니다. 문제 정의와 현장 인터뷰, 오디오 분석 파이프라인 방향, FastAPI·Flutter 구조, 데모 시나리오, 발표 메시지, 후속 업데이트 우선순위, KSCI 논문 원고의 시스템 서술까지 핵심 판단과 구현 연결을 맡았습니다.",
         challenge:
           "기존의 음악 경험은 대부분 청각 중심으로 설계되어 있어, 난청 사용자가 음악의 구조와 감정선, 리듬 변화를 다른 감각으로 이해하기 어렵습니다. 특히 교육·재활 현장에서는 시각 자료와 리듬 단서를 치료사가 수작업으로 만들고 있어 곡을 바꿀 때마다 시간이 오래 걸리고 확장성이 낮았습니다. 인터뷰와 설문에서도 멜로디 변화를 느끼고 싶다는 응답이 70.1%, 음악을 멀리하는 이유로 전달 수단 부족이 87.5%로 나타나 미충족 수요가 분명했습니다.",
         solution:
-          "음원을 stem separation으로 분리한 뒤 가사·timestamp·pitch·rhythm을 개별 파이프라인으로 뽑아냈습니다. 타임스탬프는 WhisperX의 한계를 넘기 위해 Lyrics-Aligner 기반 음절 정렬 흐름으로 바꾸고, 보컬 pitch와 드럼 onset을 시각 자막과 Core Haptics용 profile로 재구성했습니다. 그 결과를 Flutter 앱과 교육용 악보 생성 흐름까지 묶어, 한 곡의 음악을 '듣는 정보'가 아니라 '느끼고 따라갈 수 있는 단서'로 바꾸는 구조를 만들었습니다.",
+          "음원을 stem separation으로 분리한 뒤 가사·timestamp·pitch·rhythm을 개별 파이프라인으로 뽑아냈습니다. 타임스탬프는 WhisperX의 한계를 넘기 위해 Lyrics-Aligner 기반 음절 정렬 흐름으로 바꾸고, 보컬 pitch와 드럼 onset을 시각 자막과 Core Haptics용 profile로 재구성했습니다. 논문 원고에서는 이 흐름을 클라우드 분석 계층과 모바일 렌더링 계층으로 분리하고, 10ms 단위 경량 메타데이터를 B2B SDK나 치료 지원 SaaS로 확장할 수 있는 구조로 정리했습니다.",
         impact:
-          "이 프로젝트의 의미는 접근성 문제를 추상적인 선의가 아니라 현장의 반복 병목과 제품 경험의 문제로 다뤘다는 데 있습니다. 실제 난청 아동 검증에서 리듬 정확도는 44→63, 44→81, 69→88로 개선됐고, 멜로디 정확도도 33→55, 31→50, 50→63으로 올라갔습니다. 덕분에 Music Sense는 단순 공모전 앱이 아니라 교육·재활 현장에 먼저 들어가고 이후 공연·OTT·웨어러블로 확장 가능한 멀티모달 접근성 엔진으로 설명할 수 있게 됐습니다.",
+          "이 프로젝트의 의미는 접근성 문제를 추상적인 선의가 아니라 현장의 반복 병목과 제품 경험의 문제로 다뤘다는 데 있습니다. 실제 난청 아동 검증에서 리듬 정확도는 44→63, 44→81, 69→88로 개선됐고, 멜로디 정확도도 33→55, 31→50, 50→63으로 올라갔습니다. 덕분에 Music Sense는 단순 공모전 앱이 아니라 교육·재활 현장에 먼저 들어가고 이후 공연·OTT·웨어러블로 확장 가능한 멀티모달 접근성 엔진으로 설명할 수 있게 됐으며, 현재 그 설계와 PoC를 학술 원고로 공개할 준비를 진행하고 있습니다.",
         highlights: [
           "SKT FLY AI Challenger 프로젝트 부문 대상 수상",
           "난청인의 음악 접근성 문제를 '더 크게 듣는 보조'가 아니라 멀티모달 번역 문제로 재정의",
           "Lyrics-Aligner 기반 음절 정렬로 자막 정밀도를 크게 끌어올린 구조 설계",
           "복지기관·음악치료 현장 검증과 후속 Flutter 업데이트까지 이어진 제품 흐름",
+          "KSCI 한국컴퓨터정보학회논문지 양식으로 정리한 논문 등재 준비 중 원고",
         ],
         results: [
           "음절 단위 정렬로 timestamp 평균 오차를 1.70초에서 0.04초까지 축소",
           "난청 아동 3명 사전·사후 비교에서 리듬 정확도 19~37%p 개선",
           "동일 검증에서 멜로디 정확도 13~22%p 개선",
           "수작업 교구 의존도를 낮추는 앱·교육 콘텐츠 생성 흐름 정리",
+          "AI 기반 멀티모달 음악 접근성 파이프라인을 KSCI 논문 원고로 정리",
         ],
         tech: ["FastAPI", "Flutter", "Demucs", "Lyrics-Aligner", "Torchcrepe", "madmom", "Core Haptics"],
       },
       en: {
         overview:
-          "Music Sense was not just a grand-prize demo at SKT FLY AI. It became a multimodal music-accessibility project shaped around real bottlenecks in education and rehabilitation for deaf and hard-of-hearing children. What we saw in the field was not a lack of interest in music, but a lack of cues for reading melody and rhythm, while the supporting materials used in therapy were still heavily manual. I helped turn separated vocals, lyrics, rhythm, and pitch into subtitles, visual cues, and haptic feedback that connect the app to educational content, and I have kept refining the direction through user feedback and follow-up Flutter updates.",
+          "Music Sense was not just a grand-prize demo at SKT FLY AI. It became a multimodal music-accessibility project shaped around real bottlenecks in education and rehabilitation for deaf and hard-of-hearing children. What we saw in the field was not a lack of interest in music, but a lack of cues for reading melody and rhythm, while the supporting materials used in therapy were still heavily manual. I helped turn separated vocals, lyrics, rhythm, and pitch into subtitles, visual cues, and haptic feedback that connect the app to educational content. After the award, we organized the system and PoC into an April 2026 KSCI journal-style manuscript that is currently in preparation for publication/listing.",
         role:
-          "I treated PM and development as one connected lane and stitched together the full flow. That covered problem framing and field interviews, the audio-analysis direction, the FastAPI and Flutter structure, the demo narrative, the presentation message, and the priorities for follow-up product updates.",
+          "I treated PM and development as one connected lane and stitched together the full flow. That covered problem framing and field interviews, the audio-analysis direction, the FastAPI and Flutter structure, the demo narrative, the presentation message, follow-up product priorities, and the systems framing for the KSCI manuscript.",
         challenge:
           "Most music products are designed around hearing, which makes musical structure, emotional movement, and rhythmic change hard to access through other senses. In education and rehabilitation settings, therapists still spend manual effort producing visual and rhythmic cues, which makes each new song costly to adapt and hard to scale. Interviews and survey data also showed unmet demand: 70.1% wanted to feel melodic change more clearly, while 87.5% cited the lack of a delivery method as a reason for not engaging with music.",
         solution:
-          "We split the track into stems, extracted lyrics, timestamps, pitch, and rhythm through separate pipelines, and then reassembled those outputs into visual subtitles and Core Haptics profiles. To move past the limitations of WhisperX, I shifted timestamping toward a Lyrics-Aligner-based syllable alignment flow, then mapped vocal pitch and drum onsets into cues users could feel and follow. The result was not just analysis output, but a Flutter-based product flow that translates one song into a multimodal set of guides for both the app and educational content.",
+          "We split the track into stems, extracted lyrics, timestamps, pitch, and rhythm through separate pipelines, and then reassembled those outputs into visual subtitles and Core Haptics profiles. To move past the limitations of WhisperX, I shifted timestamping toward a Lyrics-Aligner-based syllable alignment flow, then mapped vocal pitch and drum onsets into cues users could feel and follow. In the paper manuscript, we formalized this as a two-layer architecture: cloud analysis produces 10 ms lightweight metadata, while the mobile renderer turns it into synchronized visual and tactile cues that can later become a B2B SDK or therapy-support SaaS layer.",
         impact:
-          "What makes the project matter is that it treated accessibility as a repeatable product and workflow problem rather than a vague social good. In field validation with three children, rhythm accuracy improved from 44→63, 44→81, and 69→88, while melody accuracy rose from 33→55, 31→50, and 50→63. That gave the project a stronger identity: not just a competition app, but a multimodal accessibility engine that can enter education and rehabilitation first, then grow toward concerts, OTT, and wearables.",
+          "What makes the project matter is that it treated accessibility as a repeatable product and workflow problem rather than a vague social good. In field validation with three children, rhythm accuracy improved from 44→63, 44→81, and 69→88, while melody accuracy rose from 33→55, 31→50, and 50→63. That gave the project a stronger identity: not just a competition app, but a multimodal accessibility engine that can enter education and rehabilitation first, grow toward concerts, OTT, and wearables, and now be communicated as a research-backed system design.",
         highlights: [
           "Won the project grand prize at SKT FLY AI Challenger",
           "Reframed music accessibility as a multimodal translation problem rather than a louder-audio problem",
           "Designed a syllable-level alignment and haptic-translation structure around actual field use",
           "Kept the work alive through field validation, user feedback, and follow-up Flutter updates",
+          "Prepared a KSCI journal-style manuscript that documents the pipeline, PoC, and platform extension model",
         ],
         results: [
           "Cut average timestamp error from 1.70 seconds to 0.04 seconds with syllable-level alignment",
           "Improved rhythm accuracy by 19–37 percentage points in before-and-after validation with three children",
           "Improved melody accuracy by 13–22 percentage points in the same validation flow",
           "Defined an app and educational-content pipeline that reduces dependence on fully manual therapy materials",
+          "Documented the AI-based multimodal music-accessibility pipeline as a KSCI paper manuscript",
         ],
         tech: ["FastAPI", "Flutter", "Demucs", "Lyrics-Aligner", "Torchcrepe", "madmom", "Core Haptics"],
       },
     },
     resources: [
       { href: "/music-sense/music_sense_pitch_deck.pdf", label: { ko: "발표 자료", en: "Slides" }, icon: "external" },
+      { href: "/music-sense/music-sense-ksci-paper.pdf", label: { ko: "KSCI 논문 PDF(등재 준비중)", en: "KSCI Paper PDF (In Preparation)" }, icon: "external" },
+      { href: "/music-sense/music-sense-ksci-paper-manuscript.hwp", label: { ko: "논문 원고 HWP", en: "Paper Manuscript HWP" }, icon: "external" },
       { href: "/credentials/2026-skt-fly-ai-project-grand-prize.jpeg", label: { ko: "수상 증빙", en: "Award" }, icon: "external" },
     ],
   },
