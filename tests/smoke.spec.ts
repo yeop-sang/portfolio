@@ -67,13 +67,21 @@ test("Music Sense detail renders strengthened content and local assets", async (
 
   await expect(page.getByRole("heading", { name: "MUSIC SENSE" })).toBeVisible();
   await expect(
-    page.getByText("난청 아동 교육·재활 현장의 병목에서 출발한 멀티모달 음악 접근성 프로젝트", {
+    page.getByText("난청 아동 교육·재활 검증을 KSCI 논문 원고까지 확장한 멀티모달 음악 접근성 프로젝트", {
       exact: true,
     }),
   ).toBeVisible();
   await expect(page.getByRole("link", { name: "발표 자료" })).toHaveAttribute(
     "href",
     "/music-sense/music_sense_pitch_deck.pdf",
+  );
+  await expect(page.getByRole("link", { name: "KSCI 논문 PDF(등재 준비중)" })).toHaveAttribute(
+    "href",
+    "/music-sense/music-sense-ksci-paper.pdf",
+  );
+  await expect(page.getByRole("link", { name: "논문 원고 HWP" })).toHaveAttribute(
+    "href",
+    "/music-sense/music-sense-ksci-paper-manuscript.hwp",
   );
   await expect(page.getByRole("link", { name: "수상 증빙" })).toHaveAttribute(
     "href",
@@ -84,7 +92,24 @@ test("Music Sense detail renders strengthened content and local assets", async (
   await expect(coverImage).toBeVisible();
   await expect(coverImage).toHaveAttribute("src", /\/music-sense\/music-sense-cover\.png$/);
 
+  await expect(page.locator("img[alt='Music Sense KSCI 논문 원고 표지']")).toBeVisible();
+  await expect(page.locator("img[alt='Music Sense KSCI 논문 시스템 아키텍처 도식']")).toBeVisible();
+  await expect(
+    page.getByText("KSCI 한국컴퓨터정보학회논문지 양식으로 정리한 논문 등재 준비 중 원고", {
+      exact: true,
+    }),
+  ).toBeVisible();
   await expect(page.getByText("1.70초에서 0.04초", { exact: false })).toBeVisible();
+
+  for (const href of [
+    "/music-sense/music-sense-ksci-paper.pdf",
+    "/music-sense/music-sense-ksci-paper-manuscript.hwp",
+    "/music-sense/music-sense-ksci-paper-cover.png",
+    "/music-sense/music-sense-ksci-architecture.png",
+  ]) {
+    const response = await page.request.get(href);
+    expect(response.ok(), `${href} should resolve`).toBeTruthy();
+  }
 
   await assertNoRuntimeErrors();
 });
