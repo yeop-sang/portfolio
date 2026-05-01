@@ -64,6 +64,18 @@ export const aboutContent = {
     ko: "안녕하세요, 김상엽입니다. 새로운 기술을 빠르게 흡수한 뒤 그것을 실제로 작동하고 운영 가능한 구조로 연결하는 개발자입니다. 백엔드, AI 응용, 시스템 설계를 중심으로 반복적이고 비효율적인 과정을 줄여 사람이 더 중요한 판단과 경험에 집중할 수 있는 흐름을 만드는 데 관심이 있습니다. 현재도 운영 중인 Pickle.plus에서 서비스 운영과 배포 관점을 익혔고, Young Il Young Inc.에서는 상담 흐름과 재고 화면 구조를 실제 사용자 흐름에 맞게 다듬었으며, Music Sense와 비나리 같은 프로젝트에서는 AI를 서비스 가능한 구조와 제품 흐름으로 밀어붙였습니다.",
     en: "Hi, I'm Yeop. I learn new technologies quickly, then turn them into systems that can actually run in production. My focus is backend engineering, applied AI, and system design, especially where technology can remove repetitive work and free people to focus on better judgment and richer experiences. At Pickle.plus, which is still live today, I learned how service operations and deployment shape software, at Young Il Young Inc. I tightened consult flow and stock-page structure around real user journeys, and through projects like Music Sense and BinarI I pushed AI ideas into service-ready product flows.",
   },
+  sktFlyTitle: {
+    ko: "SKT FLY AI Challenger 8기",
+    en: "SKT FLY AI Challenger 8th",
+  },
+  sktFlyBody: {
+    ko: "SKT FLY AI Challenger 8기에서는 단순히 모델 실습만 한 것이 아니라, NumPy·Pandas와 머신러닝 기초부터 Azure 클라우드, DevOps, OpenCV, PyTorch, RAG, LangGraph, MCP까지 이어지는 흐름을 짧은 기간 안에 밀도 있게 다뤘습니다. 이 경험은 새로운 기술을 빠르게 익히고 그것을 실제 서비스 구조로 연결하는 지금의 작업 방식에 큰 영향을 줬습니다.",
+    en: "In SKT FLY AI Challenger 8th, I did more than isolated model exercises. I worked through a dense progression from NumPy, Pandas, and machine-learning fundamentals into Azure cloud, DevOps, OpenCV, PyTorch, RAG, LangGraph, and MCP. That experience strongly shaped the way I now learn new tools quickly and connect them to service-ready systems.",
+  },
+  sktFlyHighlights: {
+    ko: ["ML/DL 기초", "Azure · DevOps", "OpenCV · PyTorch", "RAG · Agent Systems"],
+    en: ["ML/DL Foundations", "Azure · DevOps", "OpenCV · PyTorch", "RAG · Agent Systems"],
+  },
   stackTitle: {
     ko: "기술 스택",
     en: "Tech Stack",
@@ -185,6 +197,15 @@ export const credentialsContent = {
       },
     },
     {
+      period: "2025.12 - 2026.02",
+      title: { ko: "SKT FLY AI Challenger 8기", en: "SKT FLY AI Challenger 8th" },
+      subtitle: { ko: "AI 실무 집중 과정", en: "Applied AI intensive program" },
+      desc: {
+        ko: "NumPy·Pandas·머신러닝 기초부터 클라우드 컴퓨팅, DevOps, OpenCV, AI 융합 프로그래밍, 논문 발표, AI 에이전트까지 이어지는 실전형 커리큘럼을 따라가며 학습 내용을 프로젝트 실행력으로 연결했습니다.",
+        en: "Worked through an applied curriculum that moved from NumPy, Pandas, and machine-learning foundations into cloud computing, DevOps, OpenCV, AI convergence programming, paper presentation, and AI agents, then carried that learning into project execution.",
+      },
+    },
+    {
       period: "2025.08 - 2026.02",
       title: { ko: "비나리", en: "BinarI" },
       subtitle: { ko: "동화책 수어 프로젝트", en: "Storybook-to-KSL project" },
@@ -292,6 +313,15 @@ export const credentialsContent = {
         en: "Completion record for the USC Viterbi and IMSC program.",
       },
       proof: "/credentials/2025-usc-ai-data-science-certificate.jpeg",
+    },
+    {
+      date: "2025.12 - 2026.02",
+      title: { ko: "SKT FLY AI Challenger 8기", en: "SKT FLY AI Challenger 8th" },
+      issuer: { ko: "SK텔레콤", en: "SK Telecom" },
+      detail: {
+        ko: "기초 데이터 처리와 머신러닝, 클라우드 컴퓨팅과 DevOps, OpenCV 기반 컴퓨터 비전, AI 융합 프로그래밍, 논문 발표, AI 에이전트까지 폭넓게 다룬 실무형 과정이었습니다. 학습 노트는 외부 링크 대신 내부적으로 정리했고, 이 과정에서 쌓은 판단과 구현 경험을 Music Sense와 개인 수상으로 연결했습니다.",
+        en: "An applied program that covered data handling and machine-learning basics, cloud computing and DevOps, OpenCV-based computer vision, AI convergence programming, paper presentation, and AI agents. I kept the study material summarized internally rather than pointing outward, then carried that learning into Music Sense and the individual award track.",
+      },
     },
     {
       date: "2025.09 - 2025.12",

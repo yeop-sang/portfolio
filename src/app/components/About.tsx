@@ -23,6 +23,7 @@ export function About() {
 
   const stack = aboutContent.stack[language];
   const timeline = aboutContent.timeline[language];
+  const sktFlyHighlights = aboutContent.sktFlyHighlights[language];
   const profileImageSrc = "/photo_yeop.jpg";
 
   return (
@@ -104,6 +105,67 @@ export function About() {
             </div>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-32"
+        >
+          <div
+            className="border p-8 md:p-10"
+            style={{
+              borderColor: 'var(--bg-border)',
+              backgroundColor: 'var(--bg-card)',
+            }}
+          >
+            <span
+              className="text-xs uppercase tracking-[0.18em] inline-block mb-5"
+              style={{ fontFamily: 'var(--font-mono)', color: '#C8FF00' }}
+            >
+              PROGRAM
+            </span>
+            <h2
+              className="mb-5"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+                fontWeight: 700,
+                letterSpacing: '0.05em',
+                color: '#FFFFFF',
+              }}
+            >
+              {aboutContent.sktFlyTitle[language]}
+            </h2>
+            <p
+              className="max-w-4xl mb-6"
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '1.02rem',
+                lineHeight: 1.85,
+                color: '#888888',
+              }}
+            >
+              {aboutContent.sktFlyBody[language]}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {sktFlyHighlights.map((item) => (
+                <span
+                  key={item}
+                  className="px-3 py-1.5 border rounded text-xs uppercase tracking-[0.12em]"
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    color: '#CCCCCC',
+                    borderColor: '#2A2A2A',
+                  }}
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
 
         {/* Tech Stack Section */}
         <motion.div
