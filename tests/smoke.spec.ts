@@ -1,4 +1,4 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, type Locator, type Page, test } from "@playwright/test";
 
 function collectRuntimeErrors(page: Page) {
   const runtimeErrors: string[] = [];
@@ -12,30 +12,49 @@ function collectRuntimeErrors(page: Page) {
   };
 }
 
+async function expectTextOrder(container: Locator, texts: string[]) {
+  const content = await container.innerText();
+  const positions = texts.map((text) => {
+    const index = content.indexOf(text);
+    expect(index, `${text} should exist in section text`).toBeGreaterThanOrEqual(0);
+    return index;
+  });
+
+  expect(positions).toEqual([...positions].sort((a, b) => a - b));
+}
+
 test("main navigation loads and language toggle works", async ({ page }) => {
   const assertNoRuntimeErrors = collectRuntimeErrors(page);
 
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: "AI · SYSTEMS · BACKEND" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("link", { name: "Y.S" })).toBeVisible();
 
   await page.getByRole("button", { name: "EN" }).click();
-  await expect(page.getByText("AVAILABLE FOR WORK", { exact: false })).toBeVisible();
+  await expect(page.locator(".studio-current").getByText("LINE+ OSPO", { exact: true })).toBeVisible();
 
-  await page.getByRole("link", { name: "WORK" }).click();
+  await page.getByRole("link", { name: "WORK", exact: true }).click();
   await expect(page).toHaveURL(/\/work$/);
-  await expect(page.getByRole("heading", { name: "PROJECTS" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "WORK & PROJECTS", exact: true })).toBeVisible();
 
-  await page.getByRole("link", { name: "ABOUT" }).click();
+  await page.getByRole("link", { name: "ABOUT", exact: true }).click();
   await expect(page).toHaveURL(/\/about$/);
   await expect(page.getByText("About Me", { exact: false })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "LINE+ OSPO" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Young Il Young Inc." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Pickle.plus" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Cardeer" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "BinarI" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Music Sense" })).toHaveCount(0);
+  await expect(page.getByText("PROGRAM", { exact: true })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "SKT FLY AI Challenger 8기" })).toHaveCount(0);
   const aboutPhoto = page.locator("img[alt='Yeop Sang']");
   await expect(aboutPhoto).toHaveAttribute("src", /\/photo_yeop\.jpg$/);
 
-  await page.getByRole("link", { name: "CONTACT" }).click();
+  await page.getByRole("link", { name: "CONTACT", exact: true }).click();
   await expect(page).toHaveURL(/\/contact$/);
-  await expect(page.getByText("Let's Build Together.", { exact: false })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Contact", exact: true })).toBeVisible();
 
   await assertNoRuntimeErrors();
 });
@@ -49,7 +68,7 @@ test("project details and 404 states resolve correctly", async ({ page }) => {
   await signLanguageLink.click();
 
   await expect(page).toHaveURL(/\/work\/2$/);
-  await expect(page.getByRole("heading", { name: "BINARI" })).toBeVisible();
+  await expect(page.locator("h1", { hasText: "BINARI" })).toBeVisible();
 
   await page.goto("/work/999");
   await expect(page.getByText("404", { exact: true })).toBeVisible();
@@ -60,14 +79,38 @@ test("project details and 404 states resolve correctly", async ({ page }) => {
   await assertNoRuntimeErrors();
 });
 
-test("Music Sense detail renders strengthened content and local assets", async ({ page }) => {
+test("Cardeer detail renders startup-club narrative and cover", async ({ page }) => {
+  const assertNoRuntimeErrors = collectRuntimeErrors(page);
+
+  await page.goto("/work/14");
+
+  await expect(page.getByRole("heading", { name: "CARDEER" })).toBeVisible();
+  await expect(
+    page.getByText("경험을 STAR 블록으로 쌓고 JD와 매칭해 자기소개서 초안을 조립하는 AI 취업 준비 제품", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("숭실대학교 2026 학생 창업동아리 지원사업 선정", { exact: true })).toBeVisible();
+  await expect(page.locator("main").getByRole("link", { name: "GitHub", exact: true })).toHaveAttribute(
+    "href",
+    "https://github.com/yeop-sang/cardeer",
+  );
+
+  const coverImage = page.locator("img[alt='Cardeer 발표자료 표지']");
+  await expect(coverImage).toBeVisible();
+  await expect(coverImage).toHaveAttribute("src", /\/cardeer\/cardeer-hero\.png$/);
+
+  await assertNoRuntimeErrors();
+});
+
+test("Music Sense detail renders published KSCI paper content and assets", async ({ page }) => {
   const assertNoRuntimeErrors = collectRuntimeErrors(page);
 
   await page.goto("/work/1");
 
   await expect(page.getByRole("heading", { name: "MUSIC SENSE" })).toBeVisible();
   await expect(
-    page.getByText("난청 아동 교육·재활 검증을 KSCI 논문 원고까지 확장한 멀티모달 음악 접근성 프로젝트", {
+    page.getByText("음악을 화면과 진동으로 전달하고, 아동 3명의 단일 세션 평가를 논문으로 기록한 접근성 프로젝트", {
       exact: true,
     }),
   ).toBeVisible();
@@ -75,13 +118,13 @@ test("Music Sense detail renders strengthened content and local assets", async (
     "href",
     "/music-sense/music_sense_pitch_deck.pdf",
   );
-  await expect(page.getByRole("link", { name: "KSCI 논문 PDF(등재 준비중)" })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "KCI 논문 페이지" })).toHaveAttribute(
+    "href",
+    "https://journal.kci.go.kr/jksci/archive/articleView?artiId=ART003349366",
+  );
+  await expect(page.getByRole("link", { name: "KSCI 논문 PDF" })).toHaveAttribute(
     "href",
     "/music-sense/music-sense-ksci-paper.pdf",
-  );
-  await expect(page.getByRole("link", { name: "논문 원고 HWP" })).toHaveAttribute(
-    "href",
-    "/music-sense/music-sense-ksci-paper-manuscript.hwp",
   );
   await expect(page.getByRole("link", { name: "수상 증빙" })).toHaveAttribute(
     "href",
@@ -92,18 +135,20 @@ test("Music Sense detail renders strengthened content and local assets", async (
   await expect(coverImage).toBeVisible();
   await expect(coverImage).toHaveAttribute("src", /\/music-sense\/music-sense-cover\.png$/);
 
-  await expect(page.locator("img[alt='Music Sense KSCI 논문 원고 표지']")).toBeVisible();
+  await expect(page.locator("img[alt='Music Sense KSCI 게재 논문 첫 페이지']")).toBeVisible();
   await expect(page.locator("img[alt='Music Sense KSCI 논문 시스템 아키텍처 도식']")).toBeVisible();
   await expect(
-    page.getByText("KSCI 한국컴퓨터정보학회논문지 양식으로 정리한 논문 등재 준비 중 원고", {
+    page.getByText("한국컴퓨터정보학회논문지 Vol.31 No.6 게재", {
       exact: true,
     }),
   ).toBeVisible();
-  await expect(page.getByText("1.70초에서 0.04초", { exact: false })).toBeVisible();
+  await expect(page.getByText("0.04초는 가장 잘 맞은 구간의 값이며 전체 평균이 아님", { exact: false })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "연구 맥락" })).toBeVisible();
+  await expect(page.getByText("서울대 MARG와의 짧은 연구실 접점", { exact: false })).toBeVisible();
+  await expect(page.getByText("독립 연구 주제로 크게 확장하기보다는", { exact: false })).toBeVisible();
 
   for (const href of [
     "/music-sense/music-sense-ksci-paper.pdf",
-    "/music-sense/music-sense-ksci-paper-manuscript.hwp",
     "/music-sense/music-sense-ksci-paper-cover.png",
     "/music-sense/music-sense-ksci-architecture.png",
   ]) {
@@ -183,6 +228,85 @@ test("Road Damage Detection detail renders report assets and stronger narrative"
   await expect(page.locator("img[alt='Road Damage Detection 결과 보고서 1페이지']")).toHaveCount(0);
   await expect(page.locator("img[alt='후속 연구 확장 흐름']")).toBeVisible();
   await expect(page.locator("img[alt='실험 구조와 적용 방향']")).toBeVisible();
+
+  await assertNoRuntimeErrors();
+});
+
+test("SNU Biology Education collaboration detail and resources render", async ({ page }) => {
+  const assertNoRuntimeErrors = collectRuntimeErrors(page);
+
+  await page.goto("/work/13");
+
+  await expect(page.getByRole("heading", { name: "서울대 생물교육과 협업 프로젝트" })).toBeVisible();
+  await expect(
+    page.getByText("서울대학교 사범대학 생물교육과와 협업한 교육 평가 도구 개발 프로젝트", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("서울대학교 사범대학 생물교육과 협업 프로젝트", { exact: true })).toBeVisible();
+  await expect(page.getByText("Solvy의 AI 기반 서·논술형 자동 채점 플랫폼 맥락으로 이어진 교육 평가 도구 개발 흐름", { exact: true })).toBeVisible();
+  await expect(page.getByText("GitHub Actions와 Firebase secret injection", { exact: false })).toBeVisible();
+
+  await expect(page.getByRole("link", { name: "Solvy" })).toHaveAttribute(
+    "href",
+    "https://www.solvy.co.kr/main",
+  );
+  await expect(page.getByRole("link", { name: "PDF Parser" })).toHaveAttribute(
+    "href",
+    "https://github.com/yeop-sang/pdf-exam-parser",
+  );
+  await expect(page.getByRole("link", { name: "GeniBlocks Korean" })).toHaveAttribute(
+    "href",
+    "https://github.com/yeop-sang/geniblocks_korean",
+  );
+
+  await assertNoRuntimeErrors();
+});
+
+test("credentials dated sections stay newest-first and exclude certifications from summary", async ({ page }) => {
+  const assertNoRuntimeErrors = collectRuntimeErrors(page);
+
+  await page.goto("/credentials");
+
+  await expect(page.getByRole("heading", { name: "약력" })).toBeVisible();
+  const timeline = page.locator("section").filter({ has: page.getByRole("heading", { name: "약력" }) });
+  await expect(timeline.getByText("2026.07 - Present", { exact: true })).toBeVisible();
+  await expect(timeline).toContainText("Engineer, 내부 제품 개발");
+  await expect(timeline).toContainText("여러 저장소에서 정보를 수집해 결과 파일을 생성하는 동작을 확인했습니다.");
+  await expect(timeline.getByText("2023.01 - 2024.10", { exact: true })).toBeVisible();
+  await expect(timeline.getByText("영일영", { exact: true })).toBeVisible();
+  await expect(timeline.getByText("Pickle.plus", { exact: true })).toBeVisible();
+  await expect(timeline.getByText("Cardeer", { exact: true })).toHaveCount(0);
+  await expect(timeline.getByText("조코딩 x OpenAI x 프라이머 AI 해커톤", { exact: true })).toHaveCount(0);
+  await expect(timeline.getByText("SKT FLY AI Challenger 8기", { exact: true })).toHaveCount(0);
+  await expect(timeline.getByText("비나리", { exact: true })).toHaveCount(0);
+  await expect(timeline.getByText("USC AI & Data Science / IMSC Hackathon", { exact: true })).toHaveCount(0);
+  await expect(timeline.getByText("ADsP", { exact: true })).toHaveCount(0);
+
+  const periods = ["2026.07 - Present", "2023.01 - 2024.10", "2021.12 ~ 2022.08", "2019.08 - 2020.08"];
+  const tops = await Promise.all(
+    periods.map(async (period) => {
+      const box = await timeline.getByText(period, { exact: true }).first().boundingBox();
+      expect(box).not.toBeNull();
+      return box!.y;
+    }),
+  );
+  expect(tops).toEqual([...tops].sort((a, b) => a - b));
+
+  const awards = page.locator("section").filter({ has: page.getByRole("heading", { name: "수상 내역" }) });
+  await expectTextOrder(awards, [
+    "2026.03.07",
+    "2026.02.27",
+    "2025.08.23",
+    "2025.07.26",
+    "2019.10.13",
+  ]);
+
+  const programs = page.locator("section").filter({ has: page.getByRole("heading", { name: "교육 / 프로그램" }) });
+  await expectTextOrder(programs, ["2026.05", "2025.12 - 2026.02", "2025.09 - 2025.12", "2025.07.25"]);
+
+  const certifications = page.locator("section").filter({ has: page.getByRole("heading", { name: "자격" }) });
+  await expectTextOrder(certifications, ["2026.03", "2025.12"]);
 
   await assertNoRuntimeErrors();
 });
