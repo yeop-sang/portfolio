@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 import { Root } from "./components/Root";
 import { Home } from "./components/Home";
 import { Work } from "./components/Work";
@@ -15,6 +15,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "work", Component: Work },
+      { path: "work/8", loader: () => redirect("/work#young-il-young") },
       { path: "work/:id", Component: ProjectDetail },
       { path: "about", Component: About },
       { path: "credentials", Component: Credentials },

@@ -50,14 +50,14 @@ function CredentialCard({
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span
             className="text-xs uppercase tracking-[0.15em]"
-            style={{ fontFamily: "var(--font-mono)", color: "#C8FF00" }}
+            style={{ fontFamily: "var(--font-mono)", color: "var(--studio-accent)" }}
           >
             {entry.date}
           </span>
           <span style={{ color: "#2A2A2A" }}>·</span>
           <span
             className="text-xs uppercase tracking-[0.12em]"
-            style={{ fontFamily: "var(--font-mono)", color: "#888888" }}
+            style={{ fontFamily: "var(--font-mono)", color: "var(--studio-muted)" }}
           >
             {entry.issuer[language]}
           </span>
@@ -70,7 +70,7 @@ function CredentialCard({
             fontSize: "clamp(1.4rem, 3vw, 2rem)",
             fontWeight: 700,
             letterSpacing: "0.03em",
-            color: "#FFFFFF",
+            color: "var(--studio-ink)",
             lineHeight: 1.2,
           }}
         >
@@ -83,7 +83,7 @@ function CredentialCard({
             fontFamily: "var(--font-body)",
             fontSize: "0.98rem",
             lineHeight: 1.8,
-            color: "#888888",
+            color: "var(--studio-muted)",
           }}
         >
           {entry.detail[language]}
@@ -94,8 +94,8 @@ function CredentialCard({
             href={entry.proof}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 border rounded transition-colors hover:border-[#C8FF00] hover:text-[#C8FF00]"
-            style={{ borderColor: "#2A2A2A", color: "#FFFFFF" }}
+            className="inline-flex items-center gap-2 px-4 py-2 border rounded transition-colors hover:border-[var(--studio-accent)] hover:text-[var(--studio-accent)]"
+            style={{ borderColor: "#2A2A2A", color: "var(--studio-ink)" }}
           >
             <ExternalLink className="w-4 h-4" />
             <span className="text-sm uppercase tracking-[0.1em]">{proofLabel}</span>
@@ -130,7 +130,7 @@ export function Credentials() {
         >
           <span
             className="text-xs uppercase tracking-[0.18em] inline-block mb-6"
-            style={{ fontFamily: "var(--font-mono)", color: "#C8FF00" }}
+            style={{ fontFamily: "var(--font-mono)", color: "var(--studio-accent)" }}
           >
             {credentialsContent.label[language]}
           </span>
@@ -141,7 +141,7 @@ export function Credentials() {
               fontSize: "clamp(2.75rem, 7vw, 5.5rem)",
               fontWeight: 700,
               letterSpacing: "0.05em",
-              color: "#FFFFFF",
+              color: "var(--studio-ink)",
               lineHeight: 1.05,
             }}
           >
@@ -153,7 +153,7 @@ export function Credentials() {
               fontFamily: "var(--font-body)",
               fontSize: "1.05rem",
               lineHeight: 1.8,
-              color: "#888888",
+              color: "var(--studio-muted)",
             }}
           >
             {credentialsContent.intro[language]}
@@ -168,7 +168,7 @@ export function Credentials() {
               fontSize: "clamp(2rem, 5vw, 3rem)",
               fontWeight: 700,
               letterSpacing: "0.05em",
-              color: "#FFFFFF",
+              color: "var(--studio-ink)",
             }}
           >
             {credentialsContent.timelineTitle[language]}
@@ -192,7 +192,7 @@ export function Credentials() {
                     fontFamily: "var(--font-mono)",
                     fontSize: "0.8rem",
                     letterSpacing: "0.12em",
-                    color: "#C8FF00",
+                    color: "var(--studio-accent)",
                   }}
                 >
                   {item.period}
@@ -204,7 +204,7 @@ export function Credentials() {
                         fontFamily: "var(--font-body)",
                         fontSize: "1.2rem",
                         fontWeight: 600,
-                        color: "#FFFFFF",
+                        color: "var(--studio-ink)",
                       }}
                     >
                       {item.title[language]}
@@ -214,7 +214,7 @@ export function Credentials() {
                         <span style={{ color: "#2A2A2A" }}>·</span>
                         <span
                           className="text-xs uppercase tracking-[0.12em]"
-                          style={{ fontFamily: "var(--font-mono)", color: "#888888" }}
+                          style={{ fontFamily: "var(--font-mono)", color: "var(--studio-muted)" }}
                         >
                           {item.subtitle[language]}
                         </span>
@@ -226,7 +226,7 @@ export function Credentials() {
                       fontFamily: "var(--font-body)",
                       fontSize: "0.98rem",
                       lineHeight: 1.8,
-                      color: "#888888",
+                      color: "var(--studio-muted)",
                     }}
                   >
                     {item.desc[language]}
@@ -245,7 +245,7 @@ export function Credentials() {
               fontSize: "clamp(2rem, 5vw, 3rem)",
               fontWeight: 700,
               letterSpacing: "0.05em",
-              color: "#FFFFFF",
+              color: "var(--studio-ink)",
             }}
           >
             {credentialsContent.awardsTitle[language]}
@@ -266,7 +266,7 @@ export function Credentials() {
               fontSize: "clamp(2rem, 5vw, 3rem)",
               fontWeight: 700,
               letterSpacing: "0.05em",
-              color: "#FFFFFF",
+              color: "var(--studio-ink)",
             }}
           >
             {credentialsContent.programsTitle[language]}
@@ -287,7 +287,7 @@ export function Credentials() {
               fontSize: "clamp(2rem, 5vw, 3rem)",
               fontWeight: 700,
               letterSpacing: "0.05em",
-              color: "#FFFFFF",
+              color: "var(--studio-ink)",
             }}
           >
             {credentialsContent.certificationsTitle[language]}
@@ -299,16 +299,6 @@ export function Credentials() {
             ))}
           </div>
 
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.95rem",
-              lineHeight: 1.7,
-              color: "#666666",
-            }}
-          >
-            {credentialsContent.proofNote[language]}
-          </p>
         </section>
       </div>
     </div>

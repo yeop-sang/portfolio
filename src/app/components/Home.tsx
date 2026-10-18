@@ -1,131 +1,31 @@
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
-import { motion } from "motion/react";
-import { useEffect, useRef } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import { homeContent } from "../data/siteContent";
+import { featuredWork, lineOspoExperience, studioContent } from "../data/studioContent";
+import { StudioProject } from "./StudioProject";
+import { LineOspoExperience } from "./LineOspoExperience";
 
 export function Home() {
-  const tickerRef = useRef<HTMLDivElement>(null);
   const { language } = useLanguage();
-
-  useEffect(() => {
-    const ticker = tickerRef.current;
-    if (!ticker) return;
-
-    let animationId: number;
-    let position = 0;
-
-    const animate = () => {
-      position -= 0.5;
-      if (ticker.firstElementChild) {
-        const width = ticker.firstElementChild.clientWidth;
-        if (Math.abs(position) >= width) {
-          position = 0;
-        }
-      }
-      ticker.style.transform = `translateX(${position}px)`;
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, []);
-
+  const ko = language === "ko";
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Hero Section */}
-      <div className="flex-1 flex items-center justify-center px-8 pt-20">
-        <div className="max-w-7xl w-full">
-          {/* Available for work label */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-20"
-          >
-            <span 
-              className="text-xs uppercase tracking-[0.15em]"
-              style={{ 
-                fontFamily: 'var(--font-mono)',
-                color: '#888888'
-              }}
-            >
-              {homeContent.available[language]}
-            </span>
-          </motion.div>
-
-          {/* Main content */}
-          <div className="max-w-4xl">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mb-8"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(3rem, 8vw, 6rem)',
-                fontWeight: 700,
-                letterSpacing: '0.08em',
-                color: '#FFFFFF',
-                lineHeight: 1.1,
-              }}
-            >
-              {homeContent.title[language]}
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="mb-12 max-w-2xl"
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: '1.125rem',
-                lineHeight: 1.7,
-                color: '#888888',
-              }}
-            >
-              {homeContent.description[language]}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <Link
-                to="/work"
-                className="inline-block px-8 py-4 border-2 border-white text-white uppercase tracking-[0.15em] text-sm font-medium relative overflow-hidden group"
-                style={{ fontFamily: 'var(--font-body)' }}
-              >
-                <span className="relative z-10 group-hover:text-black transition-colors duration-300">
-                  {homeContent.cta[language]}
-                </span>
-                <span 
-                  className="absolute inset-0 bg-[#C8FF00] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"
-                />
-              </Link>
-            </motion.div>
-          </div>
+    <div className="studio-container">
+      <section className="studio-hero" aria-labelledby="home-title">
+        <div className="studio-hero-top"><span className="studio-eyebrow">SANGYEOP KIM / YEOP</span><span className="studio-eyebrow">DEVELOPER</span></div>
+        <h1 id="home-title">{studioContent.title[language][0]}<br /><span>{studioContent.title[language][1]}</span></h1>
+        <div className="studio-hero-bottom">
+          <div><p className="studio-intro">{studioContent.intro[language]}</p><div className="studio-actions"><a href="#selected-work" className="studio-button">{ko ? "대표 작업 보기" : "Explore the work"}<ArrowDown size={16} aria-hidden="true" /></a><Link to="/about" className="studio-text-link">{ko ? "소개" : "About"}<ArrowUpRight size={17} aria-hidden="true" /></Link></div></div>
+          <aside className="studio-current"><span className="studio-eyebrow">CURRENTLY</span><p><span className="studio-status-dot" aria-hidden="true" />LINE+ OSPO</p><span>{lineOspoExperience.role[language]}</span></aside>
         </div>
-      </div>
+        <div className="studio-hero-foot"><span>AI APPLICATIONS / BACKEND / PRODUCT</span><span>SEOUL, KR <span aria-hidden="true">↘</span></span></div>
+      </section>
 
-      {/* Marquee Ticker */}
-      <div className="border-t" style={{ borderColor: '#2A2A2A' }}>
-        <div className="overflow-hidden py-6">
-          <div ref={tickerRef} className="flex whitespace-nowrap">
-            <span 
-              className="text-xs uppercase tracking-[0.2em] inline-block"
-              style={{ 
-                fontFamily: 'var(--font-mono)',
-                color: '#888888'
-              }}
-            >
-              {homeContent.tickerText.repeat(10)}
-            </span>
-          </div>
-        </div>
-      </div>
+      <section className="studio-section" id="selected-work" aria-labelledby="selected-heading">
+        <div className="studio-section-heading"><div><p className="studio-eyebrow">01 / SELECTED WORK</p><h2 id="selected-heading">{ko ? "주요 프로젝트" : "Selected projects"}</h2></div><Link className="studio-text-link" to="/work">{ko ? "모든 프로젝트" : "All projects"}<ArrowUpRight size={18} aria-hidden="true" /></Link></div>
+        <div className="studio-project-grid">{featuredWork.map((work, index) => <StudioProject key={work.id} work={work} index={index} />)}</div>
+      </section>
+
+      <LineOspoExperience eyebrow="02 / COMPANY WORK" />
     </div>
   );
 }

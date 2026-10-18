@@ -1,32 +1,25 @@
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
+import { useEffect } from "react";
 import { Navigation } from "./Navigation";
-import { ScrollToTop } from "./ScrollToTop";
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { useLanguage } from "../context/LanguageContext";
+import { contactContent } from "../data/siteContent";
+import { ArrowUpRight } from "lucide-react";
 
 export function Root() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
+  const { language } = useLanguage();
+  const { pathname, hash } = useLocation();
+  const isContactPage = pathname.replace(/\/+$/, "").toLowerCase() === "/contact";
+  useEffect(() => { document.documentElement.lang = language; }, [language]);
+  useEffect(() => { if (!hash) window.scrollTo(0, 0); }, [pathname, hash]);
   return (
-    <>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoaded ? 1 : 0 }}
-        transition={{ duration: 0.8 }}
-        className="min-h-screen"
-        style={{ 
-          backgroundColor: '#0F0F0F',
-          fontFamily: 'var(--font-body)',
-        }}
-      >
-        <Navigation />
-        <Outlet />
-        <ScrollToTop />
-      </motion.div>
-    </>
+    <div className="studio-site">
+      <a className="studio-skip" href="#main-content">{language === "ko" ? "본문으로 이동" : "Skip to content"}</a>
+      <Navigation />
+      <main id="main-content"><Outlet /></main>
+      <footer className="studio-footer studio-container">
+        {!isContactPage && <div className="studio-footer-main"><p className="studio-eyebrow">CONTACT</p><a href={`mailto:${contactContent.email}`} className="studio-text-link">{contactContent.email}<ArrowUpRight size={20} aria-hidden="true" /></a></div>}
+        <div className="studio-footer-bottom"><span>© 2026 SANGYEOP KIM</span><div>{!isContactPage && <><a href={contactContent.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={contactContent.linkedInUrl} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></>}<a href="#main-content">{language === "ko" ? "맨 위로 ↑" : "Back to top ↑"}</a></div></div>
+      </footer>
+    </div>
   );
 }
