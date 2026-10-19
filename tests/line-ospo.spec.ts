@@ -9,6 +9,8 @@ const approved = {
     "저장소 연동을 막던 신규 클라우드의 통신 제약을 Bash, curl, tcpdump로 진단했습니다. 흩어진 문서와 운영팀의 확인 내용을 실제 진단 결과와 대조하고, 상사와 보안팀 협의를 거쳐 필요한 연결을 구성했습니다. 남은 제약을 반영해 상사와 개발 일정을 산정하고, 여러 저장소의 데이터 수집부터 결과 파일 생성까지 직접 확인했습니다.",
     "사내 저장소에서 오픈소스 정보를 수집하는 문제를 조사하며, 기존 npm과 PyPI 패키지 설치 방식의 특성이 수집 문제와 관련 있음을 파악했습니다. 정보 수집이라는 목적에 맞춰 설치 대신 저장소가 제공하는 파일을 직접 받도록 변경했습니다. Babel 관련 테스트에서 파일 수집 시간을 약 20초에서 약 5초 이내로 줄였습니다.",
     "오픈소스 검사 결과를 보완하기 위해 마련된 내부 DB를 활용해 정보 캐싱 도구를 개발하고 있습니다. 원본 데이터를 AI에 전달하는 것만으로는 원하는 형태를 얻기 어려워, 여러 테이블의 관계를 파악하고 SQL 조인으로 필요한 자료를 모아 정제했습니다. 현업과 데이터의 문제를 확인하고 API 응답 원본도 수집하며 캐싱에 필요한 자료를 정리하고 있습니다.",
+    "다른 조직의 연동 담당자가 API를 시험할 수 있도록 문서와 테스트 환경을 제공하고, 실제 호출과 응답을 함께 확인했습니다. 기술 발표 자료를 작성하고 통역을 동반한 발표를 맡아 구현 구조와 선택 이유를 설명했습니다.",
+    "AI가 만든 코드에서 특정 값에 고정된 처리와 불필요하게 복잡한 구현, 기존 기능과 중복되는 부분을 검토했습니다. 후속 개발자가 설계 이유를 확인할 수 있도록 주요 결정과 근거를 문서에 남겼습니다.",
     "로컬과 개발 환경에서 대표 사례를 검증하고, 여러 저장소에서 정보를 수집해 결과 파일을 생성하는 동작을 확인했습니다.",
   ],
   en: [
@@ -18,6 +20,8 @@ const approved = {
     "I diagnosed network constraints blocking repository integration in a new internal cloud using Bash, curl, and tcpdump. I compared test results with scattered documentation and findings from the operations team, then configured the required connections in consultation with my manager and the security team. I estimated the development schedule with my manager based on the remaining constraints and directly verified data collection from multiple repositories through to result-file generation.",
     "While investigating problems collecting open-source information from internal repositories, I found that characteristics of the existing npm and PyPI package-installation approach were related to the collection issues. Since the task was to collect information, I changed the implementation to download repository-provided files directly instead of installing packages. In a Babel-related test, file collection took about 5 seconds or less, down from about 20 seconds.",
     "I am developing an information-caching tool using an existing internal database built to supplement open-source scanning results. Passing raw data to AI alone did not produce the required form, so I traced relationships across tables and used SQL joins to collect and clean the needed data. I am reviewing data issues with the staff who use it, collecting raw API responses, and organizing the data needed for caching.",
+    "I provided API documentation and a test environment to integration partners in another organization, and checked actual requests and responses with them. I prepared technical presentation materials and explained the implementation and design choices in a presentation supported by an interpreter.",
+    "I reviewed AI-generated code for hardcoded behavior, unnecessary complexity, and duplication of existing functionality. I documented key decisions and their rationale so future developers could understand the design choices.",
     "I validated representative cases in local and development environments and confirmed the workflow from collecting information across multiple repositories to generating result files.",
   ],
 };
@@ -37,7 +41,7 @@ for (const width of [320, 375, 768, 1280]) {
         if (language === "en") await page.getByRole("button", { name: "EN", exact: true }).click();
         await expect(companyCase).toBeVisible();
         await expect(companyCase.locator("dt")).toHaveText(
-          language === "ko" ? ["역할", "업무와 구현", "입력과 오류", "클라우드 연동", "수집 방식", "데이터 정제", "동작 확인"] : ["Role", "Work and implementation", "Inputs and errors", "Cloud integration", "Collection approach", "Data preparation", "Verified behavior"],
+          language === "ko" ? ["역할", "업무와 구현", "입력과 오류", "클라우드 연동", "수집 방식", "데이터 정제", "협업", "AI 활용과 문서화", "동작 확인"] : ["Role", "Work and implementation", "Inputs and errors", "Cloud integration", "Collection approach", "Data preparation", "Collaboration", "AI review and documentation", "Verified behavior"],
         );
         await expect(companyCase.locator("dd")).toHaveText(approved[language]);
         for (const fact of await companyCase.locator("dd").all()) {
@@ -82,7 +86,7 @@ for (const width of [320, 1280]) {
         await expect(page.locator("main")).toContainText(approved[language][1]);
         if (route === "/credentials") {
           await expect(page.locator("main")).toContainText(approved[language][2]);
-          await expect(page.locator("main")).toContainText(approved[language][6]);
+          await expect(page.locator("main")).toContainText(approved[language][8]);
         }
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
       }

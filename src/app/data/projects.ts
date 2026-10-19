@@ -563,8 +563,8 @@ export const projects: Project[] = [
     period: "2025.07",
     tags: "Computer Vision · Segmentation · Ensemble Detection",
     description: {
-      ko: "U-Net + YOLO 앙상블 기반 도로 파손 탐지를 BRIDGE 3.0·2026 KICS 발표까지 확장한 프로젝트",
-      en: "Road damage detection with a U-Net + YOLO ensemble, later extended into BRIDGE 3.0 and a 2026 KICS presentation",
+      ko: "세그멘테이션과 탐지, pseudo labeling 실험을 비교해 U-Net 전처리와 YOLO 앙상블에 집중한 도로 파손 탐지 프로젝트",
+      en: "A road-damage detection project that compared segmentation, detection, and pseudo-labeling experiments before focusing on U-Net preprocessing and a YOLO ensemble",
     },
     color: "#243A1F",
     heroImage: {
@@ -593,59 +593,59 @@ export const projects: Project[] = [
     details: {
       ko: {
         overview:
-          "USC Road Damage Detection 대회에서 도로 파손 이미지를 더 정확하게 찾기 위해 배경 제거와 객체 탐지를 결합한 컴퓨터 비전 실험입니다. 제한된 시간 안에 성능과 학습 효율을 함께 확보하는 것이 핵심이었고, 이후 BRIDGE 3.0 후속 연구와 2026년도 KICS 한국통신학회 동계종합학술발표회 발표자료로까지 확장했습니다.",
+          "USC Road Damage Detection 대회에서 제한된 시간 안에 YOLO 기본 모델, segmentation, YOLO+DETR, pseudo labeling 실험을 빠르게 비교한 컴퓨터 비전 프로젝트입니다. 팀은 성능과 실험 비용을 함께 검토해 U-Net 배경 제거와 YOLO 앙상블에 집중했고, 이후 BRIDGE 3.0 후속 연구와 2026년도 KICS 한국통신학회 동계종합학술발표회 논문으로 확장했습니다.",
         role:
-          "기술 담당으로 배경 제거와 객체 탐지 조합 전략, 전처리 파이프라인, 실험 반복 구조를 설계했습니다. 이후 결과 보고서와 KICS 발표자료에서 핵심 판단 흐름이 드러나도록 내용을 정리했습니다.",
+          "팀의 실험 방향 설계와 전처리 파이프라인 구성에 참여하고, YOLO 기본 제출부터 segmentation, YOLO+DETR, pseudo labeling까지 실험 가지와 제출 순서를 정리했습니다. 이후 결과 보고서와 KICS 학술대회 논문에서 팀의 판단 흐름이 드러나도록 내용을 정리했습니다.",
         challenge:
-          "도로 이미지에는 배경 노이즈와 다양한 파손 형태가 섞여 있어 단일 탐지 모델만으로 안정적인 성능을 내기 어려웠습니다. 대회 환경에서는 학습 시간을 과도하게 늘리지 않으면서도 성능을 끌어올릴 전략이 필요했고, 후속 단계에서는 이 실험 구조를 보고서와 발표로 설명 가능한 형태로 정리해야 했습니다.",
+          "도로 이미지에는 배경 노이즈와 다양한 파손 형태가 섞여 있어 단일 탐지 모델만 오래 튜닝하기보다 여러 가설을 빠르게 비교할 필요가 있었습니다. 해커톤 시간 안에 성능이 기대에 못 미치는 실험을 중단하고, 가능성이 있는 방향에 학습 시간과 계산 자원을 재배분해야 했습니다.",
         solution:
-          "U-Net으로 배경을 정리한 뒤 YOLO 기반 객체 탐지를 조합하는 앙상블 접근을 적용했습니다. 데이터 전처리와 학습 파이프라인을 정리해 반복 실험 비용을 낮추고, 제한된 학습 시간 안에서 결과를 비교·개선할 수 있도록 구성했습니다. 이후 BRIDGE 3.0 단계에서는 grayscale 기반 증강을 포함한 후속 실험으로 위험 요소 탐지 방향까지 확장했고, 이를 결과 보고서와 KICS 발표자료로 정리했습니다.",
+          "팀은 YOLO+DETR 조합이 성능 대비 시간 효율이 낮다고 판단해 추가 탐색을 중단하고, U-Net으로 건물, 나무, 하늘을 마스킹한 뒤 YOLOv5x와 YOLOv11x를 조합하는 방향에 시간을 재배분했습니다. 저는 이 판단과 후속 실험에 참여하고, hue transformation과 rotation augmentation을 포함해 전처리하고 학습한 뒤 제출하는 흐름을 정리했습니다. 이후 BRIDGE 3.0 단계에서는 grayscale 기반 증강을 포함한 후속 실험으로 확장했습니다.",
         impact:
-          "전처리와 학습 파이프라인을 정리해 반복 실험을 진행했습니다. 이후 BRIDGE 3.0 후속 연구 결과를 보고서와 2026 KICS 발표자료로 정리했습니다.",
+          "팀은 LastDance를 최고 제출물로 확보했고 USC IMSC Hackathon 3위를 기록했습니다. 저는 해당 실험 흐름 구성에 참여하고, 이후 BRIDGE 3.0 후속 연구 결과를 보고서와 2026 KICS 학술대회 논문으로 정리했습니다.",
         highlights: [
           "USC IMSC Hackathon 3위 수상",
           "숭실대 BRIDGE 3.0 PoC 선정",
           "2026년도 KICS 한국통신학회 동계종합학술발표회 제출 및 발표",
-          "배경 제거 + 탐지 모델 결합을 통한 앙상블 실험",
-          "결과 보고서와 KICS 발표자료로 후속 연구 흐름 문서화",
+          "성능 대비 시간 효율이 낮은 YOLO+DETR 탐색을 중단하고 유망한 실험에 자원 재배분",
+          "결과 보고서와 KICS 학술대회 논문으로 후속 연구 흐름 문서화",
         ],
         results: [
-          "배경 제거와 객체 탐지를 결합한 앙상블 실험 구조 설계",
-          "50 epoch 기준 3~4시간 미만의 학습 파이프라인 구성",
-          "반복 가능한 전처리·실험 workflow 정리",
-          "결과 보고서와 2026 KICS 발표자료까지 연결되는 후속 산출물 구성",
+          "YOLO와 segmentation, YOLO+DETR, pseudo labeling 실험 비교에 참여",
+          "50 epoch 기준 3~4시간 미만의 학습 파이프라인 구성에 참여",
+          "U-Net 배경 마스킹과 YOLOv5x, YOLOv11x 앙상블을 적용한 LastDance 제출 흐름 구성에 참여",
+          "결과 보고서와 2026 KICS 학술대회 논문까지 연결되는 후속 산출물 구성",
         ],
-        tech: ["U-Net", "YOLOv5x", "PyTorch", "OpenCV", "Google Colab", "Grayscale Augmentation"],
+        tech: ["U-Net", "YOLOv5x", "YOLOv11x", "DETR", "WBF", "Pseudo Labeling", "PyTorch", "OpenCV", "Google Colab"],
       },
       en: {
         overview:
-          "A computer-vision project for the USC Road Damage Detection competition that combined background removal and object detection to improve road-damage recognition. The main goal was to balance performance and training efficiency under a tight schedule, then carry the strongest direction into BRIDGE 3.0 follow-up work and a 2026 KICS winter conference presentation.",
+          "A computer-vision project for the USC Road Damage Detection competition that rapidly compared YOLO baselines, segmentation, YOLO+DETR, and pseudo-labeling experiments under a tight schedule. The team evaluated both performance and experiment cost, focused on U-Net background removal with a YOLO ensemble, and later extended the work into BRIDGE 3.0 follow-up research and a 2026 KICS Winter Conference paper.",
         role:
-          "I focused on the technical strategy: combining background removal with detection, shaping the preprocessing flow, and making experiments repeatable under time pressure. I later organized the core decisions into the report and the KICS presentation.",
+          "I contributed to the team's experiment planning and preprocessing pipeline, organizing branches and submission order across YOLO baselines, segmentation, YOLO+DETR, and pseudo labeling. I later documented the team's decision process in the report and KICS conference paper.",
         challenge:
-          "Road images contain noisy backgrounds and highly varied damage patterns, which makes it difficult to rely on a single detector alone. In a competition setting, I needed an approach that improved performance without turning training time into a bottleneck, while still being explainable in later documentation and presentation.",
+          "Road images contain noisy backgrounds and varied damage patterns, so the team needed to compare several hypotheses instead of spending the entire hackathon tuning one detector. We also needed to stop underperforming branches early and move training time and compute toward more promising directions.",
         solution:
-          "I used an ensemble strategy that applied U-Net for background cleanup before YOLO-based detection. I also organized the preprocessing and training workflow so experiments could be repeated and compared within a limited training window. In the BRIDGE 3.0 follow-up, grayscale-oriented augmentation was added for road-risk and sinkhole-related cues, and that extension was documented in both the final report and the KICS deck.",
+          "The team stopped further YOLO+DETR exploration after finding that its performance did not justify the time cost, then reallocated effort to masking buildings, trees, and sky with U-Net before combining YOLOv5x and YOLOv11x. I participated in that decision and the follow-up experiments, and organized the preprocessing, training, and submission flow including hue transformation and rotation augmentation. The later BRIDGE 3.0 work added grayscale-oriented augmentation.",
         impact:
-          "I organized the preprocessing and training pipeline for repeated experiments. I documented the subsequent BRIDGE 3.0 research in a report and a 2026 KICS presentation.",
+          "The team secured LastDance as its strongest submission and placed 3rd at the USC IMSC Hackathon. I contributed to that experiment flow and later documented the BRIDGE 3.0 follow-up research in a report and a 2026 KICS conference paper.",
         highlights: [
           "Placed 3rd at the USC IMSC Hackathon",
           "Selected for Soongsil BRIDGE 3.0 PoC",
           "Submitted and presented at the 2026 KICS Winter Conference",
-          "Used an ensemble approach combining segmentation and detection",
-          "Documented the follow-up flow through both a report and a KICS slide deck",
+          "Stopped the low-efficiency YOLO+DETR branch and reallocated resources to more promising experiments",
+          "Documented the follow-up flow through both a report and a KICS conference paper",
         ],
         results: [
-          "Designed an ensemble workflow combining background removal and object detection",
-          "Built a training pipeline that stayed under roughly 3–4 hours for 50 epochs",
-          "Structured a repeatable preprocessing and experiment workflow",
-          "Extended the work into both a final report and a 2026 KICS presentation artifact",
+          "Contributed to comparisons across YOLO, segmentation, YOLO+DETR, and pseudo-labeling experiments",
+          "Contributed to a training pipeline that stayed under roughly 3–4 hours for 50 epochs",
+          "Contributed to the LastDance submission flow around U-Net background masking and a YOLOv5x/YOLOv11x ensemble",
+          "Extended the work into both a final report and a 2026 KICS conference paper",
         ],
-        tech: ["U-Net", "YOLOv5x", "PyTorch", "OpenCV", "Google Colab", "Grayscale Augmentation"],
+        tech: ["U-Net", "YOLOv5x", "YOLOv11x", "DETR", "WBF", "Pseudo Labeling", "PyTorch", "OpenCV", "Google Colab"],
       },
     },
     resources: [
-      { href: "/road-damage/road-damage-kics-2026-paper.pdf", label: { ko: "2026 KICS 발표자료 (PDF)", en: "2026 KICS Slides (PDF)" }, icon: "external" },
+      { href: "/road-damage/road-damage-kics-2026-paper.pdf", label: { ko: "2026 KICS 학술대회 논문", en: "2026 KICS Conference Paper" }, icon: "external" },
       { href: "/road-damage/road-damage-report.pdf", label: { ko: "결과 보고서", en: "Report" }, icon: "external" },
       { href: "https://imsc-hackathon-2025.github.io/pages/college-consolidated.html", label: { ko: "공식 챌린지", en: "Official Challenge" }, icon: "external" },
       { href: "https://colab.research.google.com/drive/1N0MWTKKxj89MX-CvlMV2xXluNJMrgT9a", label: { ko: "데모", en: "Demo" }, icon: "external" },

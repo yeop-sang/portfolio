@@ -12,6 +12,8 @@ export function LineOspoExperience({ eyebrow = "COMPANY WORK" }: { eyebrow?: str
     { label: ko ? "클라우드 연동" : "Cloud integration", text: lineOspoExperience.cloud[language] },
     { label: ko ? "수집 방식" : "Collection approach", text: lineOspoExperience.collection[language] },
     { label: ko ? "데이터 정제" : "Data preparation", text: lineOspoExperience.data[language] },
+    { label: ko ? "협업" : "Collaboration", text: lineOspoExperience.collaboration[language] },
+    { label: ko ? "AI 활용과 문서화" : "AI review and documentation", text: lineOspoExperience.documentation[language] },
     { label: ko ? "동작 확인" : "Verified behavior", text: lineOspoExperience.validation[language] },
   ];
 

@@ -62,6 +62,10 @@ export const aboutContent = {
     ko: `${lineOspoExperience.summary.ko} 이전에는 Pickle.plus에서 백엔드 개발과 정산 및 운영 업무를 했고, 영일영에서는 관리자 업로드와 외부 API 수집, 재고 화면 캐싱을 구현했습니다.`,
     en: `${lineOspoExperience.summary.en} Previously, I worked on backend development, settlement, and service operations at Pickle.plus, and implemented admin uploads, external API collection, and stock-page caching at Young Il Young Inc.`,
   },
+  approach: {
+    ko: "대학교 1학년 때 트라이본즈 디자인 인턴으로 일하며 Photoshop 파일 정리와 HTML 생성을 돕는 Python 도구를 만들었습니다. 작은 도구가 제작 이후에도 계속 사용되는 경험을 바탕으로, 반복 업무를 줄이고 실제 업무에서 쓰이는 도구를 만드는 데 관심을 이어오고 있습니다.",
+    en: "During a design internship at Tribonz in my first year of university, I built Python tools to help organize Photoshop files and generate HTML. Seeing these small tools remain in use after I built them shaped my interest in reducing repetitive work and building tools people use in their day-to-day work.",
+  },
   stackTitle: {
     ko: "기술 스택",
     en: "Tech Stack",
@@ -108,8 +112,8 @@ export const credentialsContent = {
     en: "Experience & Credentials",
   },
   intro: {
-    ko: "경력과 수상 내역, 교육 이력, 자격증을 정리했습니다.",
-    en: "Work experience, awards, education, and certifications.",
+    ko: "개발 경력과 학력, 멘토링과 봉사활동, 학술 활동, 수상 및 자격을 정리했습니다.",
+    en: "Development experience, education, mentoring, volunteering, publications, awards, and certifications.",
   },
   timelineTitle: {
     ko: "약력",
@@ -118,6 +122,18 @@ export const credentialsContent = {
   awardsTitle: {
     ko: "수상 내역",
     en: "Awards",
+  },
+  publicationsTitle: {
+    ko: "학술 활동",
+    en: "Publications",
+  },
+  publicationPdfLabel: {
+    ko: "논문 PDF",
+    en: "Paper PDF",
+  },
+  publicationProjectLabel: {
+    ko: "프로젝트 보기",
+    en: "View Project",
   },
   programsTitle: {
     ko: "교육 / 프로그램",
@@ -133,6 +149,7 @@ export const credentialsContent = {
   },
   // Credentials page convention: keep every dated list newest-first in the source data.
   // Do not rely on render-time `.reverse()` calls; update tests when adding dated items.
+  // Timeline ranges are ordered by their start month.
   timeline: [
     {
       period: "2026.07 - Present",
@@ -141,6 +158,33 @@ export const credentialsContent = {
       desc: {
         ko: [lineOspoExperience.summary.ko, lineOspoExperience.design.ko, lineOspoExperience.validation.ko].join(" "),
         en: [lineOspoExperience.summary.en, lineOspoExperience.design.en, lineOspoExperience.validation.en].join(" "),
+      },
+    },
+    {
+      period: "2026.04 - 2026.05",
+      title: { ko: "청음복지관", en: "CheongEum Welfare Center" },
+      subtitle: { ko: "프로그램 및 공연 지원 봉사", en: "Program and performance volunteer" },
+      desc: {
+        ko: "Music Sense를 도와준 복지관과 인연을 이어가며 봉사에 참여했습니다. 4월에는 성인 음악청능 그룹프로그램을, 5월에는 DMZ Music Festival 합창공연을 지원했습니다.",
+        en: "Continued volunteering with the welfare center that supported Music Sense. Helped with an adult music-based auditory training group in April and a choir performance at DMZ Music Festival in May.",
+      },
+    },
+    {
+      period: "2025.03 - Present",
+      title: { ko: "서울런 멘토링", en: "Seoul Learn Mentoring" },
+      subtitle: { ko: "학생 멘토", en: "Student mentor" },
+      desc: {
+        ko: "학생 멘토링을 이어가고 있습니다. 우수 멘토로 선정돼 서울런 5주년 기념행사 영상 인터뷰에 참여했습니다.",
+        en: "Mentor students through Seoul Learn. Selected as an outstanding mentor and interviewed for the program's fifth-anniversary video.",
+      },
+    },
+    {
+      period: "2025.01 - 2025.04",
+      title: { ko: "생물교육 자료와 웹앱 개발", en: "Biology Education Tools" },
+      subtitle: { ko: "서울대학교 생물교육과 외주 개발", en: "Freelance development for SNU Biology Education" },
+      desc: {
+        ko: "서울대학교 생물교육과와 협업해 PDF 학습자료의 문제와 해설을 CSV로 변환하는 Python 도구를 만들었습니다. 유전학 교육용 웹앱을 한국어 환경에 맞게 수정했습니다.",
+        en: "Built a Python tool that converts questions and explanations from learning PDFs into CSV files for Seoul National University's Department of Biology Education. Adapted a genetics education web app for Korean-language use.",
       },
     },
     {
@@ -153,10 +197,28 @@ export const credentialsContent = {
       },
     },
     {
+      period: "2022.09 - 2022.10",
+      title: { ko: "코드클럽 코딩 교육", en: "Code Club Coding Education" },
+      subtitle: { ko: "교육 봉사", en: "Education volunteer" },
+      desc: {
+        ko: "부천북초등학교 5개 학급에서 마인크래프트를 활용한 코딩 교육을 진행했습니다.",
+        en: "Taught coding with Minecraft to five classes at Bucheon Buk Elementary School.",
+      },
+    },
+    {
       period: youngIlYoungExperience.period,
       title: youngIlYoungExperience.company,
       subtitle: youngIlYoungExperience.role,
       desc: youngIlYoungExperience.summary,
+    },
+    {
+      period: "2020.01",
+      title: { ko: "온드림스쿨 다빈치교실", en: "Ondream School Da Vinci Classroom" },
+      subtitle: { ko: "교육 봉사팀 팀장", en: "Education volunteer team lead" },
+      desc: {
+        ko: "현대차 정몽구재단의 농산어촌 초등학생 대상 교육 봉사에 참여했습니다. 동실동실 팀의 팀장을 맡았습니다.",
+        en: "Led the Dongsil Dongsil team in the Hyundai Motor Chung Mong-Koo Foundation's education volunteer program for elementary students in rural communities.",
+      },
     },
     {
       period: "2019.08 - 2020.08",
@@ -174,6 +236,15 @@ export const credentialsContent = {
       desc: {
         ko: "Photoshop 파일 정리 도구와 HTML 파일 생성 도구를 개발했습니다.",
         en: "Built a Photoshop file cleanup tool and an HTML file generator.",
+      },
+    },
+    {
+      period: "2019.03 - 2026.08",
+      title: { ko: "숭실대학교 컴퓨터학부", en: "Soongsil University, School of Computer Science and Engineering" },
+      subtitle: { ko: "공학사", en: "Bachelor's degree" },
+      desc: {
+        ko: "컴퓨터학부에서 학사 과정을 마치고 2026년 8월 졸업했습니다.",
+        en: "Completed a bachelor's degree in the School of Computer Science and Engineering, graduating in August 2026.",
       },
     },
   ] satisfies CareerEntry[],
@@ -206,6 +277,17 @@ export const credentialsContent = {
         ko: "SK텔레콤 FLY AI Challenger 8기 과정에서 개인 부문 최우수상을 수상했습니다.",
         en: "Received the individual division top prize in the SK Telecom FLY AI Challenger 8th program.",
       },
+      proof: "/credentials/2026-skt-fly-ai-individual-excellence-award.jpeg",
+    },
+    {
+      date: "2025.11.19",
+      title: { ko: "한이음 드림업 공모전 창의도전형 장려상", en: "Hanium DreamUp Contest, Creative Challenge Encouragement Prize" },
+      issuer: { ko: "한국정보산업연합회", en: "Federation of Korean Information Industries" },
+      detail: {
+        ko: "NetZeroX 팀으로 2025 한이음 드림업 공모전 창의도전형에서 장려상을 수상했습니다.",
+        en: "Received an encouragement prize in the Creative Challenge category of the 2025 Hanium DreamUp contest as part of Team NetZeroX.",
+      },
+      proof: "/credentials/2025-hanium-dreamup-creative-challenge-encouragement.jpeg",
     },
     {
       date: "2025.08.23",
@@ -216,6 +298,16 @@ export const credentialsContent = {
         en: "Received the grand prize at Warranton as part of Team FullMoon.",
       },
       proof: "/credentials/2025-warranton-grand-prize.jpeg",
+    },
+    {
+      date: "2025.08.22",
+      title: { ko: "스파르탄 머슬 캠프 솔브드 코드 페스티벌 우수상", en: "Spartan Muscle Camp Solved Code Festival, Excellence Award" },
+      issuer: { ko: "숭실대학교 스파르탄SW교육원", en: "Soongsil University, Spartan SW Education Institute" },
+      detail: {
+        ko: "team006 팀으로 솔브드 코드 페스티벌 우수상을 수상했습니다.",
+        en: "Received an excellence award at the Solved Code Festival as part of team006.",
+      },
+      proof: "/credentials/2025-solved-code-festival-award.jpeg",
     },
     {
       date: "2025.07.26",
@@ -239,6 +331,31 @@ export const credentialsContent = {
       proof: "/credentials/2019-fintech-idea-contest-excellence.jpeg",
     },
   ] satisfies CredentialEntry[],
+  publications: [
+    {
+      date: "2026.06",
+      title: {
+        ko: "Music Sense: A Mobile Platform for Multimodal Music Perception for Individuals with Hearing Impairment",
+        en: "Music Sense: A Mobile Platform for Multimodal Music Perception for Individuals with Hearing Impairment",
+      },
+      venue: { ko: "한국컴퓨터정보학회논문지 제31권 제6호, 175–184쪽", en: "Journal of The Korea Society of Computer and Information, Vol. 31, No. 6, pp. 175–184" },
+      contribution: { ko: "제1저자", en: "First author" },
+      pdf: "/music-sense/music-sense-ksci-paper.pdf",
+      project: "/work/1",
+    },
+    {
+      // The PDF identifies the winter conference but does not state its exact date.
+      date: "2026",
+      title: {
+        ko: "교통 인프라 안전 강화를 위한 AI 기반 도로 위험 요소 및 싱크홀 탐지 기법 연구",
+        en: "A Study on AI-Based Road Hazard and Sinkhole Detection Techniques for Enhancing Transportation Infrastructure Safety",
+      },
+      venue: { ko: "2026년도 KICS 한국통신학회 동계종합학술발표회", en: "2026 KICS Winter Conference" },
+      contribution: { ko: "공동저자", en: "Co-author" },
+      pdf: "/road-damage/road-damage-kics-2026-paper.pdf",
+      project: "/work/11",
+    },
+  ],
   programs: [
     {
       date: "2026.05",
@@ -254,9 +371,10 @@ export const credentialsContent = {
       title: { ko: "SKT FLY AI Challenger 8기", en: "SKT FLY AI Challenger 8th" },
       issuer: { ko: "SK텔레콤", en: "SK Telecom" },
       detail: {
-        ko: "데이터 처리, 머신러닝, 클라우드·DevOps와 컴퓨터 비전을 학습했습니다. 과정 프로젝트로 Music Sense를 개발했습니다.",
-        en: "Studied data processing, machine learning, cloud computing, DevOps, and computer vision. Developed Music Sense as the course project.",
+        ko: "400시간의 교육을 이수하며 데이터 처리, 머신러닝, 클라우드와 컴퓨터 비전을 배웠습니다. RAG로 문서를 검색하고 LangGraph로 작업 상태와 분기를 다루며, MCP로 외부 도구를 연결하는 예제를 따라 작성했습니다. 팀 실습에서는 역할과 입출력, 완료 기준을 조율했고, 과정 프로젝트로 Music Sense를 개발했습니다.",
+        en: "Completed 400 hours of training in data processing, machine learning, cloud computing, and computer vision. Followed course examples to retrieve documents with RAG, manage workflow state and branching with LangGraph, and connect external tools through MCP. Coordinated roles, inputs, outputs, and completion criteria in team exercises, and developed Music Sense as the course project.",
       },
+      proof: "/credentials/2026-skt-fly-ai-challenger-8-completion.jpeg",
     },
     {
       date: "2025.09 - 2025.12",
@@ -278,7 +396,17 @@ export const credentialsContent = {
       proof: "/credentials/2025-usc-ai-data-science-certificate.jpeg",
     },
   ] satisfies CredentialEntry[],
+  // Qualifications are text-only: keep certificate IDs, scans, and verification links private.
   certifications: [
+    {
+      date: "2026.09",
+      title: { ko: "정보처리기사", en: "Engineer Information Processing" },
+      issuer: { ko: "과학기술정보통신부 / 한국산업인력공단", en: "MSIT / Human Resources Development Service of Korea" },
+      detail: {
+        ko: "프로그램 설계와 개발, 데이터베이스, 테스트 방법을 배웠습니다. LINE Plus에서는 필요한 기능을 정리해 API를 개발하고, 정상 입력과 오류 입력을 넣어 결과를 확인하는 데 활용했습니다.",
+        en: "Studied program design, development, databases, and testing. Applied this at LINE Plus by identifying required features, building APIs, and checking results with valid and invalid inputs.",
+      },
+    },
     {
       date: "2026.03",
       title: { ko: "ADsP", en: "ADsP" },
@@ -297,7 +425,16 @@ export const credentialsContent = {
         en: "Earned SAP's C_ABAPD Backend Developer - ABAP Cloud certification.",
       },
     },
-  ] satisfies CredentialEntry[],
+    {
+      date: "2019.04",
+      title: { ko: "네트워크관리사 2급", en: "Network Manager Level 2" },
+      issuer: { ko: "한국정보통신자격협회", en: "ICQA" },
+      detail: {
+        ko: "TCP/IP와 IP 주소, 서브넷과 라우팅 등 네트워크 통신 원리를 배웠습니다. 군 복무 중에는 스위치 장비를 직접 다루는 실습에 배운 내용을 활용했습니다.",
+        en: "Studied TCP/IP, IP addressing, subnetting, and routing. Applied this knowledge in hands-on exercises with network switches during military service.",
+      },
+    },
+  ] satisfies Omit<CredentialEntry, "proof">[],
 } as const;
 
 export const contactContent = {

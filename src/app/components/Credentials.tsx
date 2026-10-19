@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { ExternalLink } from "lucide-react";
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useLanguage } from "../context/LanguageContext";
 import { credentialsContent, type CredentialEntry } from "../data/siteContent";
@@ -40,6 +40,8 @@ function CredentialCard({
                 src={entry.proof}
                 alt={entry.title[language]}
                 className="w-full h-full object-contain"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -254,6 +256,41 @@ export function Credentials() {
           <div className="grid lg:grid-cols-2 gap-8">
             {credentialsContent.awards.map((entry) => (
               <CredentialCard key={`${entry.date}-${entry.title.en}`} entry={entry} language={language} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-24" aria-labelledby="publications-heading">
+          <h2
+            id="publications-heading"
+            className="mb-12"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(2rem, 5vw, 3rem)",
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+              color: "var(--studio-ink)",
+            }}
+          >
+            {credentialsContent.publicationsTitle[language]}
+          </h2>
+          <div className="space-y-8 max-w-5xl">
+            {credentialsContent.publications.map((entry) => (
+              <article key={entry.pdf} className="border-b pb-8" style={{ borderColor: "var(--bg-border)" }}>
+                <p className="text-xs tracking-[0.12em] mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--studio-accent)" }}>
+                  <span>{entry.date}</span> / {entry.contribution[language]}
+                </p>
+                <h3 className="text-xl font-semibold leading-snug mb-3" style={{ color: "var(--studio-ink)" }}>
+                  {entry.title[language]}
+                </h3>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--studio-muted)" }}>{entry.venue[language]}</p>
+                <div className="flex flex-wrap gap-x-6 gap-y-3">
+                  <a href={entry.pdf} target="_blank" rel="noopener noreferrer" className="studio-text-link" aria-label={`${credentialsContent.publicationPdfLabel[language]}: ${entry.title[language]}`}>
+                    {credentialsContent.publicationPdfLabel[language]}<ExternalLink size={16} aria-hidden="true" />
+                  </a>
+                  <Link to={entry.project} className="studio-text-link" aria-label={`${credentialsContent.publicationProjectLabel[language]}: ${entry.title[language]}`}>{credentialsContent.publicationProjectLabel[language]}</Link>
+                </div>
+              </article>
             ))}
           </div>
         </section>

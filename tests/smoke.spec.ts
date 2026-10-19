@@ -37,10 +37,13 @@ test("main navigation loads and language toggle works", async ({ page }) => {
   await page.getByRole("link", { name: "WORK", exact: true }).click();
   await expect(page).toHaveURL(/\/work$/);
   await expect(page.getByRole("heading", { name: "WORK & PROJECTS", exact: true })).toBeVisible();
+  await expect(page.locator("#line-ospo")).toContainText("test environment");
+  await expect(page.locator("#line-ospo")).toContainText("AI-generated code");
 
   await page.getByRole("link", { name: "ABOUT", exact: true }).click();
   await expect(page).toHaveURL(/\/about$/);
   await expect(page.getByText("About Me", { exact: false })).toBeVisible();
+  await expect(page.locator(".studio-about-grid")).toContainText("Tribonz");
   await expect(page.getByRole("heading", { name: "LINE+ OSPO" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Young Il Young Inc." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Pickle.plus" })).toBeVisible();
@@ -196,7 +199,7 @@ test("Road Damage Detection detail renders report assets and stronger narrative"
   await expect(page.getByRole("heading", { name: "ROAD DAMAGE DETECTION" })).toBeVisible();
   await expect(
     page.getByText(
-      "U-Net + YOLO 앙상블 기반 도로 파손 탐지를 BRIDGE 3.0·2026 KICS 발표까지 확장한 프로젝트",
+      "세그멘테이션과 탐지, pseudo labeling 실험을 비교해 U-Net 전처리와 YOLO 앙상블에 집중한 도로 파손 탐지 프로젝트",
       { exact: true },
     ),
   ).toBeVisible();
@@ -204,7 +207,7 @@ test("Road Damage Detection detail renders report assets and stronger narrative"
     "href",
     "/road-damage/road-damage-report.pdf",
   );
-  await expect(page.getByRole("link", { name: "2026 KICS 발표자료 (PDF)" })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "2026 KICS 학술대회 논문" })).toHaveAttribute(
     "href",
     "/road-damage/road-damage-kics-2026-paper.pdf",
   );
